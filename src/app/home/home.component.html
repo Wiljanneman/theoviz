@@ -1,0 +1,192 @@
+<!-- Navigation Header -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-violet-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo/Brand -->
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 bg-gradient-to-br from-fuchsia-500 to-violet-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                        </path>
+                    </svg>
+                </div>
+                <div class="text-xl font-semibold text-slate-50">
+                    Theology <span class="text-fuchsia-400">Visualizer</span>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-slate-300 hover:text-fuchsia-400 transition-colors duration-200 font-medium">
+                    Reformed Theology
+                </a>
+                <a href="#" class="text-slate-300 hover:text-fuchsia-400 transition-colors duration-200 font-medium">
+                    Kingdom Badges
+                </a>
+                <a href="#" class="text-slate-300 hover:text-fuchsia-400 transition-colors duration-200 font-medium">
+                    Defending Faith
+                </a>
+                <a href="#" class="text-slate-300 hover:text-fuchsia-400 transition-colors duration-200 font-medium">
+                    My Story
+                </a>
+                <a href="#" class="text-slate-300 hover:text-fuchsia-400 transition-colors duration-200 font-medium">
+                    Contact
+                </a>
+            </div>
+
+            <!-- CTA Button & Mobile Menu -->
+            <div class="flex items-center gap-4">
+                <a routerLink="/denomination-quiz"
+                    class="hidden sm:flex items-center gap-2 bg-fuchsia-500 hover:bg-fuchsia-400 text-white px-4 py-2 rounded-xl font-medium text-sm transition-colors duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                    Take Quiz
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button
+                    class="md:hidden p-2 rounded-lg text-slate-300 hover:text-fuchsia-400 hover:bg-slate-800/50 transition-colors duration-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Map Header -->
+<div class="bg-slate-800/80 backdrop-blur-sm border-b border-violet-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-50">Church Locator</h3>
+                    <p class="text-sm text-violet-300">Sound theological communities near you</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="hidden sm:flex items-center gap-6 text-sm">
+                    <div class="text-center">
+                        <div class="text-fuchsia-400 font-bold">5</div>
+                        <div class="text-violet-300">Churches</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-cyan-400 font-bold">5</div>
+                        <div class="text-violet-300">Denominations</div>
+                    </div>
+                </div>
+                <button
+                    class="flex items-center gap-2 bg-fuchsia-500 hover:bg-fuchsia-400 text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Add Church
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="h-64 w-full border-b border-violet-500/20">
+    <app-church-map class="w-full"></app-church-map>
+</div>
+
+<!-- Hero Section -->
+<section
+    class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden pt-16">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center space-y-16">
+            <!-- Embedded Map Section -->
+            <section class="relative">
+
+                <!-- Full Width Map -->
+
+            </section>
+
+
+            <!-- Feature Cards -->
+            <div class="grid md:grid-cols-3 gap-8 pt-16">
+                <!-- Interactive Decision Trees -->
+                <div
+                    class="group bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-2">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-fuchsia-500 to-fuchsia-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-slate-50 mb-4">Interactive Decision Trees</h3>
+                    <p class="text-violet-300 leading-relaxed">
+                        Navigate complex theological questions through visual decision trees that help you understand
+                        denominational differences
+                    </p>
+                </div>
+
+                <!-- Comprehensive Resources -->
+                <div
+                    class="group bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-2">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-slate-50 mb-4">Comprehensive Resources</h3>
+                    <p class="text-violet-300 leading-relaxed">
+                        Access a vast library of theological resources covering church history, apologetics, and
+                        different Christian traditions
+                    </p>
+                </div>
+
+                <!-- Find Your Community -->
+                <div
+                    class="group bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-2">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-slate-50 mb-4">Find Your Community</h3>
+                    <p class="text-violet-300 leading-relaxed">
+                        Discover doctrinally sound churches in your area that align with your theological convictions
+                        and biblical understanding
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Effects -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-fuchsia-500/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl"></div>
+        <div
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl">
+        </div>
+    </div>
+</section>
