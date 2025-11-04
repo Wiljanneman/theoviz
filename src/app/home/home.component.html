@@ -61,65 +61,11 @@
     </div>
 </nav>
 
-<!-- Map Header -->
-<div class="bg-slate-800/80 backdrop-blur-sm border-b border-violet-500/20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div
-                    class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                        </path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-slate-50">Church Locator</h3>
-                    <p class="text-sm text-violet-300">Sound theological communities near you</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3">
-                <div class="hidden sm:flex items-center gap-6 text-sm">
-                    <div class="text-center">
-                        <div class="text-fuchsia-400 font-bold">5</div>
-                        <div class="text-violet-300">Churches</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-cyan-400 font-bold">5</div>
-                        <div class="text-violet-300">Denominations</div>
-                    </div>
-                </div>
-                <button
-                    class="flex items-center gap-2 bg-fuchsia-500 hover:bg-fuchsia-400 text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors duration-200">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    Add Church
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="h-64 w-full border-b border-violet-500/20">
-    <app-church-map class="w-full"></app-church-map>
-</div>
-
 <!-- Hero Section -->
 <section
-    class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden pt-16">
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden pt-4">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center space-y-16">
-            <!-- Embedded Map Section -->
-            <section class="relative">
-
-                <!-- Full Width Map -->
-
-            </section>
-
-
             <!-- Feature Cards -->
             <div class="grid md:grid-cols-3 gap-8 pt-16">
                 <!-- Interactive Decision Trees -->
@@ -158,7 +104,7 @@
                     </p>
                 </div>
 
-                <!-- Find Your Community -->
+                <!-- Find Your Community (restored) -->
                 <div
                     class="group bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-2">
                     <div
@@ -179,6 +125,67 @@
                 </div>
             </div>
         </div>
+                    <!-- Embedded Map Section -->
+            <section class="relative mt-4">
+
+                <!-- Map Card: left gradient content + right map -->
+                <div class="w-full flex items-center justify-center">
+                    <div
+                        role="region"
+                        aria-label="Church locator card"
+                        class="group w-full max-w-7xl mx-auto transform transition-all duration-300 rounded-3xl overflow-hidden border border-violet-500/20 bg-slate-800/50 hover:-translate-y-2 hover:shadow-2xl hover:shadow-violet-500/10">
+                        <div class="flex flex-col md:flex-row">
+                            <!-- Left gradient column -->
+                            <div class="md:w-2/5 w-full py-8 px-6 md:px-10 bg-gradient-to-br from-fuchsia-500 to-violet-600 text-white flex flex-col justify-center gap-3">
+                                <div>
+                                    <h3 class="text-2xl md:text-3xl font-semibold leading-tight">Church Locator</h3>
+                                    <p class="mt-1 text-sm md:text-base text-fuchsia-100/90">Sound theological
+                                        communities near you
+                                    </p>
+                                </div>
+
+                                <div class="mt-4 flex flex-wrap gap-4 items-center">
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-white">5</div>
+                                        <div class="text-xs text-fuchsia-100/80">Churches</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-white">5</div>
+                                        <div class="text-xs text-fuchsia-100/80">Denominations</div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6">
+                                    <button
+                                        class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors duration-200">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4v16m8-8H4"></path>
+                                        </svg>
+                                        Add Church
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Right map column -->
+                            <div class="!hover:w-5/5 md:w-3/5 w-full h-64 md:h-72 bg-slate-700 relative">
+                                <!-- ensure the map fills the right panel -->
+                                <app-church-map class="w-full h-full block"></app-church-map>
+                                <!-- optional overlay handle (desktop) to hint expand on hover -->
+                                <div
+                                    class="hidden md:flex absolute top-3 right-3 items-center gap-2 bg-slate-800/40 backdrop-blur rounded-full px-3 py-1 text-xs text-slate-100">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 10l4 4m0 0l-4 4m4-4H9"></path>
+                                    </svg>
+                                    Hover to focus
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
     </div>
 
     <!-- Background Effects -->
@@ -190,3 +197,4 @@
         </div>
     </div>
 </section>
+
