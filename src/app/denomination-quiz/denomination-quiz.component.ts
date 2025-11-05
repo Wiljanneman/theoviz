@@ -32,7 +32,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   private treeData: TreeNode = {
     id: 'root',
-    question: 'What denomination are you?',
+    question: 'Find Your Denomination',
     children: [
       {
         id: 'bible-authority',
@@ -159,7 +159,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     ]
   };
 
-  private visibleNodes = new Set<string>(['root']);
+  private visibleNodes = new Set<string>(['root', 'bible-authority']); // Start with root and first question visible
 
   ngOnInit(): void {}
 
@@ -201,14 +201,14 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     // Add the specific clicked child to visible nodes
     this.visibleNodes.add(childId);
     
-    // Find the clicked node to check if it's a final denomination or a question
+    // Find the clicked node to check if it has children (answers to show)
     const clickedNode = this.findNodeById(this.treeData, childId);
     
-    // Only show children if this is a question node (not a denomination result)
-    // Don't auto-show answer options - let them appear when the question is displayed
-    if (clickedNode && clickedNode.question && !clickedNode.denomination) {
-      // This is a question node - don't show the answers yet
-      // They will be shown when the tree is rendered
+    // If this node has children, make them visible too (the answer options)
+    if (clickedNode && clickedNode.children && !clickedNode.denomination) {
+      clickedNode.children.forEach(child => {
+        this.visibleNodes.add(child.id);
+      });
     }
     
     this.currentLevel++;
@@ -216,8 +216,9 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   private startQuiz(): void {
-    // Show the first question
-    this.visibleNodes.add('bible-authority');
+    // Show the first question's answers
+    this.visibleNodes.add('bible-no');
+    this.visibleNodes.add('bible-yes');
     this.currentLevel = 1;
     this.updateTreeWithPan();
   }
@@ -226,12 +227,13 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     // First, update the tree structure with new visible nodes
     this.updateTreeStructure();
     
-    // Then animate to the new level position
-    const yOffset = this.nodePositions.get(this.currentLevel) || 0;
+    // Calculate how much to pan based on current level
+    // Pan so the current question is centered in the viewport
+    const yOffset = this.currentLevel * 200; // 200px spacing per level
     
     this.g.transition()
       .duration(750)
-      .attr('transform', `translate(50, ${50 - yOffset})`);
+      .attr('transform', `translate(${this.width / 2}, ${100 - yOffset})`);
   }
 
   private findNodeById(node: TreeNode, id: string): TreeNode | null {
@@ -248,23 +250,22 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   private updateTree(): void {
     this.createTree();
     // Keep the current position when just updating without level change
-    const yOffset = this.nodePositions.get(this.currentLevel) || 0;
-    this.g.attr('transform', `translate(50, ${50 - yOffset})`);
+    const yOffset = this.currentLevel * 200; // 200px spacing per level
+    this.g.attr('transform', `translate(${this.width / 2}, ${100 - yOffset})`);
   }
 
   private updateTreeStructure(): void {
-    // Calculate dynamic height based on visible nodes and depth
-    const maxDepth = this.getMaxDepth();
-    const dynamicHeight = Math.max(this.height - 100, maxDepth * 250); // 250px per level minimum
+    // Calculate dynamic height based on full tree depth
+    const maxDepth = this.getMaxTreeDepth(this.treeData);
+    const dynamicHeight = Math.max(this.height - 100, maxDepth * 200); // 200px per level
     
     // Update tree layout with dynamic sizing
     const tree = d3.tree<TreeNode>()
       .size([this.width - 100, dynamicHeight])
-      .separation((a, b) => (a.parent === b.parent ? 1 : 2) * 2); // Increase separation
+      .separation((a, b) => (a.parent === b.parent ? 1.5 : 2)); // Adjust separation
 
-    // Create hierarchy with only visible nodes
-    const filteredData = this.filterVisibleNodes(this.treeData);
-    const root = d3.hierarchy(filteredData);
+    // Create hierarchy with FULL tree data (not filtered)
+    const root = d3.hierarchy(this.treeData);
     tree(root);
 
     // Store Y positions by level for accurate panning
@@ -295,7 +296,16 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     return maxDepth + 1;
   }
 
+  private getMaxTreeDepth(node: TreeNode, depth: number = 0): number {
+    if (!node.children || node.children.length === 0) {
+      return depth;
+    }
+    return Math.max(...node.children.map(child => this.getMaxTreeDepth(child, depth + 1)));
+  }
+
   private updateLinks(root: any): void {
+    const selfRef = this;
+    
     // Update links with enter/update/exit pattern
     const linkSelection = this.g.selectAll('.link')
       .data(root.links(), (d: any) => `${d.source.data.id}-${d.target.data.id}`);
@@ -310,11 +320,13 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('stroke', '#fff')
       .style('stroke-width', 2)
       .style('fill', 'none')
-      .style('opacity', 0)
+      .style('opacity', 0.2)
+      .style('filter', 'blur(2px)')
       .merge(linkSelection)
       .transition()
       .duration(500)
-      .style('opacity', 0.8)
+      .style('opacity', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 0.8 : 0.2)
+      .style('filter', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 'none' : 'blur(2px)')
       .attr('d', (d: any) => {
         return `M${d.source.x},${d.source.y}
                 L${d.target.x},${d.target.y}`;
@@ -335,15 +347,17 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     const nodeEnter = nodeSelection.enter()
       .append('g')
       .attr('class', 'node')
-      .style('opacity', 0);
+      .style('opacity', 0.3)
+      .style('filter', 'blur(3px)');
 
     // Merge enter and update selections
     const nodeMerge = nodeEnter.merge(nodeSelection);
 
-    // Animate to new positions
+    // Animate to new positions and visibility
     nodeMerge.transition()
       .duration(500)
-      .style('opacity', 1)
+      .style('opacity', (d: any) => selfRef.visibleNodes.has(d.data.id) ? 1 : 0.3)
+      .style('filter', (d: any) => selfRef.visibleNodes.has(d.data.id) ? 'none' : 'blur(3px)')
       .attr('transform', (d: any) => `translate(${d.x},${d.y})`);
 
     // Add all the node content (rectangles, circles, text, buttons)
@@ -356,15 +370,16 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     // Add rectangles for questions (non-denomination nodes)
     nodeEnter.filter((d: any) => d.data.question && !d.data.denomination)
       .append('rect')
-      .attr('x', -100)
-      .attr('y', -20)
-      .attr('width', 200)
-      .attr('height', 40)
-      .attr('rx', 8)
-      .style('fill', '#ffffff')
-      .style('stroke', 'none')
+      .attr('x', -120)
+      .attr('y', -30)
+      .attr('width', 240)
+      .attr('height', 60)
+      .attr('rx', 12)
+      .style('fill', 'rgba(30, 41, 59, 0.95)')
+      .style('stroke', '#a855f7')
+      .style('stroke-width', 2)
       .style('cursor', 'default')
-      .style('filter', 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.15))');
+      .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))');
 
     // Add circles for denomination results
     nodeEnter.filter((d: any) => d.data.denomination)
@@ -391,31 +406,40 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     nodeEnter.filter((d: any) => d.data.question && !d.data.denomination)
       .append('text')
       .attr('text-anchor', 'middle')
-      .attr('dy', 5)
-      .style('font-size', '12px')
+      .attr('dy', 0)
+      .style('font-size', '13px')
       .style('font-weight', '500')
-      .style('fill', '#2c3e50')
+      .style('fill', '#e2e8f0')
       .style('pointer-events', 'none')
-      .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
+      .style('font-family', 'Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
       .each(function(this: SVGTextElement, d: any) {
         const text = d3.select(this);
         const words = d.data.question.split(' ');
-        const lineHeight = 14;
+        const lineHeight = 16;
         let line: string[] = [];
-        let tspan = text.append('tspan').attr('x', 0).attr('dy', -7);
+        let lineNumber = 0;
+        let tspan = text.append('tspan').attr('x', 0).attr('dy', 0);
 
         words.forEach((word: string) => {
           line.push(word);
           tspan.text(line.join(' '));
-          if (tspan.node()!.getComputedTextLength() > 180) {
+          if (tspan.node()!.getComputedTextLength() > 210) {
             line.pop();
             tspan.text(line.join(' '));
             line = [word];
+            lineNumber++;
             tspan = text.append('tspan')
               .attr('x', 0)
               .attr('dy', lineHeight)
               .text(word);
           }
+        });
+        
+        // Center the text block vertically
+        const totalLines = text.selectAll('tspan').size();
+        const offset = -(totalLines - 1) * lineHeight / 2;
+        text.selectAll('tspan').each(function(this: any, d: any, i: number) {
+          d3.select(this).attr('dy', i === 0 ? offset : lineHeight);
         });
       });
 
@@ -449,23 +473,23 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
           .attr('width', 150)
           .attr('height', 40)
           .attr('rx', 20)
-          .style('fill', '#1976d2')
+          .style('fill', '#d946ef')
           .style('stroke', 'none')
           .style('opacity', 1)
-          .style('filter', 'drop-shadow(0px 4px 8px rgba(25, 118, 210, 0.3))')
+          .style('filter', 'drop-shadow(0px 4px 12px rgba(217, 70, 239, 0.5))')
           .on('mouseover', function() {
             d3.select(this)
               .transition()
               .duration(150)
-              .style('fill', '#1565c0')
-              .style('filter', 'drop-shadow(0px 6px 12px rgba(25, 118, 210, 0.4))');
+              .style('fill', '#c026d3')
+              .style('filter', 'drop-shadow(0px 6px 16px rgba(217, 70, 239, 0.6))');
           })
           .on('mouseout', function() {
             d3.select(this)
               .transition()
               .duration(150)
-              .style('fill', '#1976d2')
-              .style('filter', 'drop-shadow(0px 4px 8px rgba(25, 118, 210, 0.3))');
+              .style('fill', '#d946ef')
+              .style('filter', 'drop-shadow(0px 4px 12px rgba(217, 70, 239, 0.5))');
           });
 
         buttonGroup.append('text')
@@ -473,10 +497,10 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
           .attr('y', 79)
           .attr('text-anchor', 'middle')
           .style('font-size', '14px')
-          .style('font-weight', '500')
+          .style('font-weight', '600')
           .style('fill', '#ffffff')
           .style('pointer-events', 'none')
-          .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
+          .style('font-family', 'Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
           .text('Get Started');
       });
 
@@ -558,22 +582,21 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .attr('width', '100%')
       .attr('height', '100%')
       .attr('viewBox', `0 0 ${this.width} ${this.height}`)
-      .style('background', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)');
+      .style('background', 'linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%)');
 
     this.g = this.svg.append('g')
-      .attr('transform', 'translate(50, 50)');
+      .attr('transform', `translate(${this.width / 2}, 100)`);
 
-    // Create tree layout with dynamic sizing
-    const maxDepth = this.getMaxDepth();
-    const dynamicHeight = Math.max(this.height - 100, maxDepth * 250); // 250px per level minimum
+    // Create tree layout with dynamic sizing - RENDER ENTIRE TREE
+    const maxDepth = this.getMaxTreeDepth(this.treeData); // Get full tree depth
+    const dynamicHeight = Math.max(this.height - 100, maxDepth * 200); // 200px per level
     
     const tree = d3.tree<TreeNode>()
       .size([this.width - 100, dynamicHeight])
-      .separation((a, b) => (a.parent === b.parent ? 1 : 2) * 2); // Increase separation
+      .separation((a, b) => (a.parent === b.parent ? 1.5 : 2)); // Adjust separation
 
-    // Create hierarchy with only visible nodes
-    const filteredData = this.filterVisibleNodes(this.treeData);
-    const root = d3.hierarchy(filteredData);
+    // Create hierarchy with FULL tree data (not filtered)
+    const root = d3.hierarchy(this.treeData);
     tree(root);
 
     // Store Y positions by level for accurate panning
@@ -598,7 +621,8 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('stroke', '#fff')
       .style('stroke-width', 2)
       .style('fill', 'none')
-      .style('opacity', 0.8);
+      .style('opacity', (d: any) => this.visibleNodes.has(d.target.data.id) ? 0.8 : 0.2)
+      .style('filter', (d: any) => this.visibleNodes.has(d.target.data.id) ? 'none' : 'blur(2px)');
 
     // Create nodes
     const node = this.g.selectAll('.node')
@@ -606,20 +630,23 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .enter()
       .append('g')
       .attr('class', 'node')
-      .attr('transform', (d: any) => `translate(${d.x},${d.y})`);
+      .attr('transform', (d: any) => `translate(${d.x},${d.y})`)
+      .style('opacity', (d: any) => this.visibleNodes.has(d.data.id) ? 1 : 0.3)
+      .style('filter', (d: any) => this.visibleNodes.has(d.data.id) ? 'none' : 'blur(3px)');
 
     // Add rectangles for questions (non-denomination nodes)
     node.filter((d: any) => d.data.question && !d.data.denomination)
       .append('rect')
-      .attr('x', -100)
-      .attr('y', -20)
-      .attr('width', 200)
-      .attr('height', 40)
-      .attr('rx', 8)
-      .style('fill', '#ffffff')
-      .style('stroke', 'none')
+      .attr('x', -120)
+      .attr('y', -30)
+      .attr('width', 240)
+      .attr('height', 60)
+      .attr('rx', 12)
+      .style('fill', 'rgba(30, 41, 59, 0.95)')
+      .style('stroke', '#a855f7')
+      .style('stroke-width', 2)
       .style('cursor', 'default')
-      .style('filter', 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.15))');
+      .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))');
 
     // Add circles for denomination results
     node.filter((d: any) => d.data.denomination)
@@ -646,31 +673,40 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     node.filter((d: any) => d.data.question && !d.data.denomination)
       .append('text')
       .attr('text-anchor', 'middle')
-      .attr('dy', 5)
-      .style('font-size', '12px')
+      .attr('dy', 0)
+      .style('font-size', '13px')
       .style('font-weight', '500')
-      .style('fill', '#2c3e50')
+      .style('fill', '#e2e8f0')
       .style('pointer-events', 'none')
-      .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
+      .style('font-family', 'Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
       .each(function(this: SVGTextElement, d: any) {
         const text = d3.select(this);
         const words = d.data.question.split(' ');
-        const lineHeight = 14;
+        const lineHeight = 16;
         let line: string[] = [];
-        let tspan = text.append('tspan').attr('x', 0).attr('dy', -7);
+        let lineNumber = 0;
+        let tspan = text.append('tspan').attr('x', 0).attr('dy', 0);
 
         words.forEach((word: string) => {
           line.push(word);
           tspan.text(line.join(' '));
-          if (tspan.node()!.getComputedTextLength() > 180) {
+          if (tspan.node()!.getComputedTextLength() > 210) {
             line.pop();
             tspan.text(line.join(' '));
             line = [word];
+            lineNumber++;
             tspan = text.append('tspan')
               .attr('x', 0)
               .attr('dy', lineHeight)
               .text(word);
           }
+        });
+        
+        // Center the text block vertically
+        const totalLines = text.selectAll('tspan').size();
+        const offset = -(totalLines - 1) * lineHeight / 2;
+        text.selectAll('tspan').each(function(this: any, d: any, i: number) {
+          d3.select(this).attr('dy', i === 0 ? offset : lineHeight);
         });
       });
 

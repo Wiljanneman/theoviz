@@ -1,15 +1,17 @@
 :host {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
 }
 
 .tree-container {
   width: 100%;
-  height: 100%;
-  min-height: 400px;
+  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 .node {
@@ -34,7 +36,7 @@
 
 .answer-button:hover rect {
   stroke-width: 2px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
 }
 
 .start-button {
@@ -46,13 +48,13 @@
 }
 
 .start-button:hover rect {
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-  transform: translateY(-1px);
+  filter: drop-shadow(0 6px 12px rgba(217, 70, 239, 0.4));
+  transform: translateY(-2px);
 }
 
 .node text {
   pointer-events: none;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .link {
@@ -69,14 +71,9 @@
   text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
-/* Question rectangles styling */
-.node rect {
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .tree-container {
-    height: 600px;
+    height: 100vh;
   }
 }

@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.denomination-group {
+  transition: all 0.3s ease;
+}
+
+.denomination-group:hover {
+  filter: brightness(1.1);
+}

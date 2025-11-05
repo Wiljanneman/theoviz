@@ -1,0 +1,144 @@
+<!-- Full Page Layout with Digital Ministry Theme -->
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+  
+  <!-- Navigation Header (matching home page) -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-lg border-b border-violet-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo/Brand -->
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-gradient-to-br from-fuchsia-500 to-violet-600 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+              </path>
+            </svg>
+          </div>
+          <a routerLink="/" class="text-xl font-semibold text-slate-50 hover:text-fuchsia-400 transition-colors">
+            Theology <span class="text-fuchsia-400">Visualizer</span>
+          </a>
+        </div>
+        
+        <!-- Back Button -->
+        <a routerLink="/" class="text-slate-300 hover:text-fuchsia-400 transition-colors duration-200 font-medium flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content: Two Column Layout -->
+  <div class="pt-16 min-h-screen">
+    <div class="grid grid-cols-1 lg:grid-cols-12 min-h-screen">
+      
+      <!-- Left Sidebar: Explanations -->
+      <div class="lg:col-span-4 xl:col-span-3 bg-slate-900/50 backdrop-blur-sm border-r border-violet-500/20 overflow-y-auto">
+        <div class="p-6 lg:p-8 space-y-6">
+          
+          <!-- Title -->
+          <div>
+            <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-400 mb-2">
+              Denomination Wheel
+            </h1>
+            <p class="text-slate-400 text-sm">
+              Explore the hierarchical relationships between Christian denominations and their theological foundations.
+            </p>
+          </div>
+
+          <!-- Core Beliefs Section -->
+          <div class="space-y-3">
+            <h2 class="text-xl font-semibold text-slate-100 flex items-center gap-2">
+              <span class="w-2 h-2 bg-fuchsia-400 rounded-full"></span>
+              Core Christian Beliefs
+            </h2>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+              <ul class="space-y-2 text-sm text-slate-300">
+                <li class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span><strong class="text-fuchsia-400">Trinity:</strong> One God in three persons</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span><strong class="text-fuchsia-400">Nicene Creed:</strong> Historic statement of faith</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span><strong class="text-fuchsia-400">Divinity of Christ:</strong> Jesus is fully God</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span><strong class="text-fuchsia-400">Virgin Birth:</strong> Miraculous conception</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span><strong class="text-fuchsia-400">Resurrection:</strong> Jesus rose from the dead</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Major Traditions Section -->
+          <div class="space-y-3">
+            <h2 class="text-xl font-semibold text-slate-100 flex items-center gap-2">
+              <span class="w-2 h-2 bg-cyan-400 rounded-full"></span>
+              Major Traditions
+            </h2>
+            <div class="space-y-3">
+              <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                <h3 class="font-semibold text-blue-300 mb-1">Protestant</h3>
+                <p class="text-xs text-slate-400">Emphasizes salvation by faith alone and Scripture alone</p>
+              </div>
+              <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
+                <h3 class="font-semibold text-yellow-300 mb-1">Catholic</h3>
+                <p class="text-xs text-slate-400">Papal authority, sacramental tradition, apostolic succession</p>
+              </div>
+              <div class="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3">
+                <h3 class="font-semibold text-orange-300 mb-1">Eastern Orthodox</h3>
+                <p class="text-xs text-slate-400">Theosis (union with God), liturgical worship, icons</p>
+              </div>
+              <div class="bg-lime-500/10 border border-lime-500/30 rounded-lg p-3">
+                <h3 class="font-semibold text-lime-300 mb-1">Oriental Orthodox</h3>
+                <p class="text-xs text-slate-400">Miaphysite Christology, ancient traditions</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- How to Read Section -->
+          <div class="space-y-3">
+            <h2 class="text-xl font-semibold text-slate-100 flex items-center gap-2">
+              <span class="w-2 h-2 bg-fuchsia-400 rounded-full"></span>
+              How to Read
+            </h2>
+            <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700 text-sm text-slate-300 space-y-2">
+              <p><strong class="text-fuchsia-400">Center:</strong> Core Christian beliefs shared by all traditions</p>
+              <p><strong class="text-cyan-400">Ring 2:</strong> Major Christian traditions (Protestant, Catholic, Orthodox)</p>
+              <p><strong class="text-violet-400">Ring 3:</strong> Key theological emphases (SOLA FIDE, SOLA SCRIPTURA)</p>
+              <p><strong class="text-pink-400">Ring 4:</strong> Specific theological concepts and polity structures</p>
+              <p><strong class="text-blue-400">Outer Rings:</strong> Individual denominations with their distinctive colors</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Side: Visualization -->
+      <div class="lg:col-span-8 xl:col-span-9 flex items-center justify-center p-4 lg:p-8">
+        <div #wheelContainer class="w-full h-full min-h-[600px] lg:min-h-[800px]"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
