@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import * as d3 from 'd3';
 
 interface TreeNode {
@@ -15,7 +16,7 @@ interface TreeNode {
 
 @Component({
   selector: 'app-denomination-quiz',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './denomination-quiz.component.html',
   styleUrl: './denomination-quiz.component.css'
 })
@@ -29,6 +30,49 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   private currentLevel = 0;
   private resizeListener: (() => void) | null = null;
   private nodePositions = new Map<number, number>(); // Store Y positions by level
+  private visitHistory: string[] = ['root', 'bible-authority']; // Track the path taken
+  public mode: 'quiz' | 'free' = 'quiz'; // Current mode
+  public currentHelpText: { title: string; content: string } | null = null; // Current help card content
+
+  // Help text for each question
+  private helpText: { [key: string]: { title: string; content: string } } = {
+    'bible-authority': {
+      title: 'Biblical Authority',
+      content: 'This question addresses the relationship between Scripture and Church tradition. Protestants generally hold to "Sola Scriptura" (Scripture alone), while Catholics and Orthodox emphasize the role of sacred tradition alongside Scripture in interpreting faith.'
+    },
+    'spirit-father-pre-orthodox': {
+      title: 'The Filioque Controversy',
+      content: 'The "Filioque" ("and the Son") was added to the Nicene Creed in the West, stating the Holy Spirit proceeds from both the Father and the Son. Eastern Orthodox churches reject this addition, maintaining the Spirit proceeds from the Father alone. This theological difference was a major factor in the Great Schism of 1054.'
+    },
+    'nature-one-oriental': {
+      title: 'Christological Debates',
+      content: 'This concerns the nature of Christ. "Miaphysitism" (one nature) believes Christ\'s divine and human natures united into one nature. "Dyophysitism" (two natures) maintains Christ has two distinct natures - fully God and fully man - united in one person. This debate led to the Council of Chalcedon in 451 AD.'
+    },
+    'infant-yes': {
+      title: 'Infant Baptism',
+      content: 'Also called "paedobaptism," this practice baptizes infants born into Christian families, viewing baptism as a covenant sign similar to circumcision. Believers who reject this practice ("credobaptism") argue baptism should follow a personal confession of faith.'
+    },
+    'hierarchy-no': {
+      title: 'Episcopal Polity',
+      content: 'This refers to church governance. "Episcopal" systems are led by bishops in apostolic succession. "Presbyterian" systems use elected elders. "Congregational" systems give autonomy to local churches. The question of church structure has been debated since the Reformation.'
+    },
+    'freewill-no': {
+      title: 'Predestination vs Free Will',
+      content: 'This addresses the "Calvinist-Arminian" debate. Calvinists emphasize God\'s sovereignty in salvation (predestination), while Arminians stress human free will in accepting or rejecting God\'s grace. This has been a central Protestant theological divide since the 16th century.'
+    },
+    'communion-yes': {
+      title: 'Real Presence in Communion',
+      content: 'Views on the Eucharist vary: "Transubstantiation" (Catholic) - bread and wine become Christ\'s actual body and blood; "Consubstantiation" (Lutheran) - Christ is present "in, with, and under" the elements; "Symbolic" (Reformed) - a memorial meal. This question separated Lutherans from Reformed traditions.'
+    },
+    'spirit-same': {
+      title: 'Spirit Baptism',
+      content: 'This distinguishes between viewing Spirit baptism as occurring at conversion (most evangelicals) versus as a subsequent "second blessing" experience (Pentecostal/Charismatic). Pentecostals often associate Spirit baptism with speaking in tongues and emphasize ongoing supernatural gifts.'
+    },
+    'church-free': {
+      title: 'Worship Style & Structure',
+      content: 'This addresses liturgical formality. "Liturgical" traditions follow set orders of worship with written prayers and rituals. "Non-liturgical" or "free" churches emphasize spontaneity, contemporary music, and informal atmosphere. This reflects different views on reverence and accessibility.'
+    }
+  };
 
   private treeData: TreeNode = {
     id: 'root',
@@ -41,8 +85,34 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
           {
             id: 'bible-no',
             answer: 'No',
-            denomination: 'Catholic',
-            color: '#FFD700'
+            question: 'Does the Spirit proceed from the Father and the Son, or just the Father?',
+            children: [
+              {
+                id: 'spirit-both-catholic',
+                answer: 'Father and Son',
+                denomination: 'Catholic',
+                color: '#FFD700'
+              },
+              {
+                id: 'spirit-father-pre-orthodox',
+                answer: 'Just Father',
+                question: 'Does Jesus have two natures, or one nature that\'s a union of two?',
+                children: [
+                  {
+                    id: 'nature-one-oriental',
+                    answer: 'One',
+                    denomination: 'Oriental Orthodox',
+                    color: '#ADFF2F'
+                  },
+                  {
+                    id: 'nature-two-eastern',
+                    answer: 'Two',
+                    denomination: 'Eastern Orthodox',
+                    color: '#FF8C00'
+                  }
+                ]
+              }
+            ]
           },
           {
             id: 'bible-yes',
@@ -63,45 +133,32 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
                   {
                     id: 'hierarchy-no',
                     answer: 'No',
-                    question: 'Does Jesus have two natures, or one nature that\'s a union of two?',
+                    question: 'Is salvation based on a free-will choice?',
                     children: [
                       {
-                        id: 'nature-one',
-                        answer: 'One',
-                        denomination: 'Oriental Orthodox',
-                        color: '#ADFF2F'
-                      },
-                      {
-                        id: 'nature-two',
-                        answer: 'Two',
-                        question: 'Does the Spirit proceed from the Father and the Son, or just the Father?',
+                        id: 'freewill-no',
+                        answer: 'No',
+                        question: 'Are Christ\'s body and blood physically present in Communion?',
                         children: [
                           {
-                            id: 'spirit-father',
-                            answer: 'Just Father',
-                            denomination: 'Eastern Orthodox',
-                            color: '#FF8C00'
+                            id: 'communion-yes',
+                            answer: 'Yes',
+                            denomination: 'Lutheran',
+                            color: '#4169E1'
                           },
                           {
-                            id: 'spirit-both',
-                            answer: 'Father and Son',
-                            question: 'Are Christ\'s body and blood physically present in Communion?',
-                            children: [
-                              {
-                                id: 'communion-yes',
-                                answer: 'Yes',
-                                denomination: 'Lutheran',
-                                color: '#4169E1'
-                              },
-                              {
-                                id: 'communion-no',
-                                answer: 'No, just spiritually',
-                                denomination: 'Presbyterian',
-                                color: '#DC143C'
-                              }
-                            ]
+                            id: 'communion-no',
+                            answer: 'Spiritually',
+                            denomination: 'Presbyterian',
+                            color: '#DC143C'
                           }
                         ]
+                      },
+                      {
+                        id: 'freewill-yes',
+                        answer: 'Yes',
+                        denomination: 'Methodist',
+                        color: '#228B22'
                       }
                     ]
                   }
@@ -115,32 +172,13 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
                   {
                     id: 'spirit-same',
                     answer: 'Same',
-                    question: 'Is salvation based on a free-will choice?',
-                    children: [
-                      {
-                        id: 'freewill-no',
-                        answer: 'No',
-                        denomination: 'Non-Denominational',
-                        color: '#000000'
-                      },
-                      {
-                        id: 'freewill-yes',
-                        answer: 'Yes',
-                        denomination: 'Methodist',
-                        color: '#228B22'
-                      }
-                    ]
-                  },
-                  {
-                    id: 'spirit-later',
-                    answer: 'Later',
                     question: 'Should Church be more free or more formal?',
                     children: [
                       {
                         id: 'church-free',
                         answer: 'Free',
-                        denomination: 'Pentecostal',
-                        color: '#8A2BE2'
+                        denomination: 'Non-Denominational',
+                        color: '#000000'
                       },
                       {
                         id: 'church-formal',
@@ -149,6 +187,12 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
                         color: '#8B4513'
                       }
                     ]
+                  },
+                  {
+                    id: 'spirit-later',
+                    answer: 'Later',
+                    denomination: 'Pentecostal',
+                    color: '#8A2BE2'
                   }
                 ]
               }
@@ -201,26 +245,101 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     // Add the specific clicked child to visible nodes
     this.visibleNodes.add(childId);
     
-    // Find the clicked node to check if it has children (answers to show)
-    const clickedNode = this.findNodeById(this.treeData, childId);
-    
-    // If this node has children, make them visible too (the answer options)
-    if (clickedNode && clickedNode.children && !clickedNode.denomination) {
-      clickedNode.children.forEach(child => {
-        this.visibleNodes.add(child.id);
-      });
+    // Add to visit history if not already the last item
+    if (this.visitHistory[this.visitHistory.length - 1] !== childId) {
+      this.visitHistory.push(childId);
     }
     
-    this.currentLevel++;
-    this.updateTreeWithPan();
+    // Find the clicked node to check if it's a question or final denomination
+    const clickedNode = this.findNodeById(this.treeData, childId);
+    
+    // If this is a final denomination, just update without panning
+    if (clickedNode && clickedNode.denomination) {
+      this.updateTreeStructure();
+      return;
+    }
+    
+    // If this node is a question (has children), only make the question visible, NOT the answer buttons yet
+    // The answer buttons will be visible because they're rendered with the question node
+    if (clickedNode && clickedNode.children && !clickedNode.denomination) {
+      // Only increment level and pan for question nodes
+      this.currentLevel++;
+      this.updateTreeWithPan();
+    } else {
+      // Just update without panning
+      this.updateTreeStructure();
+    }
+  }
+
+  public setMode(mode: 'quiz' | 'free'): void {
+    this.mode = mode;
+    
+    if (mode === 'free') {
+      // In free mode, show all nodes and enable panning/zooming
+      this.showAllNodes();
+      this.enableZoom();
+    } else {
+      // In quiz mode, reset to guided experience
+      this.resetQuiz();
+      this.disableZoom();
+    }
+  }
+
+  private showHelpCard(nodeId: string, event?: any): void {
+    // Get help text for this node
+    const help = this.helpText[nodeId];
+    if (!help) return;
+
+    // Set the current help text to display the card
+    this.currentHelpText = help;
+  }
+
+  public closeHelpCard(): void {
+    this.currentHelpText = null;
+  }
+
+  private showAllNodes(): void {
+    // Make all nodes visible
+    const addAllNodes = (node: TreeNode) => {
+      this.visibleNodes.add(node.id);
+      if (node.children) {
+        node.children.forEach(child => addAllNodes(child));
+      }
+    };
+    addAllNodes(this.treeData);
+    this.updateTreeStructure();
+  }
+
+  private resetQuiz(): void {
+    // Reset to initial state
+    this.visibleNodes = new Set<string>(['root', 'bible-authority']);
+    this.visitHistory = ['root', 'bible-authority'];
+    this.currentLevel = 0;
+    this.updateTree();
+  }
+
+  private enableZoom(): void {
+    if (!this.svg) return;
+    
+    const zoom = d3.zoom()
+      .scaleExtent([0.5, 3])
+      .on('zoom', (event) => {
+        this.g.attr('transform', event.transform);
+      });
+    
+    this.svg.call(zoom);
+  }
+
+  private disableZoom(): void {
+    if (!this.svg) return;
+    this.svg.on('.zoom', null);
   }
 
   private startQuiz(): void {
-    // Show the first question's answers
-    this.visibleNodes.add('bible-no');
-    this.visibleNodes.add('bible-yes');
-    this.currentLevel = 1;
-    this.updateTreeWithPan();
+    // This function is no longer needed since we auto-start
+    // But keeping it in case it's referenced elsewhere
+    this.currentLevel = 0;
+    this.updateTree();
   }
 
   private updateTreeWithPan(): void {
@@ -233,7 +352,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     
     this.g.transition()
       .duration(750)
-      .attr('transform', `translate(${this.width / 2}, ${100 - yOffset})`);
+      .attr('transform', `translate(100, ${100 - yOffset})`);
   }
 
   private findNodeById(node: TreeNode, id: string): TreeNode | null {
@@ -251,7 +370,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     this.createTree();
     // Keep the current position when just updating without level change
     const yOffset = this.currentLevel * 200; // 200px spacing per level
-    this.g.attr('transform', `translate(${this.width / 2}, ${100 - yOffset})`);
+    this.g.attr('transform', `translate(100, ${100 - yOffset})`);
   }
 
   private updateTreeStructure(): void {
@@ -261,7 +380,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     
     // Update tree layout with dynamic sizing
     const tree = d3.tree<TreeNode>()
-      .size([this.width - 100, dynamicHeight])
+      .size([this.width - 200, dynamicHeight])
       .separation((a, b) => (a.parent === b.parent ? 1.5 : 2)); // Adjust separation
 
     // Create hierarchy with FULL tree data (not filtered)
@@ -456,52 +575,72 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('text-shadow', '0px 1px 2px rgba(0, 0, 0, 0.3)')
       .text((d: any) => d.data.denomination);
 
-    // Add start button for root node
-    nodeEnter.filter((d: any) => d.data.id === 'root')
+    // Add question mark badge for question nodes (rectangles)
+    nodeEnter.filter((d: any) => d.data.question && !d.data.denomination)
       .append('g')
-      .attr('class', 'start-button')
+      .attr('class', 'info-button')
+      .attr('transform', 'translate(120, -25)')
       .style('cursor', 'pointer')
-      .on('click', () => {
-        selfRef.startQuiz();
+      .on('click', (event: any, d: any) => {
+        event.stopPropagation();
+        selfRef.showHelpCard(d.data.id, event);
       })
       .each(function(this: SVGGElement) {
-        const buttonGroup = d3.select(this);
+        const infoButton = d3.select(this);
         
-        buttonGroup.append('rect')
-          .attr('x', -75)
-          .attr('y', 55)
-          .attr('width', 150)
-          .attr('height', 40)
-          .attr('rx', 20)
-          .style('fill', '#d946ef')
-          .style('stroke', 'none')
-          .style('opacity', 1)
-          .style('filter', 'drop-shadow(0px 4px 12px rgba(217, 70, 239, 0.5))')
-          .on('mouseover', function() {
-            d3.select(this)
-              .transition()
-              .duration(150)
-              .style('fill', '#c026d3')
-              .style('filter', 'drop-shadow(0px 6px 16px rgba(217, 70, 239, 0.6))');
-          })
-          .on('mouseout', function() {
-            d3.select(this)
-              .transition()
-              .duration(150)
-              .style('fill', '#d946ef')
-              .style('filter', 'drop-shadow(0px 4px 12px rgba(217, 70, 239, 0.5))');
-          });
-
-        buttonGroup.append('text')
+        // Black circle badge background
+        infoButton.append('circle')
+          .attr('r', 12)
+          .style('fill', '#000000')
+          .style('stroke', '#ffffff')
+          .style('stroke-width', 2);
+        
+        // White question mark
+        infoButton.append('text')
           .attr('x', 0)
-          .attr('y', 79)
+          .attr('y', 0)
           .attr('text-anchor', 'middle')
+          .attr('dy', 4)
           .style('font-size', '14px')
-          .style('font-weight', '600')
+          .style('font-weight', 'bold')
           .style('fill', '#ffffff')
           .style('pointer-events', 'none')
-          .style('font-family', 'Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
-          .text('Get Started');
+          .style('font-family', 'Arial, sans-serif')
+          .text('?');
+      });
+
+    // Add question mark badge for denomination nodes (circles)
+    nodeEnter.filter((d: any) => d.data.denomination)
+      .append('g')
+      .attr('class', 'info-button')
+      .attr('transform', 'translate(25, -25)')
+      .style('cursor', 'pointer')
+      .on('click', (event: any, d: any) => {
+        event.stopPropagation();
+        selfRef.showHelpCard(d.data.id, event);
+      })
+      .each(function(this: SVGGElement) {
+        const infoButton = d3.select(this);
+        
+        // Black circle badge background
+        infoButton.append('circle')
+          .attr('r', 12)
+          .style('fill', '#000000')
+          .style('stroke', '#ffffff')
+          .style('stroke-width', 2);
+        
+        // White question mark
+        infoButton.append('text')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('text-anchor', 'middle')
+          .attr('dy', 4)
+          .style('font-size', '14px')
+          .style('font-weight', 'bold')
+          .style('fill', '#ffffff')
+          .style('pointer-events', 'none')
+          .style('font-family', 'Arial, sans-serif')
+          .text('?');
       });
 
     // Add answer buttons
@@ -525,12 +664,12 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
               });
 
             const yOffset = 60;
-            const xOffset = (index === 0) ? -50 : 50;
+            const xOffset = (index === 0) ? -60 : 60;
 
             buttonGroup.append('rect')
-              .attr('x', xOffset - 35)
+              .attr('x', xOffset - 50)
               .attr('y', yOffset - 16)
-              .attr('width', 70)
+              .attr('width', 100)
               .attr('height', 32)
               .attr('rx', 16)
               .style('fill', child.answer === 'Yes' ? '#4caf50' : '#ff9800')
@@ -585,14 +724,14 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('background', 'linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%)');
 
     this.g = this.svg.append('g')
-      .attr('transform', `translate(${this.width / 2}, 100)`);
+      .attr('transform', `translate(${100}, 100)`);
 
     // Create tree layout with dynamic sizing - RENDER ENTIRE TREE
     const maxDepth = this.getMaxTreeDepth(this.treeData); // Get full tree depth
     const dynamicHeight = Math.max(this.height - 100, maxDepth * 200); // 200px per level
     
     const tree = d3.tree<TreeNode>()
-      .size([this.width - 100, dynamicHeight])
+      .size([this.width, dynamicHeight])
       .separation((a, b) => (a.parent === b.parent ? 1.5 : 2)); // Adjust separation
 
     // Create hierarchy with FULL tree data (not filtered)
@@ -723,55 +862,72 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('text-shadow', '0px 1px 2px rgba(0, 0, 0, 0.3)')
       .text((d: any) => d.data.denomination);
 
-    // Add "Click to get started" button for root node
-    const component = this;
-    node.filter((d: any) => d.data.id === 'root')
+    // Add question mark badge for question nodes (rectangles)
+    node.filter((d: any) => d.data.question && !d.data.denomination)
       .append('g')
-      .attr('class', 'start-button')
+      .attr('class', 'info-button')
+      .attr('transform', 'translate(120, -25)')
       .style('cursor', 'pointer')
-      .on('click', () => {
-        component.startQuiz();
+      .on('click', (event: any, d: any) => {
+        event.stopPropagation();
+        selfRef.showHelpCard(d.data.id, event);
       })
       .each(function(this: SVGGElement) {
-        const buttonGroup = d3.select(this);
+        const infoButton = d3.select(this);
         
-        // Add button rectangle
-        buttonGroup.append('rect')
-          .attr('x', -75)
-          .attr('y', 55)
-          .attr('width', 150)
-          .attr('height', 40)
-          .attr('rx', 20)
-          .style('fill', '#1976d2')
-          .style('stroke', 'none')
-          .style('opacity', 1)
-          .style('filter', 'drop-shadow(0px 4px 8px rgba(25, 118, 210, 0.3))')
-          .on('mouseover', function() {
-            d3.select(this)
-              .transition()
-              .duration(150)
-              .style('fill', '#1565c0')
-              .style('filter', 'drop-shadow(0px 6px 12px rgba(25, 118, 210, 0.4))');
-          })
-          .on('mouseout', function() {
-            d3.select(this)
-              .transition()
-              .duration(150)
-              .style('fill', '#1976d2')
-              .style('filter', 'drop-shadow(0px 4px 8px rgba(25, 118, 210, 0.3))');
-          });
-
-        // Add button text
-        buttonGroup.append('text')
+        // Black circle badge background
+        infoButton.append('circle')
+          .attr('r', 12)
+          .style('fill', '#000000')
+          .style('stroke', '#ffffff')
+          .style('stroke-width', 2);
+        
+        // White question mark
+        infoButton.append('text')
           .attr('x', 0)
-          .attr('y', 79)
+          .attr('y', 0)
           .attr('text-anchor', 'middle')
+          .attr('dy', 4)
           .style('font-size', '14px')
-          .style('font-weight', '500')
+          .style('font-weight', 'bold')
           .style('fill', '#ffffff')
           .style('pointer-events', 'none')
-          .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
-          .text('Get Started');
+          .style('font-family', 'Arial, sans-serif')
+          .text('?');
+      });
+
+    // Add question mark badge for denomination nodes (circles)
+    node.filter((d: any) => d.data.denomination)
+      .append('g')
+      .attr('class', 'info-button')
+      .attr('transform', 'translate(25, -25)')
+      .style('cursor', 'pointer')
+      .on('click', (event: any, d: any) => {
+        event.stopPropagation();
+        selfRef.showHelpCard(d.data.id, event);
+      })
+      .each(function(this: SVGGElement) {
+        const infoButton = d3.select(this);
+        
+        // Black circle badge background
+        infoButton.append('circle')
+          .attr('r', 12)
+          .style('fill', '#000000')
+          .style('stroke', '#ffffff')
+          .style('stroke-width', 2);
+        
+        // White question mark
+        infoButton.append('text')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('text-anchor', 'middle')
+          .attr('dy', 4)
+          .style('font-size', '14px')
+          .style('font-weight', 'bold')
+          .style('fill', '#ffffff')
+          .style('pointer-events', 'none')
+          .style('font-family', 'Arial, sans-serif')
+          .text('?');
       });
 
     // Create answer choice buttons for each question node that has children in the original data
@@ -800,13 +956,13 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
             // Position buttons horizontally side-by-side below the question
             const yOffset = 60; // Fixed Y position for all buttons
-            const xOffset = (index === 0) ? -50 : 50; // Left and right positioning
+            const xOffset = (index === 0) ? -60 : 60; // Left and right positioning
 
             // Add button rectangle
             const buttonRect = buttonGroup.append('rect')
-              .attr('x', xOffset - 35)
+              .attr('x', xOffset - 50)
               .attr('y', yOffset - 16)
-              .attr('width', 70)
+              .attr('width', 100)
               .attr('height', 32)
               .attr('rx', 16)
               .style('fill', child.answer === 'Yes' ? '#4caf50' : '#ff9800')
@@ -845,23 +1001,6 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
           }
         });
       });
-
-    // Add answer labels on links
-    this.g.selectAll('.answer-label')
-      .data(root.links().filter((d: any) => d.target.data.answer))
-      .enter()
-      .append('text')
-      .attr('class', 'answer-label')
-      .attr('x', (d: any) => (d.source.x + d.target.x) / 2)
-      .attr('y', (d: any) => (d.source.y + d.target.y) / 2)
-      .attr('text-anchor', 'middle')
-      .style('font-size', '10px')
-      .style('font-weight', 'bold')
-      .style('fill', '#fff')
-      .style('background', 'rgba(0,0,0,0.7)')
-      .style('padding', '2px')
-      .style('border-radius', '3px')
-      .text((d: any) => d.target.data.answer);
 
     // Zoom functionality disabled to lock user at current zoom level
   }
