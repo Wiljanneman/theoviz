@@ -1,0 +1,357 @@
+{
+  "id": "root",
+  "question": "Find Your Denomination",
+  "result": "Welcome to the Denomination Finder! Answer each question to discover which Christian tradition aligns most closely with your beliefs.",
+  "children": [
+    {
+      "id": "bible-authority",
+      "question": "Does the Bible have MORE authority than the Church?",
+      "result": "This foundational question addresses the relationship between Scripture and Church tradition in determining Christian doctrine and practice.",
+      "children": [
+        {
+          "id": "bible-no",
+          "answer": "No",
+          "question": "Does the Spirit proceed from the Father and the Son?",
+          "result": "You believe in the authority of both Scripture and Sacred Tradition. This leads to questions about the nature of the Trinity.",
+          "children": [
+            {
+              "id": "is-pope-infallible",
+              "answer": "Yes",
+              "denomination": "",
+              "color": "#FFD700",
+              "result": "The Catholic Church embraces the Filioque clause (the Holy Spirit proceeds from the Father and the Son) and recognizes the Pope as the successor of Peter with supreme authority over the universal Church. The Catholic tradition emphasizes the sacraments, apostolic succession, and the Magisterium's role in interpreting Scripture and Tradition.",
+              "level": 3,
+              "expanded": false,
+              "question": "Is the Pope infallible?",
+              "children": [
+                {
+                  "id": "old-catholic",
+                  "question": "",
+                  "result": "New result text",
+                  "children": [],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "No",
+                  "denomination": "Old Catholic",
+                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Emblem_of_the_Papacy_SE.svg/200px-Emblem_of_the_Papacy_SE.svg.png"
+                },
+                {
+                  "id": "new-1762796509801",
+                  "question": "Is the seat of the Pope Vacant?",
+                  "result": "New result text",
+                  "children": [
+                    {
+                      "id": "is-catholic",
+                      "question": "",
+                      "result": "A Catholic is a follower of Catholicism, which is the world's largest branch of Christianity. Catholics believe in Jesus Christ as the son of God and adhere to the teachings of the Catholic Church, which includes a belief in the Trinity, the importance of sacraments like the Eucharist, the authority of the Pope, and a high regard for the Virgin Mary. ",
+                      "children": [],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "No",
+                      "denomination": "Catholic",
+                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Emblem_of_the_Papacy_SE.svg/200px-Emblem_of_the_Papacy_SE.svg.png"
+                    },
+                    {
+                      "id": "is-sedevacantist",
+                      "question": "",
+                      "result": "A sedevacantist is a person who believes the Roman Catholic papacy has been vacant since the 1950s or 1960s, as they hold that the popes since then have lost their authority due to heresy. The term comes from the Latin phrase \"sedes vacante,\" meaning \"the seat is empty,\" which is also the official term for a temporary vacancy between a pope's death and his successor's election. Sedevacantists consider themselves Catholic but reject the authority of recent popes, often because of the reforms from the Second Vatican Council. ",
+                      "children": [],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "Yes",
+                      "denomination": "Sedevacantist",
+                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Emblem_of_the_Papacy_SE.svg/200px-Emblem_of_the_Papacy_SE.svg.png"
+                    }
+                  ],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "Yes"
+                }
+              ]
+            },
+            {
+              "id": "spirit-father-pre-orthodox",
+              "answer": "No",
+              "question": "Does Jesus have two natures, or one nature that's a union of two?",
+              "result": "You reject the Filioque clause. The question of Christ's nature further distinguishes between Orthodox traditions.",
+              "children": [
+                {
+                  "id": "one-nature",
+                  "question": "",
+                  "result": "Oriental Orthodoxy's belief in \"one nature\" is called miaphysitism (or \"one incarnate nature of God the Word\"), which holds that Jesus is one person with a single, composite nature that is both fully divine and fully human. This union is understood as occurring without confusion, mingling, or alteration, a position that is distinct from the two-nature (dyophysitism) view of the Eastern Orthodox and Catholic churches, which originated from the Council of Chalcedon in 451 AD. ",
+                  "children": [],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "One",
+                  "denomination": "Oriental Orthodox",
+                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Coptic_cross.svg/200px-Coptic_cross.svg.png"
+                },
+                {
+                  "id": "two-natures",
+                  "question": "Is Icon Veneration necessary for all Christians?",
+                  "result": "It is a required and integral part of the faith for Orthodox Christians, who equate rejecting icons with rejecting the faith itself. The veneration of icons is considered a way to honor God and the saints, a \"visual gospel\" that aids in spiritual life and connects believers to the heavenly realm",
+                  "children": [
+                    {
+                      "id": "no-veneration",
+                      "question": "",
+                      "result": "The Assyrian Church of the East (ACOE) allows religious images such as crosses and pictures of Christ or saints, but it does not venerate icons the way the Eastern Orthodox Church does.\n\nIcons are used mainly as reminders or teaching aids, not as objects of devotion or channels of grace. Worship is directed to God alone, and the Church avoids practices like kissing or incensing icons.\n\nThis cautious view comes from its Syriac and Antiochene theology, which emphasizes God's transcendence and avoids portraying the divine nature in material form.",
+                      "children": [],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "No",
+                      "denomination": "Nestorian",
+                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Assyrian_Church_of_the_East_symbol.svg/200px-Assyrian_Church_of_the_East_symbol.svg.png"
+                    },
+                    {
+                      "id": "veneration-yes",
+                      "question": "Is the Old Calendar Necessary?",
+                      "result": "The Old Calendar in Eastern Orthodoxy means following the Julian calendar for feasts - celebrating them about 13 days later than churches that use the New (Revised Julian/Gregorian) calendar.",
+                      "children": [
+                        {
+                          "id": "old-cal-no",
+                          "question": "New Question",
+                          "result": "New result text",
+                          "children": [],
+                          "level": 6,
+                          "expanded": true,
+                          "denomination": "Eastern Orthodox",
+                          "answer": "No",
+                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Orthodox_cross.svg/200px-Orthodox_cross.svg.png"
+                        },
+                        {
+                          "id": "old-cal-yes",
+                          "question": "New Question",
+                          "result": "New result text",
+                          "children": [],
+                          "level": 6,
+                          "expanded": true,
+                          "answer": "Yes",
+                          "denomination": "True Orthodox",
+                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Orthodox_cross.svg/200px-Orthodox_cross.svg.png"
+                        }
+                      ],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "Yes"
+                    }
+                  ],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "Two"
+                }
+              ],
+              "level": 3,
+              "expanded": true
+            }
+          ],
+          "level": 2,
+          "expanded": false
+        },
+        {
+          "id": "bible-yes",
+          "answer": "Yes",
+          "question": "Should infants be baptized?",
+          "result": "You hold to Sola Scriptura - Scripture alone as the final authority. This is a core Protestant principle that emerged from the Reformation.",
+          "children": [
+            {
+              "id": "paedo-baptism-yes",
+              "question": "Must All the Churches still be ruled by a hierarchy of Bishops?",
+              "result": "In general church polity, bishops are ordained overseers who hold authority over multiple congregations.",
+              "children": [
+                {
+                  "id": "new-1762797461825",
+                  "question": "",
+                  "result": "Anglicans are Christians rooted in the English Reformation, balancing Catholic liturgy and Protestant theology within a global, episcopal (bishop-led) church structure.",
+                  "children": [],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "Yes",
+                  "denomination": "Anglican / Episcopal",
+                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Canterbury_Cross.svg/200px-Canterbury_Cross.svg.png"
+                },
+                {
+                  "id": "new-1762797647560",
+                  "question": "Should congregations all be autonomous?",
+                  "result": "Some traditions, like many Baptist and Churches of Christ, asserting they should be completely self-governing based on biblical interpretation. Other traditions believe in a hierarchical structure, while others see a middle ground where congregations are largely independent but cooperate within a larger framework. ",
+                  "children": [
+                    {
+                      "id": "new-1762797711322",
+                      "question": "",
+                      "result": "In the Congregationalist tradition, the autonomy of the local church is a foundational principle, meaning each congregation is self-governing and independent from outside authority. This is a core part of their identity. ",
+                      "children": [],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "Yes",
+                      "denomination": "Congregationalist",
+                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                    },
+                    {
+                      "id": "new-1762797711777",
+                      "question": "Is salvation based on a free-will choice?",
+                      "result": "Beliefs generally fall into two main theological perspectives: Arminianism and Calvinism, with other denominations holding nuanced positions. ",
+                      "children": [
+                        {
+                          "id": "new-1762797856877",
+                          "question": "Are Christ's body and blood physically present in Communion?",
+                          "result": "The physical presence of Christ's body and blood in communion is a matter of differing Christian beliefs. The Catholic Church teaches a belief in transubstantiation, where the substance of the bread and wine becomes the substance of Christ's body and blood while the physical appearances remain. Some other Christian traditions, such as Lutherans, believe in a sacramental union, where Christ's body and blood are truly present \"in, with, and under\" the forms of bread and wine. Others, like Reformed Christians, hold to a real spiritual presence, where Christ is spiritually present and received by faith during communion.",
+                          "children": [
+                            {
+                              "id": "new-1762798039871",
+                              "question": "",
+                              "result": "\"Presbyterian\" and \"Reformed\" are terms for a branch of Protestant Christianity that originated in the Protestant Reformation, particularly influenced by the teachings of John Calvin. The term \"Reformed\" refers to its theology, which emphasizes salvation by God's grace through faith alone and the authority of Scripture. \"Presbyterian\" refers to the form of church government by elders (presbyters) who are organized in representative courts, from local sessions to national assemblies. ",
+                              "children": [],
+                              "level": 7,
+                              "expanded": true,
+                              "answer": "No",
+                              "denomination": "Presbyterian / Reformed",
+                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Presbyterian_Church_USA_seal.svg/200px-Presbyterian_Church_USA_seal.svg.png"
+                            },
+                            {
+                              "id": "new-1762798040458",
+                              "question": "",
+                              "result": "Lutheranism uniquely stresses justification by faith alone while rejecting both strict predestination and works-based salvation.",
+                              "children": [],
+                              "level": 7,
+                              "expanded": true,
+                              "answer": "Yes",
+                              "denomination": "Lutheran",
+                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Luther_rose.svg/200px-Luther_rose.svg.png"
+                            }
+                          ],
+                          "level": 6,
+                          "expanded": false,
+                          "answer": "No"
+                        },
+                        {
+                          "id": "new-1762798346398",
+                          "question": "Is \"entire sanctification\" a second work of grace?",
+                          "result": "Entire sanctification is a theological concept in certain Christian traditions, particularly the Wesleyan-Holiness tradition, that describes a state where a believer is freed from the power of sin and is able to live in a perfect love for God and neighbor. ",
+                          "children": [
+                            {
+                              "id": "new-1762798414806",
+                              "question": "",
+                              "result": "Methodism stems from the Wesleyan revival, which stressed a \"methodical\" approach to faith,",
+                              "children": [],
+                              "level": 7,
+                              "expanded": true,
+                              "answer": "No",
+                              "denomination": "Methodist",
+                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cross_and_flame.svg/200px-Cross_and_flame.svg.png"
+                            },
+                            {
+                              "id": "new-1762798414973",
+                              "question": "",
+                              "result": "The Holiness movement's central belief is that Christians can achieve \"Christian perfection\" or \"entire sanctification\" through a post-conversion experience, which allows them to live a life free from intentional sin through the power of the Holy Spirit.",
+                              "children": [],
+                              "level": 7,
+                              "expanded": true,
+                              "denomination": "Holiness",
+                              "answer": "Yes",
+                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cross_and_flame.svg/200px-Cross_and_flame.svg.png"
+                            }
+                          ],
+                          "level": 6,
+                          "expanded": true,
+                          "answer": "Yes"
+                        }
+                      ],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "No"
+                    }
+                  ],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "No"
+                }
+              ],
+              "level": 3,
+              "expanded": false,
+              "answer": "Yes"
+            },
+            {
+              "id": "paedo-baptism-no",
+              "question": "Does Baptism regenerate?",
+              "result": "Baptismal regeneration is the belief that baptism is not just symbolic, but that it actually causes or conveys spiritual rebirth - that is, a person is born again and forgiven of sins through the act of baptism itself, by the grace of God.",
+              "children": [
+                {
+                  "id": "new-1762799098700",
+                  "question": "",
+                  "result": "Restorationist Christianity, particularly in movements like the Churches of Christ, views baptism as a necessary act for receiving salvation and regeneration, a concept known as baptismal regeneration. This view holds that while faith and repentance are crucial, spiritual rebirth does not fully occur until a person is immersed in water. While many Christian denominations also see a strong link between baptism and regeneration, the Restorationist emphasis is that it is an indispensable step, rather than just a symbolic one. ",
+                  "children": [],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "Yes",
+                  "denomination": "Restorationist",
+                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                },
+                {
+                  "id": "new-1762799098875",
+                  "question": "Is \"Spirit Baptism\" the same as being born again, or something later?",
+                  "result": "\"Spirit baptism\" is often seen as the same as being \"born again\" or regeneration, happening at the moment of conversion when a believer receives the Holy Spirit. In contrast, some traditions view the \"baptism of the Holy Spirit\" as a separate, subsequent event that empowers believers after they have been born again. Therefore, there are different interpretations: one view is that the two are synonymous at salvation, while another is that spirit baptism is a second, post-salvation experience. ",
+                  "children": [
+                    {
+                      "id": "new-1762799311412",
+                      "question": "",
+                      "result": "Pentecostal baptism involves two distinct types of baptism: water baptism and the \"baptism in the Holy Spirit\". Water baptism is a symbolic act of faith through full immersion, usually in the name of the Father, Son, and Holy Spirit, after a person has been saved. The baptism in the Holy Spirit is considered a post-conversion, Spirit-filled experience, believed to be essential for empowering believers and often accompanied by signs like speaking in tongues. ",
+                      "children": [],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "Later",
+                      "denomination": "Pentecostal",
+                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cross_and_flame.svg/200px-Cross_and_flame.svg.png"
+                    },
+                    {
+                      "id": "new-1762799312712",
+                      "question": "Should Church be more free or more formal?",
+                      "result": "In its primary, historical sense, a \"free church\" is a Christian denomination that is intrinsically separate from government control, funding, or endorsement. It operates freely, neither accepting policy definitions from the government nor seeking government funding to carry out its work. ",
+                      "children": [
+                        {
+                          "id": "new-1762799474250",
+                          "question": "New Question",
+                          "result": "New result text",
+                          "children": [],
+                          "level": 6,
+                          "expanded": true,
+                          "answer": "Free",
+                          "denomination": "Non-Denominational",
+                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                        },
+                        {
+                          "id": "new-1762799474395",
+                          "question": "New Question",
+                          "result": "Baptists emphasize a formal membership process based on believer's baptism by immersion and a congregational form of government. While Baptists share many beliefs with other Protestants, they are a group of denominations, not a single church, and each local congregation is autonomous. The \"formal\" nature is also reflected in their beliefs about ordinances like the Lord's Supper and the role of individual soul liberty and accountability within the church body. ",
+                          "children": [],
+                          "level": 6,
+                          "expanded": true,
+                          "denomination": "Baptist",
+                          "answer": "Formal",
+                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                        }
+                      ],
+                      "level": 5,
+                      "expanded": true,
+                      "answer": "Same"
+                    }
+                  ],
+                  "level": 4,
+                  "expanded": true,
+                  "answer": "No"
+                }
+              ],
+              "level": 3,
+              "expanded": true,
+              "answer": "No"
+            }
+          ],
+          "level": 2,
+          "expanded": true
+        }
+      ],
+      "level": 1,
+      "expanded": true
+    }
+  ],
+  "level": 0,
+  "expanded": true
+}

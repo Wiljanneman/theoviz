@@ -8,6 +8,8 @@ interface TreeNode {
   answer?: string;
   denomination?: string;
   color?: string;
+  result?: string;
+  icon?: string;
   children?: TreeNode[];
   x?: number;
   y?: number;
@@ -32,184 +34,55 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   private nodePositions = new Map<number, number>(); // Store Y positions by level
   private visitHistory: string[] = ['root', 'bible-authority']; // Track the path taken
   public mode: 'quiz' | 'free' = 'quiz'; // Current mode
-  public currentHelpText: { title: string; content: string } | null = null; // Current help card content
-
-  // Help text for each question
-  private helpText: { [key: string]: { title: string; content: string } } = {
-    'bible-authority': {
-      title: 'Biblical Authority',
-      content: 'This question addresses the relationship between Scripture and Church tradition. Protestants generally hold to "Sola Scriptura" (Scripture alone), while Catholics and Orthodox emphasize the role of sacred tradition alongside Scripture in interpreting faith.'
-    },
-    'spirit-father-pre-orthodox': {
-      title: 'The Filioque Controversy',
-      content: 'The "Filioque" ("and the Son") was added to the Nicene Creed in the West, stating the Holy Spirit proceeds from both the Father and the Son. Eastern Orthodox churches reject this addition, maintaining the Spirit proceeds from the Father alone. This theological difference was a major factor in the Great Schism of 1054.'
-    },
-    'nature-one-oriental': {
-      title: 'Christological Debates',
-      content: 'This concerns the nature of Christ. "Miaphysitism" (one nature) believes Christ\'s divine and human natures united into one nature. "Dyophysitism" (two natures) maintains Christ has two distinct natures - fully God and fully man - united in one person. This debate led to the Council of Chalcedon in 451 AD.'
-    },
-    'infant-yes': {
-      title: 'Infant Baptism',
-      content: 'Also called "paedobaptism," this practice baptizes infants born into Christian families, viewing baptism as a covenant sign similar to circumcision. Believers who reject this practice ("credobaptism") argue baptism should follow a personal confession of faith.'
-    },
-    'hierarchy-no': {
-      title: 'Episcopal Polity',
-      content: 'This refers to church governance. "Episcopal" systems are led by bishops in apostolic succession. "Presbyterian" systems use elected elders. "Congregational" systems give autonomy to local churches. The question of church structure has been debated since the Reformation.'
-    },
-    'freewill-no': {
-      title: 'Predestination vs Free Will',
-      content: 'This addresses the "Calvinist-Arminian" debate. Calvinists emphasize God\'s sovereignty in salvation (predestination), while Arminians stress human free will in accepting or rejecting God\'s grace. This has been a central Protestant theological divide since the 16th century.'
-    },
-    'communion-yes': {
-      title: 'Real Presence in Communion',
-      content: 'Views on the Eucharist vary: "Transubstantiation" (Catholic) - bread and wine become Christ\'s actual body and blood; "Consubstantiation" (Lutheran) - Christ is present "in, with, and under" the elements; "Symbolic" (Reformed) - a memorial meal. This question separated Lutherans from Reformed traditions.'
-    },
-    'spirit-same': {
-      title: 'Spirit Baptism',
-      content: 'This distinguishes between viewing Spirit baptism as occurring at conversion (most evangelicals) versus as a subsequent "second blessing" experience (Pentecostal/Charismatic). Pentecostals often associate Spirit baptism with speaking in tongues and emphasize ongoing supernatural gifts.'
-    },
-    'church-free': {
-      title: 'Worship Style & Structure',
-      content: 'This addresses liturgical formality. "Liturgical" traditions follow set orders of worship with written prayers and rituals. "Non-liturgical" or "free" churches emphasize spontaneity, contemporary music, and informal atmosphere. This reflects different views on reverence and accessibility.'
-    }
-  };
+  public currentResult: string | null = null; // Current result text to display
+  public headerExpanded: boolean = true; // Drawer state for header
+  
+  // Responsive scaling factors
+  private get isMobile(): boolean {
+    // Account for DPI scaling - use actual rendered size
+    return this.width < 960; // Increased from 768 to account for 125% scaling
+  }
+  
+  private get isSmallMobile(): boolean {
+    return this.width < 600; // Increased from 480 to account for 125% scaling
+  }
+  
+  private get scaleFactor(): number {
+    if (this.isSmallMobile) return 0.7; // Slightly increased
+    if (this.isMobile) return 0.85; // Slightly increased
+    return 1;
+  }
 
   private treeData: TreeNode = {
     id: 'root',
-    question: 'Find Your Denomination',
-    children: [
-      {
-        id: 'bible-authority',
-        question: 'Does the Bible have MORE authority than the Church?',
-        children: [
-          {
-            id: 'bible-no',
-            answer: 'No',
-            question: 'Does the Spirit proceed from the Father and the Son, or just the Father?',
-            children: [
-              {
-                id: 'spirit-both-catholic',
-                answer: 'Father and Son',
-                denomination: 'Catholic',
-                color: '#FFD700'
-              },
-              {
-                id: 'spirit-father-pre-orthodox',
-                answer: 'Just Father',
-                question: 'Does Jesus have two natures, or one nature that\'s a union of two?',
-                children: [
-                  {
-                    id: 'nature-one-oriental',
-                    answer: 'One',
-                    denomination: 'Oriental Orthodox',
-                    color: '#ADFF2F'
-                  },
-                  {
-                    id: 'nature-two-eastern',
-                    answer: 'Two',
-                    denomination: 'Eastern Orthodox',
-                    color: '#FF8C00'
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: 'bible-yes',
-            answer: 'Yes',
-            question: 'Should infants be baptized?',
-            children: [
-              {
-                id: 'infant-yes',
-                answer: 'Yes',
-                question: 'Must ALL the Churches still be ruled by a hierarchy of Bishops?',
-                children: [
-                  {
-                    id: 'hierarchy-yes',
-                    answer: 'Yes',
-                    denomination: 'Anglican/Episcopal',
-                    color: '#FFC0CB'
-                  },
-                  {
-                    id: 'hierarchy-no',
-                    answer: 'No',
-                    question: 'Is salvation based on a free-will choice?',
-                    children: [
-                      {
-                        id: 'freewill-no',
-                        answer: 'No',
-                        question: 'Are Christ\'s body and blood physically present in Communion?',
-                        children: [
-                          {
-                            id: 'communion-yes',
-                            answer: 'Yes',
-                            denomination: 'Lutheran',
-                            color: '#4169E1'
-                          },
-                          {
-                            id: 'communion-no',
-                            answer: 'Spiritually',
-                            denomination: 'Presbyterian',
-                            color: '#DC143C'
-                          }
-                        ]
-                      },
-                      {
-                        id: 'freewill-yes',
-                        answer: 'Yes',
-                        denomination: 'Methodist',
-                        color: '#228B22'
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                id: 'infant-no',
-                answer: 'No',
-                question: 'Is "Spirit Baptism" the same as being born again, or something later?',
-                children: [
-                  {
-                    id: 'spirit-same',
-                    answer: 'Same',
-                    question: 'Should Church be more free or more formal?',
-                    children: [
-                      {
-                        id: 'church-free',
-                        answer: 'Free',
-                        denomination: 'Non-Denominational',
-                        color: '#000000'
-                      },
-                      {
-                        id: 'church-formal',
-                        answer: 'Formal',
-                        denomination: 'Baptist',
-                        color: '#8B4513'
-                      }
-                    ]
-                  },
-                  {
-                    id: 'spirit-later',
-                    answer: 'Later',
-                    denomination: 'Pentecostal',
-                    color: '#8A2BE2'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    question: 'Loading...',
+    children: []
   };
 
   private visibleNodes = new Set<string>(['root', 'bible-authority']); // Start with root and first question visible
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadTreeData();
+  }
+
+  private async loadTreeData(): Promise<void> {
+    try {
+      const response = await fetch('/tree-data.json');
+      this.treeData = await response.json();
+      // Initialize visible nodes after data is loaded
+      this.visibleNodes = new Set<string>(['root', this.treeData.children?.[0]?.id || 'bible-authority']);
+      this.visitHistory = ['root', this.treeData.children?.[0]?.id || 'bible-authority'];
+      
+      // Create the tree after data is loaded
+      this.createTree();
+    } catch (error) {
+      console.error('Failed to load tree data:', error);
+    }
+  }
 
   ngAfterViewInit(): void {
     this.setDimensions();
-    this.createTree();
+    // Don't call createTree here - it will be called after data loads
     
     // Add resize listener
     this.resizeListener = () => {
@@ -229,6 +102,10 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     const container = this.treeContainer.nativeElement;
     this.width = container.clientWidth;
     this.height = container.clientHeight;
+    
+    // Debug log for DPI scaling issues
+    console.log('Container dimensions:', this.width, 'x', this.height, 
+                'Device pixel ratio:', window.devicePixelRatio);
   }
 
   private makeChildrenVisible(nodeId: string): void {
@@ -252,6 +129,11 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     
     // Find the clicked node to check if it's a question or final denomination
     const clickedNode = this.findNodeById(this.treeData, childId);
+    
+    // Update the current result text
+    if (clickedNode?.result) {
+      this.currentResult = clickedNode.result;
+    }
     
     // If this is a final denomination, just update without panning
     if (clickedNode && clickedNode.denomination) {
@@ -285,17 +167,8 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
-  private showHelpCard(nodeId: string, event?: any): void {
-    // Get help text for this node
-    const help = this.helpText[nodeId];
-    if (!help) return;
-
-    // Set the current help text to display the card
-    this.currentHelpText = help;
-  }
-
-  public closeHelpCard(): void {
-    this.currentHelpText = null;
+  public toggleHeader(): void {
+    this.headerExpanded = !this.headerExpanded;
   }
 
   private showAllNodes(): void {
@@ -346,13 +219,16 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     // First, update the tree structure with new visible nodes
     this.updateTreeStructure();
     
-    // Calculate how much to pan based on current level
-    // Pan so the current question is centered in the viewport
-    const yOffset = this.currentLevel * 200; // 200px spacing per level
+    // Calculate how much to pan based on current level with responsive spacing
+    const scale = this.scaleFactor;
+    const levelSpacing = 200 * scale;
+    const yOffset = this.currentLevel * levelSpacing;
+    const leftMargin = this.isMobile ? 50 : 100;
+    const topMargin = this.isMobile ? 50 : 100;
     
     this.g.transition()
       .duration(750)
-      .attr('transform', `translate(100, ${100 - yOffset})`);
+      .attr('transform', `translate(${leftMargin}, ${topMargin - yOffset})`);
   }
 
   private findNodeById(node: TreeNode, id: string): TreeNode | null {
@@ -369,32 +245,18 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   private updateTree(): void {
     this.createTree();
     // Keep the current position when just updating without level change
-    const yOffset = this.currentLevel * 200; // 200px spacing per level
-    this.g.attr('transform', `translate(100, ${100 - yOffset})`);
+    const scale = this.scaleFactor;
+    const levelSpacing = 200 * scale;
+    const yOffset = this.currentLevel * levelSpacing;
+    const leftMargin = this.isMobile ? 50 : 100;
+    const topMargin = this.isMobile ? 50 : 100;
+    this.g.attr('transform', `translate(${leftMargin}, ${topMargin - yOffset})`);
   }
 
   private updateTreeStructure(): void {
-    // Calculate dynamic height based on full tree depth
-    const maxDepth = this.getMaxTreeDepth(this.treeData);
-    const dynamicHeight = Math.max(this.height - 100, maxDepth * 200); // 200px per level
-    
-    // Update tree layout with dynamic sizing
-    const tree = d3.tree<TreeNode>()
-      .size([this.width - 200, dynamicHeight])
-      .separation((a, b) => (a.parent === b.parent ? 1.5 : 2)); // Adjust separation
-
-    // Create hierarchy with FULL tree data (not filtered)
-    const root = d3.hierarchy(this.treeData);
-    tree(root);
-
-    // Store Y positions by level for accurate panning
-    this.nodePositions.clear();
-    root.descendants().forEach(d => {
-      const level = d.depth;
-      if (!this.nodePositions.has(level)) {
-        this.nodePositions.set(level, d.y || 0);
-      }
-    });
+    // Create tree layout and hierarchy using shared methods
+    const tree = this.setupTreeLayout();
+    const root = this.createHierarchy(tree);
 
     // Update existing elements instead of recreating
     this.updateLinks(root);
@@ -422,34 +284,81 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     return Math.max(...node.children.map(child => this.getMaxTreeDepth(child, depth + 1)));
   }
 
+  private setupTreeLayout(): any {
+    const maxDepth = this.getMaxTreeDepth(this.treeData);
+    const scale = this.scaleFactor;
+    const levelSpacing = 200 * scale;
+    const dynamicHeight = Math.max(this.height - 100, maxDepth * levelSpacing);
+    
+    return d3.tree<TreeNode>()
+      .size([this.width * 2, dynamicHeight])
+      .separation((a, b) => 0.5 );
+  }
+
+  private createHierarchy(tree: any): any {
+    const root = d3.hierarchy(this.treeData);
+    tree(root);
+
+    // Store Y positions by level for accurate panning
+    this.nodePositions.clear();
+    root.descendants().forEach(d => {
+      const level = d.depth;
+      if (!this.nodePositions.has(level)) {
+        this.nodePositions.set(level, d.y || 0);
+      }
+    });
+
+    return root;
+  }
+
   private updateLinks(root: any): void {
+    this.renderLinks(root, true);
+  }
+
+  private renderLinks(root: any, isUpdate: boolean = false): void {
     const selfRef = this;
     
-    // Update links with enter/update/exit pattern
-    const linkSelection = this.g.selectAll('.link')
-      .data(root.links(), (d: any) => `${d.source.data.id}-${d.target.data.id}`);
+    if (isUpdate) {
+      // Update pattern for existing SVG
+      const linkSelection = this.g.selectAll('.link')
+        .data(root.links(), (d: any) => `${d.source.data.id}-${d.target.data.id}`);
 
-    // Remove old links
-    linkSelection.exit().remove();
+      linkSelection.exit().remove();
 
-    // Add new links
-    linkSelection.enter()
-      .append('path')
-      .attr('class', 'link')
-      .style('stroke', '#fff')
-      .style('stroke-width', 2)
-      .style('fill', 'none')
-      .style('opacity', 0.2)
-      .style('filter', 'blur(2px)')
-      .merge(linkSelection)
-      .transition()
-      .duration(500)
-      .style('opacity', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 0.8 : 0.2)
-      .style('filter', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 'none' : 'blur(2px)')
-      .attr('d', (d: any) => {
-        return `M${d.source.x},${d.source.y}
+      linkSelection.enter()
+        .append('path')
+        .attr('class', 'link')
+        .style('stroke', '#fff')
+        .style('stroke-width', 2)
+        .style('fill', 'none')
+        .style('opacity', 0.2)
+        .style('filter', 'blur(2px)')
+        .merge(linkSelection)
+        .transition()
+        .duration(500)
+        .style('opacity', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 0.8 : 0.2)
+        .style('filter', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 'none' : 'blur(2px)')
+        .attr('d', (d: any) => {
+          return `M${d.source.x},${d.source.y}
                 L${d.target.x},${d.target.y}`;
-      });
+        });
+    } else {
+      // Initial creation
+      this.g.selectAll('.link')
+        .data(root.links())
+        .enter()
+        .append('path')
+        .attr('class', 'link')
+        .attr('d', (d: any) => {
+          return `M${d.source.x},${d.source.y}
+                L${d.target.x},${d.target.y}`;
+        })
+        .style('stroke', '#fff')
+        .style('stroke-width', 2)
+        .style('fill', 'none')
+        .style('opacity', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 0.8 : 0.2)
+        .style('filter', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 'none' : 'blur(2px)');
+    }
   }
 
   private updateNodes(root: any): void {
@@ -485,39 +394,72 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   private addNodeContent(nodeEnter: any): void {
     const selfRef = this;
+    const scale = this.scaleFactor;
+    
+    // Scaled dimensions
+    const rectWidth = 240 * scale;
+    const rectHeight = 60 * scale;
+    const circleRadius = 35 * scale;
+    const fontSize = 13 * scale;
+    const buttonWidth = 100 * scale;
+    const buttonHeight = 32 * scale;
 
     // Add rectangles for questions (non-denomination nodes)
     nodeEnter.filter((d: any) => d.data.question && !d.data.denomination)
       .append('rect')
-      .attr('x', -120)
-      .attr('y', -30)
-      .attr('width', 240)
-      .attr('height', 60)
-      .attr('rx', 12)
+      .attr('x', -rectWidth / 2)
+      .attr('y', -rectHeight / 2)
+      .attr('width', rectWidth)
+      .attr('height', rectHeight)
+      .attr('rx', 12 * scale)
       .style('fill', 'rgba(30, 41, 59, 0.95)')
       .style('stroke', '#a855f7')
-      .style('stroke-width', 2)
-      .style('cursor', 'default')
-      .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))');
+      .style('stroke-width', 2 * scale)
+      .style('cursor', 'pointer')
+      .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))')
+      .on('click', (event: any, d: any) => {
+        event.stopPropagation();
+        if (d.data.result) {
+          selfRef.currentResult = d.data.result;
+        }
+      })
+      .on('mouseover', function(this: SVGRectElement) {
+        d3.select(this).transition()
+          .duration(150)
+          .style('stroke-width', 3 * scale)
+          .style('filter', 'drop-shadow(0px 6px 16px rgba(168, 85, 247, 0.5))');
+      })
+      .on('mouseout', function(this: SVGRectElement) {
+        d3.select(this).transition()
+          .duration(150)
+          .style('stroke-width', 2 * scale)
+          .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))');
+      });
 
     // Add circles for denomination results
     nodeEnter.filter((d: any) => d.data.denomination)
       .append('circle')
-      .attr('r', 35)
+      .attr('r', circleRadius)
       .style('fill', (d: any) => d.data.color || '#ffffff')
       .style('stroke', 'none')
-      .style('cursor', 'default')
+      .style('cursor', 'pointer')
       .style('filter', 'drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.2))')
+      .on('click', (event: any, d: any) => {
+        event.stopPropagation();
+        if (d.data.result) {
+          selfRef.currentResult = d.data.result;
+        }
+      })
       .on('mouseover', function(this: SVGCircleElement) {
         d3.select(this).transition()
           .duration(150)
-          .attr('r', 40)
+          .attr('r', circleRadius * 1.15)
           .style('filter', 'drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.25))');
       })
       .on('mouseout', function(this: SVGCircleElement) {
         d3.select(this).transition()
           .duration(150)
-          .attr('r', 35)
+          .attr('r', circleRadius)
           .style('filter', 'drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.2))');
       });
 
@@ -526,7 +468,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .append('text')
       .attr('text-anchor', 'middle')
       .attr('dy', 0)
-      .style('font-size', '13px')
+      .style('font-size', `${fontSize}px`)
       .style('font-weight', '500')
       .style('fill', '#e2e8f0')
       .style('pointer-events', 'none')
@@ -534,7 +476,8 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .each(function(this: SVGTextElement, d: any) {
         const text = d3.select(this);
         const words = d.data.question.split(' ');
-        const lineHeight = 16;
+        const lineHeight = 16 * scale;
+        const maxWidth = (rectWidth * 0.9);
         let line: string[] = [];
         let lineNumber = 0;
         let tspan = text.append('tspan').attr('x', 0).attr('dy', 0);
@@ -542,7 +485,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
         words.forEach((word: string) => {
           line.push(word);
           tspan.text(line.join(' '));
-          if (tspan.node()!.getComputedTextLength() > 210) {
+          if (tspan.node()!.getComputedTextLength() > maxWidth) {
             line.pop();
             tspan.text(line.join(' '));
             line = [word];
@@ -566,82 +509,14 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     nodeEnter.filter((d: any) => d.data.denomination)
       .append('text')
       .attr('text-anchor', 'middle')
-      .attr('dy', 4)
-      .style('font-size', '12px')
+      .attr('dy', 4 * scale)
+      .style('font-size', `${12 * scale}px`)
       .style('font-weight', '600')
       .style('fill', '#ffffff')
       .style('pointer-events', 'none')
       .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
       .style('text-shadow', '0px 1px 2px rgba(0, 0, 0, 0.3)')
       .text((d: any) => d.data.denomination);
-
-    // Add question mark badge for question nodes (rectangles)
-    nodeEnter.filter((d: any) => d.data.question && !d.data.denomination)
-      .append('g')
-      .attr('class', 'info-button')
-      .attr('transform', 'translate(120, -25)')
-      .style('cursor', 'pointer')
-      .on('click', (event: any, d: any) => {
-        event.stopPropagation();
-        selfRef.showHelpCard(d.data.id, event);
-      })
-      .each(function(this: SVGGElement) {
-        const infoButton = d3.select(this);
-        
-        // Black circle badge background
-        infoButton.append('circle')
-          .attr('r', 12)
-          .style('fill', '#000000')
-          .style('stroke', '#ffffff')
-          .style('stroke-width', 2);
-        
-        // White question mark
-        infoButton.append('text')
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('text-anchor', 'middle')
-          .attr('dy', 4)
-          .style('font-size', '14px')
-          .style('font-weight', 'bold')
-          .style('fill', '#ffffff')
-          .style('pointer-events', 'none')
-          .style('font-family', 'Arial, sans-serif')
-          .text('?');
-      });
-
-    // Add question mark badge for denomination nodes (circles)
-    nodeEnter.filter((d: any) => d.data.denomination)
-      .append('g')
-      .attr('class', 'info-button')
-      .attr('transform', 'translate(25, -25)')
-      .style('cursor', 'pointer')
-      .on('click', (event: any, d: any) => {
-        event.stopPropagation();
-        selfRef.showHelpCard(d.data.id, event);
-      })
-      .each(function(this: SVGGElement) {
-        const infoButton = d3.select(this);
-        
-        // Black circle badge background
-        infoButton.append('circle')
-          .attr('r', 12)
-          .style('fill', '#000000')
-          .style('stroke', '#ffffff')
-          .style('stroke-width', 2);
-        
-        // White question mark
-        infoButton.append('text')
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('text-anchor', 'middle')
-          .attr('dy', 4)
-          .style('font-size', '14px')
-          .style('font-weight', 'bold')
-          .style('fill', '#ffffff')
-          .style('pointer-events', 'none')
-          .style('font-family', 'Arial, sans-serif')
-          .text('?');
-      });
 
     // Add answer buttons
     nodeEnter.filter((d: any) => {
@@ -663,15 +538,15 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
                 selfRef.makeSpecificChildVisible(child.id);
               });
 
-            const yOffset = 60;
-            const xOffset = (index === 0) ? -60 : 60;
+            const yOffset = 60 * scale;
+            const xOffset = (index === 0) ? -60 * scale : 60 * scale;
 
             buttonGroup.append('rect')
-              .attr('x', xOffset - 50)
-              .attr('y', yOffset - 16)
-              .attr('width', 100)
-              .attr('height', 32)
-              .attr('rx', 16)
+              .attr('x', xOffset - (buttonWidth / 2))
+              .attr('y', yOffset - (buttonHeight / 2))
+              .attr('width', buttonWidth)
+              .attr('height', buttonHeight)
+              .attr('rx', 16 * scale)
               .style('fill', child.answer === 'Yes' ? '#4caf50' : '#ff9800')
               .style('stroke', 'none')
               .style('opacity', 1)
@@ -681,21 +556,21 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
                   .transition()
                   .duration(150)
                   .style('filter', 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.24))')
-                  .attr('y', yOffset - 18);
+                  .attr('y', yOffset - (buttonHeight / 2) - 2);
               })
               .on('mouseout', function(this: SVGRectElement) {
                 d3.select(this)
                   .transition()
                   .duration(150)
                   .style('filter', 'drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.16))')
-                  .attr('y', yOffset - 16);
+                  .attr('y', yOffset - (buttonHeight / 2));
               });
 
             buttonGroup.append('text')
               .attr('x', xOffset)
-              .attr('y', yOffset + 4)
+              .attr('y', yOffset + (4 * scale))
               .attr('text-anchor', 'middle')
-              .style('font-size', '13px')
+              .style('font-size', `${13 * scale}px`)
               .style('font-weight', '500')
               .style('fill', '#ffffff')
               .style('pointer-events', 'none')
@@ -715,6 +590,10 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       this.setDimensions();
     }
 
+    // Responsive margins
+    const leftMargin = this.isMobile ? 50 : 100;
+    const topMargin = this.isMobile ? 50 : 100;
+
     // Create SVG that fills the container
     this.svg = d3.select(this.treeContainer.nativeElement)
       .append('svg')
@@ -724,44 +603,14 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('background', 'linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%)');
 
     this.g = this.svg.append('g')
-      .attr('transform', `translate(${100}, 100)`);
+      .attr('transform', `translate(${leftMargin}, ${topMargin})`);
 
-    // Create tree layout with dynamic sizing - RENDER ENTIRE TREE
-    const maxDepth = this.getMaxTreeDepth(this.treeData); // Get full tree depth
-    const dynamicHeight = Math.max(this.height - 100, maxDepth * 200); // 200px per level
-    
-    const tree = d3.tree<TreeNode>()
-      .size([this.width, dynamicHeight])
-      .separation((a, b) => (a.parent === b.parent ? 1.5 : 2)); // Adjust separation
+    // Create tree layout and hierarchy using shared methods
+    const tree = this.setupTreeLayout();
+    const root = this.createHierarchy(tree);
 
-    // Create hierarchy with FULL tree data (not filtered)
-    const root = d3.hierarchy(this.treeData);
-    tree(root);
-
-    // Store Y positions by level for accurate panning
-    this.nodePositions.clear();
-    root.descendants().forEach(d => {
-      const level = d.depth;
-      if (!this.nodePositions.has(level)) {
-        this.nodePositions.set(level, d.y || 0);
-      }
-    });
-
-    // Create links
-    this.g.selectAll('.link')
-      .data(root.links())
-      .enter()
-      .append('path')
-      .attr('class', 'link')
-      .attr('d', (d: any) => {
-        return `M${d.source.x},${d.source.y}
-                L${d.target.x},${d.target.y}`;
-      })
-      .style('stroke', '#fff')
-      .style('stroke-width', 2)
-      .style('fill', 'none')
-      .style('opacity', (d: any) => this.visibleNodes.has(d.target.data.id) ? 0.8 : 0.2)
-      .style('filter', (d: any) => this.visibleNodes.has(d.target.data.id) ? 'none' : 'blur(2px)');
+    // Create links using shared rendering method
+    this.renderLinks(root, false);
 
     // Create nodes
     const node = this.g.selectAll('.node')
@@ -773,236 +622,8 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('opacity', (d: any) => this.visibleNodes.has(d.data.id) ? 1 : 0.3)
       .style('filter', (d: any) => this.visibleNodes.has(d.data.id) ? 'none' : 'blur(3px)');
 
-    // Add rectangles for questions (non-denomination nodes)
-    node.filter((d: any) => d.data.question && !d.data.denomination)
-      .append('rect')
-      .attr('x', -120)
-      .attr('y', -30)
-      .attr('width', 240)
-      .attr('height', 60)
-      .attr('rx', 12)
-      .style('fill', 'rgba(30, 41, 59, 0.95)')
-      .style('stroke', '#a855f7')
-      .style('stroke-width', 2)
-      .style('cursor', 'default')
-      .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))');
-
-    // Add circles for denomination results
-    node.filter((d: any) => d.data.denomination)
-      .append('circle')
-      .attr('r', 35)
-      .style('fill', (d: any) => d.data.color || '#ffffff')
-      .style('stroke', 'none')
-      .style('cursor', 'default')
-      .style('filter', 'drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.2))')
-      .on('mouseover', function(this: SVGCircleElement) {
-        d3.select(this).transition()
-          .duration(150)
-          .attr('r', 40)
-          .style('filter', 'drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.25))');
-      })
-      .on('mouseout', function(this: SVGCircleElement) {
-        d3.select(this).transition()
-          .duration(150)
-          .attr('r', 35)
-          .style('filter', 'drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.2))');
-      });
-
-    // Add text labels for questions in rectangles
-    node.filter((d: any) => d.data.question && !d.data.denomination)
-      .append('text')
-      .attr('text-anchor', 'middle')
-      .attr('dy', 0)
-      .style('font-size', '13px')
-      .style('font-weight', '500')
-      .style('fill', '#e2e8f0')
-      .style('pointer-events', 'none')
-      .style('font-family', 'Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
-      .each(function(this: SVGTextElement, d: any) {
-        const text = d3.select(this);
-        const words = d.data.question.split(' ');
-        const lineHeight = 16;
-        let line: string[] = [];
-        let lineNumber = 0;
-        let tspan = text.append('tspan').attr('x', 0).attr('dy', 0);
-
-        words.forEach((word: string) => {
-          line.push(word);
-          tspan.text(line.join(' '));
-          if (tspan.node()!.getComputedTextLength() > 210) {
-            line.pop();
-            tspan.text(line.join(' '));
-            line = [word];
-            lineNumber++;
-            tspan = text.append('tspan')
-              .attr('x', 0)
-              .attr('dy', lineHeight)
-              .text(word);
-          }
-        });
-        
-        // Center the text block vertically
-        const totalLines = text.selectAll('tspan').size();
-        const offset = -(totalLines - 1) * lineHeight / 2;
-        text.selectAll('tspan').each(function(this: any, d: any, i: number) {
-          d3.select(this).attr('dy', i === 0 ? offset : lineHeight);
-        });
-      });
-
-    // Add text labels for denominations in circles
-    node.filter((d: any) => d.data.denomination)
-      .append('text')
-      .attr('text-anchor', 'middle')
-      .attr('dy', 4)
-      .style('font-size', '12px')
-      .style('font-weight', '600')
-      .style('fill', '#ffffff')
-      .style('pointer-events', 'none')
-      .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
-      .style('text-shadow', '0px 1px 2px rgba(0, 0, 0, 0.3)')
-      .text((d: any) => d.data.denomination);
-
-    // Add question mark badge for question nodes (rectangles)
-    node.filter((d: any) => d.data.question && !d.data.denomination)
-      .append('g')
-      .attr('class', 'info-button')
-      .attr('transform', 'translate(120, -25)')
-      .style('cursor', 'pointer')
-      .on('click', (event: any, d: any) => {
-        event.stopPropagation();
-        selfRef.showHelpCard(d.data.id, event);
-      })
-      .each(function(this: SVGGElement) {
-        const infoButton = d3.select(this);
-        
-        // Black circle badge background
-        infoButton.append('circle')
-          .attr('r', 12)
-          .style('fill', '#000000')
-          .style('stroke', '#ffffff')
-          .style('stroke-width', 2);
-        
-        // White question mark
-        infoButton.append('text')
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('text-anchor', 'middle')
-          .attr('dy', 4)
-          .style('font-size', '14px')
-          .style('font-weight', 'bold')
-          .style('fill', '#ffffff')
-          .style('pointer-events', 'none')
-          .style('font-family', 'Arial, sans-serif')
-          .text('?');
-      });
-
-    // Add question mark badge for denomination nodes (circles)
-    node.filter((d: any) => d.data.denomination)
-      .append('g')
-      .attr('class', 'info-button')
-      .attr('transform', 'translate(25, -25)')
-      .style('cursor', 'pointer')
-      .on('click', (event: any, d: any) => {
-        event.stopPropagation();
-        selfRef.showHelpCard(d.data.id, event);
-      })
-      .each(function(this: SVGGElement) {
-        const infoButton = d3.select(this);
-        
-        // Black circle badge background
-        infoButton.append('circle')
-          .attr('r', 12)
-          .style('fill', '#000000')
-          .style('stroke', '#ffffff')
-          .style('stroke-width', 2);
-        
-        // White question mark
-        infoButton.append('text')
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('text-anchor', 'middle')
-          .attr('dy', 4)
-          .style('font-size', '14px')
-          .style('font-weight', 'bold')
-          .style('fill', '#ffffff')
-          .style('pointer-events', 'none')
-          .style('font-family', 'Arial, sans-serif')
-          .text('?');
-      });
-
-    // Create answer choice buttons for each question node that has children in the original data
-    const selfRef = this;
-    node.filter((d: any) => {
-      // Find the original node data to check for children
-      const originalNode = this.findNodeById(this.treeData, d.data.id);
-      return originalNode && originalNode.children && !d.data.denomination;
-    })
-      .each(function(this: SVGGElement, d: any) {
-        const nodeGroup = d3.select(this);
-        // Get children from original data, not filtered data
-        const originalNode = selfRef.findNodeById(selfRef.treeData, d.data.id);
-        const children = originalNode?.children || [];
-        
-        children.forEach((child: TreeNode, index: number) => {
-          if (child.answer) {
-            const buttonGroup = nodeGroup.append('g')
-              .attr('class', 'answer-button')
-              .style('cursor', 'pointer')
-              .on('click', (event: any) => {
-                event.stopPropagation();
-                // Only make the specific clicked child visible, not all children
-                selfRef.makeSpecificChildVisible(child.id);
-              });
-
-            // Position buttons horizontally side-by-side below the question
-            const yOffset = 60; // Fixed Y position for all buttons
-            const xOffset = (index === 0) ? -60 : 60; // Left and right positioning
-
-            // Add button rectangle
-            const buttonRect = buttonGroup.append('rect')
-              .attr('x', xOffset - 50)
-              .attr('y', yOffset - 16)
-              .attr('width', 100)
-              .attr('height', 32)
-              .attr('rx', 16)
-              .style('fill', child.answer === 'Yes' ? '#4caf50' : '#ff9800')
-              .style('stroke', 'none')
-              .style('opacity', 1)
-              .style('filter', 'drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.16))');
-
-            // Add hover effects
-            buttonRect
-              .on('mouseover', function(this: SVGRectElement) {
-                d3.select(this)
-                  .transition()
-                  .duration(150)
-                  .style('filter', 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.24))')
-                  .attr('y', yOffset - 18);
-              })
-              .on('mouseout', function(this: SVGRectElement) {
-                d3.select(this)
-                  .transition()
-                  .duration(150)
-                  .style('filter', 'drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.16))')
-                  .attr('y', yOffset - 16);
-              });
-
-            // Add button text
-            buttonGroup.append('text')
-              .attr('x', xOffset)
-              .attr('y', yOffset + 4)
-              .attr('text-anchor', 'middle')
-              .style('font-size', '13px')
-              .style('font-weight', '500')
-              .style('fill', '#ffffff')
-              .style('pointer-events', 'none')
-              .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
-              .text(child.answer || '');
-          }
-        });
-      });
-
-    // Zoom functionality disabled to lock user at current zoom level
+    // Add all node content using shared method
+    this.addNodeContent(node);
   }
 
   private filterVisibleNodes(node: TreeNode): TreeNode {

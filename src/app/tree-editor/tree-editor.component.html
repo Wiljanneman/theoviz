@@ -1,0 +1,105 @@
+<div class="tree-editor-container">
+  <!-- Left Panel: Tree View -->
+  <div class="tree-panel">
+    <div class="panel-header">
+      <h2 class="text-xl font-bold text-white mb-4">Tree Structure</h2>
+      <button (click)="saveChanges()" class="save-btn">
+        💾 Save & Download
+      </button>
+    </div>
+    
+    <div class="tree-view">
+      <div *ngFor="let node of flattenedNodes" 
+           class="tree-node"
+           [class.selected]="node === selectedNode"
+           [style.padding-left.px]="(node.level || 0) * 20 + 10"
+           (click)="selectNode(node)">
+        <span class="expand-icon" 
+              *ngIf="hasChildren(node)"
+              (click)="toggleExpand(node); $event.stopPropagation()">
+          {{ node.expanded ? '▼' : '▶' }}
+        </span>
+        <span class="node-label">{{ getNodeLabel(node) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Editor -->
+  <div class="editor-panel">
+    <div class="panel-header">
+      <h2 class="text-xl font-bold text-white mb-4">
+        {{ selectedNode ? 'Edit Node' : 'Select a node to edit' }}
+      </h2>
+      <div class="action-buttons" *ngIf="selectedNode">
+        <button (click)="addChild()" class="action-btn add-btn">
+          ➕ Add Child
+        </button>
+        <button (click)="deleteNode()" class="action-btn delete-btn">
+          🗑️ Delete
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="selectedNode" class="editor-form">
+      <!-- ID -->
+      <div class="form-group">
+        <label>ID</label>
+        <input type="text" [(ngModel)]="selectedNode.id" class="form-input" />
+      </div>
+
+      <!-- Question -->
+      <div class="form-group">
+        <label>Question</label>
+        <textarea [(ngModel)]="selectedNode.question" 
+                  class="form-textarea" 
+                  rows="3"
+                  placeholder="Enter question text..."></textarea>
+      </div>
+
+      <!-- Answer -->
+      <div class="form-group">
+        <label>Answer (for buttons)</label>
+        <input type="text" 
+               [(ngModel)]="selectedNode.answer" 
+               class="form-input"
+               placeholder="e.g., Yes, No, etc." />
+      </div>
+
+      <!-- Denomination -->
+      <div class="form-group">
+        <label>Denomination (final result)</label>
+        <input type="text" 
+               [(ngModel)]="selectedNode.denomination" 
+               class="form-input"
+               placeholder="e.g., Catholic, Baptist, etc." />
+      </div>
+
+      <!-- Color -->
+      <div class="form-group">
+        <label>Color (hex code)</label>
+        <div class="color-input-group">
+          <input type="text" 
+                 [(ngModel)]="selectedNode.color" 
+                 class="form-input"
+                 placeholder="#FFD700" />
+          <input type="color" 
+                 [(ngModel)]="selectedNode.color" 
+                 class="color-picker" />
+        </div>
+      </div>
+
+      <!-- Result Text -->
+      <div class="form-group">
+        <label>Result Text (displayed in card)</label>
+        <textarea [(ngModel)]="selectedNode.result" 
+                  class="form-textarea" 
+                  rows="8"
+                  placeholder="Enter the explanatory text that will be shown when this node is reached..."></textarea>
+      </div>
+    </div>
+
+    <div *ngIf="!selectedNode" class="empty-state">
+      <p class="text-slate-400 text-center">👈 Click a node in the tree to start editing</p>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,106 @@
-<div #mapContainer class="w-full h-full  overflow-hidden"></div>
+<div class="relative w-full h-full group">
+  <div #mapContainer class="w-full h-full overflow-hidden"></div>
+  
+  <!-- Legend Bar (appears on hover) -->
+  <div *ngIf="legendVisible" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-[1000]">
+    <div class="bg-slate-800/95 backdrop-blur-md rounded-xl px-4 py-3 border border-violet-500/30 shadow-2xl relative">
+      <!-- Close button -->
+      <button 
+        (click)="toggleLegend()"
+        class="absolute -top-2 -right-2 w-6 h-6 bg-slate-700 hover:bg-slate-600 rounded-full flex items-center justify-center text-slate-300 hover:text-white transition-colors border border-violet-500/30">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      
+      <div class="flex items-center gap-3">
+        <!-- Icon 1 -->
+        <button 
+          (click)="toggleDenomination(1)"
+          [class.opacity-50]="!selectedDenominations.has(1)"
+          class="flex flex-col items-center gap-1 transition-all duration-200 hover:scale-110">
+          <div class="w-8 h-8 rounded-md bg-slate-700/50 border flex items-center justify-center" 
+               [class.border-fuchsia-400]="selectedDenominations.has(1)"
+               [class.border-slate-600]="!selectedDenominations.has(1)">
+            <img src="/icon-1.png" alt="Reformed" class="w-6 h-6 object-contain">
+          </div>
+          <span class="text-[8px] text-slate-300">{{denomCounts[1] || 0}}</span>
+        </button>
+        
+        <!-- Icon 2 -->
+        <button 
+          (click)="toggleDenomination(2)"
+          [class.opacity-50]="!selectedDenominations.has(2)"
+          class="flex flex-col items-center gap-1 transition-all duration-200 hover:scale-110">
+          <div class="w-8 h-8 rounded-md bg-slate-700/50 border flex items-center justify-center"
+               [class.border-fuchsia-400]="selectedDenominations.has(2)"
+               [class.border-slate-600]="!selectedDenominations.has(2)">
+            <img src="/icon-2.png" alt="Lutheran" class="w-6 h-6 object-contain">
+          </div>
+          <span class="text-[8px] text-slate-300">{{denomCounts[2] || 0}}</span>
+        </button>
+        
+        <!-- Icon 3 -->
+        <button 
+          (click)="toggleDenomination(3)"
+          [class.opacity-50]="!selectedDenominations.has(3)"
+          class="flex flex-col items-center gap-1 transition-all duration-200 hover:scale-110">
+          <div class="w-8 h-8 rounded-md bg-slate-700/50 border flex items-center justify-center"
+               [class.border-fuchsia-400]="selectedDenominations.has(3)"
+               [class.border-slate-600]="!selectedDenominations.has(3)">
+            <img src="/icon-3.png" alt="Anglican" class="w-6 h-6 object-contain">
+          </div>
+          <span class="text-[8px] text-slate-300">{{denomCounts[3] || 0}}</span>
+        </button>
+        
+        <!-- Icon 4 -->
+        <button 
+          (click)="toggleDenomination(4)"
+          [class.opacity-50]="!selectedDenominations.has(4)"
+          class="flex flex-col items-center gap-1 transition-all duration-200 hover:scale-110">
+          <div class="w-8 h-8 rounded-md bg-slate-700/50 border flex items-center justify-center"
+               [class.border-fuchsia-400]="selectedDenominations.has(4)"
+               [class.border-slate-600]="!selectedDenominations.has(4)">
+            <img src="/icon-4.png" alt="Baptist" class="w-6 h-6 object-contain">
+          </div>
+          <span class="text-[8px] text-slate-300">{{denomCounts[4] || 0}}</span>
+        </button>
+        
+        <!-- Icon 5 -->
+        <button 
+          (click)="toggleDenomination(5)"
+          [class.opacity-50]="!selectedDenominations.has(5)"
+          class="flex flex-col items-center gap-1 transition-all duration-200 hover:scale-110">
+          <div class="w-8 h-8 rounded-md bg-slate-700/50 border flex items-center justify-center"
+               [class.border-fuchsia-400]="selectedDenominations.has(5)"
+               [class.border-slate-600]="!selectedDenominations.has(5)">
+            <img src="/icon-5.png" alt="Methodist" class="w-6 h-6 object-contain">
+          </div>
+          <span class="text-[8px] text-slate-300">{{denomCounts[5] || 0}}</span>
+        </button>
+        
+        <!-- Icon 6 -->
+        <button 
+          (click)="toggleDenomination(6)"
+          [class.opacity-50]="!selectedDenominations.has(6)"
+          class="flex flex-col items-center gap-1 transition-all duration-200 hover:scale-110">
+          <div class="w-8 h-8 rounded-md bg-slate-700/50 border flex items-center justify-center"
+               [class.border-fuchsia-400]="selectedDenominations.has(6)"
+               [class.border-slate-600]="!selectedDenominations.has(6)">
+            <img src="/icon-6.png" alt="Presbyterian" class="w-6 h-6 object-contain">
+          </div>
+          <span class="text-[8px] text-slate-300">{{denomCounts[6] || 0}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Show Legend Button (when hidden) -->
+  <button 
+    *ngIf="!legendVisible"
+    (click)="toggleLegend()"
+    class="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-[1000] bg-slate-800/95 backdrop-blur-md rounded-lg px-4 py-2 border border-violet-500/30 shadow-xl hover:bg-slate-700 text-slate-200 text-sm font-medium">
+    Show Legend
+  </button>
+
+</div>

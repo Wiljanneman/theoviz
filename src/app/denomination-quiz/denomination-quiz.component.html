@@ -1,39 +1,68 @@
-<div class="quiz-header">
-  <h1 class="quiz-title">Denomination Finder</h1>
-  <p class="quiz-description">
-    Discover which Christian denomination aligns with your theological beliefs through a series of questions about Biblical authority, sacraments, and church governance.
-  </p>
-  <div class="mode-toggle">
-    <button 
-      [class.active]="mode === 'quiz'" 
-      (click)="setMode('quiz')"
-      class="mode-button">
-      Quiz Mode
-    </button>
-    <button 
-      [class.active]="mode === 'free'" 
-      (click)="setMode('free')"
-      class="mode-button">
-      Free Mode
+<!-- Header Drawer Card -->
+<div class="header-drawer" [class.collapsed]="!headerExpanded">
+  <div class="drawer-card">
+    <div class="drawer-content">
+      <h1 class="drawer-title">Denomination Finder</h1>
+      <p class="drawer-description" *ngIf="headerExpanded">
+        Discover which Christian denomination aligns with your theological beliefs through a series of questions about Biblical authority, sacraments, and church governance.
+      </p>
+      <div class="mode-toggle" *ngIf="headerExpanded">
+        <button 
+          [class.active]="mode === 'quiz'" 
+          (click)="setMode('quiz')"
+          class="mode-button">
+          Quiz Mode
+        </button>
+        <button 
+          [class.active]="mode === 'free'" 
+          (click)="setMode('free')"
+          class="mode-button">
+          Free Mode
+        </button>
+      </div>
+      
+      <!-- Attribution -->
+      <div class="attribution" *ngIf="headerExpanded">
+        <span class="attribution-text">Based on content by Redeemed Zoomer</span>
+        <a href="https://www.youtube.com/@redeemed_zoomer" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="youtube-link"
+           title="Visit Redeemed Zoomer on YouTube">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Toggle Button -->
+    <button class="drawer-toggle" (click)="toggleHeader()">
+      <svg class="w-5 h-5 transition-transform duration-300" 
+           [class.rotate-180]="!headerExpanded"
+           fill="none" 
+           stroke="currentColor" 
+           viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
     </button>
   </div>
 </div>
 
-<!-- Help Card -->
-<div *ngIf="currentHelpText" 
-     class="fixed top-4 right-4 w-80 bg-slate-800/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-purple-500 overflow-hidden z-50 animate-slide-in">
+<!-- Result Card -->
+<div *ngIf="currentResult" 
+     class="fixed top-4 right-4 w-96 bg-slate-800/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-purple-500 overflow-hidden z-50 animate-slide-in">
   <div class="p-6">
-    <div class="flex items-start justify-between mb-4">
-      <h3 class="text-lg font-bold text-white">{{ currentHelpText.title }}</h3>
+    <div class="flex items-start justify-end mb-4">
       <button 
-        (click)="closeHelpCard()" 
+        (click)="currentResult = null" 
         class="text-white hover:text-red-400 transition-colors -mt-1 -mr-1">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
-    <p class="text-sm text-slate-200 leading-relaxed">{{ currentHelpText.content }}</p>
+    <p class="text-sm text-slate-200 leading-relaxed">{{ currentResult }}</p>
   </div>
 </div>
 

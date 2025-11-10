@@ -1,0 +1,148 @@
+{
+  "id": "root",
+  "question": "Find Your Denomination",
+  "result": "Welcome to the Denomination Finder! Answer each question to discover which Christian tradition aligns most closely with your beliefs.",
+  "children": [
+    {
+      "id": "bible-authority",
+      "question": "Does the Bible have MORE authority than the Church?",
+      "result": "This foundational question addresses the relationship between Scripture and Church tradition in determining Christian doctrine and practice.",
+      "children": [
+        {
+          "id": "bible-no",
+          "answer": "No",
+          "question": "Does the Spirit proceed from the Father and the Son, or just the Father?",
+          "result": "You believe in the authority of both Scripture and Sacred Tradition. This leads to questions about the nature of the Trinity.",
+          "children": [
+            {
+              "id": "spirit-both-catholic",
+              "answer": "Father and Son",
+              "denomination": "Catholic",
+              "color": "#FFD700",
+              "result": "The Catholic Church embraces the Filioque clause (the Holy Spirit proceeds from the Father and the Son) and recognizes the Pope as the successor of Peter with supreme authority over the universal Church. The Catholic tradition emphasizes the sacraments, apostolic succession, and the Magisterium's role in interpreting Scripture and Tradition."
+            },
+            {
+              "id": "spirit-father-pre-orthodox",
+              "answer": "Just Father",
+              "question": "Does Jesus have two natures, or one nature that's a union of two?",
+              "result": "You reject the Filioque clause. The question of Christ's nature further distinguishes between Orthodox traditions.",
+              "children": [
+                {
+                  "id": "nature-one-oriental",
+                  "answer": "One",
+                  "denomination": "Oriental Orthodox",
+                  "color": "#ADFF2F",
+                  "result": "The Oriental Orthodox churches (Coptic, Armenian, Ethiopian, etc.) affirm Miaphysitism - Christ has one united nature that is both fully divine and fully human. These ancient churches separated after the Council of Chalcedon in 451 AD. They maintain rich liturgical traditions and emphasize the mystery of the Incarnation."
+                },
+                {
+                  "id": "nature-two-eastern",
+                  "answer": "Two",
+                  "denomination": "Eastern Orthodox",
+                  "color": "#FF8C00",
+                  "result": "The Eastern Orthodox Church affirms Chalcedonian Christology - Christ has two distinct natures (divine and human) united in one person. Orthodox Christianity emphasizes theosis (deification), the Divine Liturgy, iconography, and the authority of the Seven Ecumenical Councils. The church is governed by a communion of autocephalous bishops."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bible-yes",
+          "answer": "Yes",
+          "question": "Should infants be baptized?",
+          "result": "You hold to Sola Scriptura - Scripture alone as the final authority. This is a core Protestant principle that emerged from the Reformation.",
+          "children": [
+            {
+              "id": "infant-yes",
+              "answer": "Yes",
+              "question": "Must ALL the Churches still be ruled by a hierarchy of Bishops?",
+              "result": "You practice infant baptism (paedobaptism), viewing baptism as a covenant sign for children of believers, similar to circumcision in the Old Testament.",
+              "children": [
+                {
+                  "id": "hierarchy-yes",
+                  "answer": "Yes",
+                  "denomination": "Anglican/Episcopal",
+                  "color": "#FFC0CB",
+                  "result": "The Anglican Communion maintains the historic episcopate (bishops in apostolic succession) while embracing Reformed theology. Anglicans value the Book of Common Prayer, the via media (middle way) between Catholicism and Protestantism, and the three-fold order of ministry: bishops, priests, and deacons. The tradition emphasizes both Scripture and reason."
+                },
+                {
+                  "id": "hierarchy-no",
+                  "answer": "No",
+                  "question": "Is salvation based on a free-will choice?",
+                  "result": "You reject episcopal hierarchy in favor of presbyterian or congregational governance. The question of free will further distinguishes Reformed traditions.",
+                  "children": [
+                    {
+                      "id": "freewill-no",
+                      "answer": "No",
+                      "question": "Are Christ's body and blood physically present in Communion?",
+                      "result": "You hold to predestination and God's sovereignty in salvation (monergism). This is a hallmark of Reformed/Calvinist theology.",
+                      "children": [
+                        {
+                          "id": "communion-yes",
+                          "answer": "Yes",
+                          "denomination": "Lutheran",
+                          "color": "#4169E1",
+                          "result": "Lutheranism affirms the Real Presence of Christ in the Eucharist (sacramental union) - Christ is truly present 'in, with, and under' the bread and wine. Lutherans emphasize justification by faith alone, the priesthood of all believers, and the authority of Scripture. The tradition values liturgy, the sacraments of Baptism and Communion, and the Augsburg Confession."
+                        },
+                        {
+                          "id": "communion-no",
+                          "answer": "Spiritually",
+                          "denomination": "Presbyterian",
+                          "color": "#DC143C",
+                          "result": "Presbyterian churches follow John Calvin's theology, emphasizing God's sovereignty, the five points of Calvinism (TULIP), and presbyterian church governance by elders. Presbyterians believe in the spiritual (not physical) presence of Christ in Communion. The tradition values education, expository preaching, and the Westminster Confession of Faith."
+                        }
+                      ]
+                    },
+                    {
+                      "id": "freewill-yes",
+                      "answer": "Yes",
+                      "denomination": "Methodist",
+                      "color": "#228B22",
+                      "result": "Methodism, founded by John Wesley, emphasizes free will in salvation (Arminianism), prevenient grace, the possibility of Christian perfection, and social holiness. Methodists stress both personal and social transformation, mission work, and the Wesleyan Quadrilateral: Scripture, tradition, reason, and experience. The tradition values disciplined spiritual practices and serving the marginalized."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "infant-no",
+              "answer": "No",
+              "question": "Is 'Spirit Baptism' the same as being born again, or something later?",
+              "result": "You practice believer's baptism (credobaptism), requiring a personal profession of faith before baptism. This is also called 'adult baptism' or 'baptism upon confession of faith.'",
+              "children": [
+                {
+                  "id": "spirit-same",
+                  "answer": "Same",
+                  "question": "Should Church be more free or more formal?",
+                  "result": "You believe the baptism of the Holy Spirit occurs at conversion, not as a separate 'second blessing.' Your view of church structure determines the next step.",
+                  "children": [
+                    {
+                      "id": "church-free",
+                      "answer": "Free",
+                      "denomination": "Non-Denominational",
+                      "color": "#000000",
+                      "result": "Non-denominational churches emphasize a direct relationship with God without formal denominational structures. These churches typically feature contemporary worship, practical Bible teaching, and flexible ministry approaches. They value authenticity, community, and mission over traditional forms. Many are evangelical in theology and practice congregational governance."
+                    },
+                    {
+                      "id": "church-formal",
+                      "answer": "Formal",
+                      "denomination": "Baptist",
+                      "color": "#8B4513",
+                      "result": "Baptist churches emphasize believer's baptism by immersion, the autonomy of the local church, soul liberty (individual freedom of conscience), and the separation of church and state. Baptists hold to the priesthood of all believers and congregational governance. The tradition values expository preaching, missions, and religious freedom."
+                    }
+                  ]
+                },
+                {
+                  "id": "spirit-later",
+                  "answer": "Later",
+                  "denomination": "Pentecostal",
+                  "color": "#8A2BE2",
+                  "result": "Pentecostal churches emphasize the baptism of the Holy Spirit as a distinct experience after conversion, often evidenced by speaking in tongues. Pentecostals stress the ongoing work of the Holy Spirit, spiritual gifts (charismata), divine healing, and experiential worship. The tradition values Spirit-led ministry, evangelism, and the expectation of God's supernatural intervention in daily life."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
