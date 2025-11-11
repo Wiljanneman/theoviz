@@ -29,6 +29,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   private height = 0;
   private svg: any;
   private g: any;
+  private zoom: any; // Store zoom behavior
   private currentLevel = 0;
   private resizeListener: (() => void) | null = null;
   private nodePositions = new Map<number, number>(); // Store Y positions by level
@@ -135,35 +136,22 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       this.currentResult = clickedNode.result;
     }
     
-    // If this is a final denomination, just update without panning
-    if (clickedNode && clickedNode.denomination) {
-      this.updateTreeStructure();
-      return;
-    }
+    // Update the tree structure
+    this.updateTreeStructure();
     
-    // If this node is a question (has children), only make the question visible, NOT the answer buttons yet
-    // The answer buttons will be visible because they're rendered with the question node
-    if (clickedNode && clickedNode.children && !clickedNode.denomination) {
-      // Only increment level and pan for question nodes
-      this.currentLevel++;
-      this.updateTreeWithPan();
-    } else {
-      // Just update without panning
-      this.updateTreeStructure();
-    }
+    // Pan to center the clicked node in the viewport
+    setTimeout(() => this.panToNode(childId), 100);
   }
 
   public setMode(mode: 'quiz' | 'free'): void {
     this.mode = mode;
     
     if (mode === 'free') {
-      // In free mode, show all nodes and enable panning/zooming
+      // In free mode, show all nodes
       this.showAllNodes();
-      this.enableZoom();
     } else {
       // In quiz mode, reset to guided experience
       this.resetQuiz();
-      this.disableZoom();
     }
   }
 
@@ -189,21 +177,55 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     this.visitHistory = ['root', 'bible-authority'];
     this.currentLevel = 0;
     this.updateTree();
+    // Center the root node
+    this.panToNode('root');
   }
 
-  private enableZoom(): void {
+  private panToNode(nodeId: string): void {
+    if (!this.svg || !this.g) return;
+    
+    // Find the node's position in the tree
+    const tree = this.setupTreeLayout();
+    const root = this.createHierarchy(tree);
+    
+    const targetNode = root.descendants().find((d: any) => d.data.id === nodeId);
+    if (!targetNode) return;
+    
+    // Calculate the center of the viewport
+    const centerX = this.width / 2;
+    const centerY = this.height / 2;
+    
+    // Calculate the transform needed to center this node
+    const scale = 1; // You can adjust zoom level here
+    const x = centerX - targetNode.x * scale;
+    const y = centerY - targetNode.y * scale;
+    
+    // Apply the transform with animation
+    const transform = d3.zoomIdentity.translate(x, y).scale(scale);
+    
+    this.svg.transition()
+      .duration(750)
+      .call(this.zoom.transform, transform);
+  }
+
+  private enablePanZoom(): void {
     if (!this.svg) return;
     
-    const zoom = d3.zoom()
-      .scaleExtent([0.5, 3])
+    this.zoom = d3.zoom()
+      .scaleExtent([0.3, 3])
       .on('zoom', (event) => {
         this.g.attr('transform', event.transform);
       });
     
-    this.svg.call(zoom);
+    this.svg.call(this.zoom);
+  }
+
+  private enableZoom(): void {
+    this.enablePanZoom();
   }
 
   private disableZoom(): void {
+    // We keep zoom/pan enabled now, just don't call this anymore
     if (!this.svg) return;
     this.svg.on('.zoom', null);
   }
@@ -291,7 +313,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     const dynamicHeight = Math.max(this.height - 100, maxDepth * levelSpacing);
     
     return d3.tree<TreeNode>()
-      .size([this.width * 2, dynamicHeight])
+      .size([this.width * 1.1, dynamicHeight])
       .separation((a, b) => 0.5 );
   }
 
@@ -638,6 +660,12 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
     // Add all node content using shared method
     this.addNodeContent(node);
+    
+    // Enable pan and zoom
+    this.enablePanZoom();
+    
+    // Center the root node in the viewport
+    setTimeout(() => this.panToNode('root'), 100);
   }
 
   private filterVisibleNodes(node: TreeNode): TreeNode {
