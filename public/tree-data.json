@@ -33,7 +33,7 @@
                   "expanded": true,
                   "answer": "No",
                   "denomination": "Old Catholic",
-                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Emblem_of_the_Papacy_SE.svg/200px-Emblem_of_the_Papacy_SE.svg.png"
+                  "icon": "/denom-icons/catholic.png"
                 },
                 {
                   "id": "new-1762796509801",
@@ -49,7 +49,7 @@
                       "expanded": true,
                       "answer": "No",
                       "denomination": "Catholic",
-                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Emblem_of_the_Papacy_SE.svg/200px-Emblem_of_the_Papacy_SE.svg.png"
+                      "icon": "/denom-icons/catholic.png"
                     },
                     {
                       "id": "is-sedevacantist",
@@ -60,7 +60,7 @@
                       "expanded": true,
                       "answer": "Yes",
                       "denomination": "Sedevacantist",
-                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Emblem_of_the_Papacy_SE.svg/200px-Emblem_of_the_Papacy_SE.svg.png"
+                      "icon": "/denom-icons/sedevacantism.png"
                     }
                   ],
                   "level": 4,
@@ -84,7 +84,7 @@
                   "expanded": true,
                   "answer": "One",
                   "denomination": "Oriental Orthodox",
-                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Coptic_cross.svg/200px-Coptic_cross.svg.png"
+                  "icon": "/denom-icons/coptic.png"
                 },
                 {
                   "id": "two-natures",
@@ -100,7 +100,7 @@
                       "expanded": true,
                       "answer": "No",
                       "denomination": "Nestorian",
-                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Assyrian_Church_of_the_East_symbol.svg/200px-Assyrian_Church_of_the_East_symbol.svg.png"
+                      "icon": "/denom-icons/assyrian.png"
                     },
                     {
                       "id": "veneration-yes",
@@ -116,7 +116,7 @@
                           "expanded": true,
                           "denomination": "Eastern Orthodox",
                           "answer": "No",
-                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Orthodox_cross.svg/200px-Orthodox_cross.svg.png"
+                          "icon": "/denom-icons/orthodox.png"
                         },
                         {
                           "id": "old-cal-yes",
@@ -127,7 +127,7 @@
                           "expanded": true,
                           "answer": "Yes",
                           "denomination": "True Orthodox",
-                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Orthodox_cross.svg/200px-Orthodox_cross.svg.png"
+                          "icon": "/denom-icons/orthodox.png"
                         }
                       ],
                       "level": 5,
@@ -167,7 +167,7 @@
                   "expanded": true,
                   "answer": "Yes",
                   "denomination": "Anglican / Episcopal",
-                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Canterbury_Cross.svg/200px-Canterbury_Cross.svg.png"
+                  "icon": "/denom-icons/anglican.png"
                 },
                 {
                   "id": "new-1762797647560",
@@ -183,7 +183,7 @@
                       "expanded": true,
                       "answer": "Yes",
                       "denomination": "Congregationalist",
-                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                      "icon": "/denom-icons/congregational.png"
                     },
                     {
                       "id": "new-1762797711777",
@@ -204,7 +204,7 @@
                               "expanded": true,
                               "answer": "No",
                               "denomination": "Presbyterian / Reformed",
-                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Presbyterian_Church_USA_seal.svg/200px-Presbyterian_Church_USA_seal.svg.png"
+                              "icon": "/denom-icons/presby.png"
                             },
                             {
                               "id": "new-1762798040458",
@@ -215,7 +215,7 @@
                               "expanded": true,
                               "answer": "Yes",
                               "denomination": "Lutheran",
-                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Luther_rose.svg/200px-Luther_rose.svg.png"
+                              "icon": "/denom-icons/lutheran.png"
                             }
                           ],
                           "level": 6,
@@ -236,7 +236,7 @@
                               "expanded": true,
                               "answer": "No",
                               "denomination": "Methodist",
-                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cross_and_flame.svg/200px-Cross_and_flame.svg.png"
+                              "icon": "/denom-icons/methodist.png"
                             },
                             {
                               "id": "new-1762798414973",
@@ -247,7 +247,7 @@
                               "expanded": true,
                               "denomination": "Holiness",
                               "answer": "Yes",
-                              "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cross_and_flame.svg/200px-Cross_and_flame.svg.png"
+                              "icon": "/denom-icons/nazarene.png"
                             }
                           ],
                           "level": 6,
@@ -283,7 +283,7 @@
                   "expanded": true,
                   "answer": "Yes",
                   "denomination": "Restorationist",
-                  "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                  "icon": "/denom-icons/churchofchrist.png"
                 },
                 {
                   "id": "new-1762799098875",
@@ -299,7 +299,7 @@
                       "expanded": true,
                       "answer": "Later",
                       "denomination": "Pentecostal",
-                      "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Cross_and_flame.svg/200px-Cross_and_flame.svg.png"
+                      "icon": "/denom-icons/pentecostal.png"
                     },
                     {
                       "id": "new-1762799312712",
@@ -315,7 +315,7 @@
                           "expanded": true,
                           "answer": "Free",
                           "denomination": "Non-Denominational",
-                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                          "icon": "/denom-icons/nondenom.png"
                         },
                         {
                           "id": "new-1762799474395",
@@ -326,7 +326,7 @@
                           "expanded": true,
                           "denomination": "Baptist",
                           "answer": "Formal",
-                          "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Protestant_Symbol.svg/200px-Protestant_Symbol.svg.png"
+                          "icon": "/denom-icons/baptist.png"
                         }
                       ],
                       "level": 5,

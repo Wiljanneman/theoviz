@@ -437,7 +437,9 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       });
 
     // Add circles for denomination results
-    nodeEnter.filter((d: any) => d.data.denomination)
+    const denomNodes = nodeEnter.filter((d: any) => d.data.denomination);
+    
+    denomNodes
       .append('circle')
       .attr('r', circleRadius)
       .style('fill', (d: any) => d.data.color || '#ffffff')
@@ -462,6 +464,18 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
           .attr('r', circleRadius)
           .style('filter', 'drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.2))');
       });
+
+    // Add icons for denomination results
+    denomNodes
+      .filter((d: any) => d.data.icon)
+      .append('image')
+      .attr('xlink:href', (d: any) => d.data.icon)
+      .attr('x', -circleRadius)
+      .attr('y', -circleRadius)
+      .attr('width', circleRadius * 2)
+      .attr('height', circleRadius * 2)
+      .style('pointer-events', 'none')
+      .attr('clip-path', 'circle(50%)');
 
     // Add text labels for questions
     nodeEnter.filter((d: any) => d.data.question && !d.data.denomination)
@@ -505,11 +519,11 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
         });
       });
 
-    // Add text labels for denominations
+    // Add text labels for denominations (below the circle)
     nodeEnter.filter((d: any) => d.data.denomination)
       .append('text')
       .attr('text-anchor', 'middle')
-      .attr('dy', 4 * scale)
+      .attr('dy', circleRadius + (20 * scale))
       .style('font-size', `${12 * scale}px`)
       .style('font-weight', '600')
       .style('fill', '#ffffff')
