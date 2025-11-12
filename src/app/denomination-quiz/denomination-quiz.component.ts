@@ -175,7 +175,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   private async loadTreeData(): Promise<void> {
     try {
-      const response = await fetch('/tree-data.json');
+      const response = await fetch('./tree-data.json');
       this.treeData = await response.json();
       // Initialize visible nodes after data is loaded
       this.visibleNodes = new Set<string>(['root', this.treeData.children?.[0]?.id || 'bible-authority']);

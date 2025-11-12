@@ -34,7 +34,7 @@ export class TreeEditorComponent implements OnInit {
 
   private async loadTreeData(): Promise<void> {
     try {
-      const response = await fetch('/tree-data.json');
+      const response = await fetch('./tree-data.json');
       this.treeData = await response.json();
       this.updateFlattenedNodes();
     } catch (error) {
