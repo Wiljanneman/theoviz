@@ -34,7 +34,9 @@
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"
+            ]
           },
           "configurations": {
             "production": {
