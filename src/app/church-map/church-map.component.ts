@@ -291,7 +291,7 @@ export class ChurchMapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (church.iconNumber !== undefined && church.iconNumber >= 1 && church.iconNumber <= 8) {
         // Use custom icon from public folder
         markerIcon = L.icon({
-          iconUrl: `/icon-${church.iconNumber}.png`,
+          iconUrl: `./icon-${church.iconNumber}.png`,
           iconSize: [32, 32],
           iconAnchor: [16, 32],
           popupAnchor: [0, -32]

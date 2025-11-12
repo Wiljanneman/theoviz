@@ -13,7 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/theoviz",
+            "outputPath": {
+              "base": "dist"
+            },
             "index": "src/index.html",
             "browser": "src/main.ts",
             "baseHref": "/theoviz/",
