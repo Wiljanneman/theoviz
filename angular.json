@@ -16,6 +16,7 @@
             "outputPath": "dist/theoviz",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "baseHref": "/theoviz/",
             "polyfills": [
               "zone.js"
             ],
@@ -92,6 +93,9 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
