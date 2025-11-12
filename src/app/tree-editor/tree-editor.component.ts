@@ -34,7 +34,7 @@ export class TreeEditorComponent implements OnInit {
 
   private async loadTreeData(): Promise<void> {
     try {
-      const response = await fetch('./tree-data.json');
+      const response = await fetch('./theoviz/tree-data.json');
       this.treeData = await response.json();
       this.updateFlattenedNodes();
     } catch (error) {
@@ -92,7 +92,7 @@ export class TreeEditorComponent implements OnInit {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'tree-data.json';
+    a.download = 'theoviz/tree-data.json';
     a.click();
     URL.revokeObjectURL(url);
   }
