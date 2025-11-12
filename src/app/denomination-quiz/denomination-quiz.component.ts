@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Renderer2, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import * as d3 from 'd3';
+import { TooltipService } from '@babybeet/angular-tooltip';
 
 interface TreeNode {
   id: string;
@@ -35,8 +37,29 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   private nodePositions = new Map<number, number>(); // Store Y positions by level
   private visitHistory: string[] = ['root', 'bible-authority']; // Track the path taken
   public mode: 'quiz' | 'free' = 'quiz'; // Current mode
-  public currentResult: string | null = null; // Current result text to display
+  private _currentResult: string | null = null;
+  public currentResultIcon: string | null = null; // Current result icon
+  public currentResultDenomination: string | null = null; // Current denomination name
   public headerExpanded: boolean = true; // Drawer state for header
+  private selectedNodeId: string | null = null; // Track which node is currently selected
+  
+  // Cached formatted result to avoid re-processing on every change detection
+  public formattedResult: SafeHtml = '';
+  
+  // Getter/setter for currentResult to trigger formatting only when it changes
+  public get currentResult(): string | null {
+    return this._currentResult;
+  }
+  
+  public set currentResult(value: string | null) {
+    if (this._currentResult !== value) {
+      this._currentResult = value;
+      this.formattedResult = this.formatResult(value);
+    }
+  }
+  
+  // Tooltip management
+  private hideTooltipTimeout: any = null;
   
   // Responsive scaling factors
   private get isMobile(): boolean {
@@ -62,8 +85,92 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   private visibleNodes = new Set<string>(['root', 'bible-authority']); // Start with root and first question visible
 
+  constructor(private renderer: Renderer2, private sanitizer: DomSanitizer, private tooltipService: TooltipService) {}
+
   ngOnInit(): void {
     this.loadTreeData();
+  }
+
+  @HostListener('document:mouseover', ['$event'])
+  onMouseOver(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target && target.classList.contains('tooltip-term')) {
+      // Clear any pending hide timeout
+      if (this.hideTooltipTimeout) {
+        clearTimeout(this.hideTooltipTimeout);
+        this.hideTooltipTimeout = null;
+      }
+      
+      this.tooltipService.show(target, {
+        content: target.getAttribute('data-tooltip') || '',
+        theme: 'dark',
+        className: 'custom-tooltip'
+      });
+    }
+  }
+
+  @HostListener('mouseout', ['$event'])
+  onMouseOut(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target && target.classList.contains('tooltip-term')) {
+      // Small delay to prevent flickering when moving between adjacent tooltip terms
+      this.hideTooltipTimeout = setTimeout(() => {
+        this.tooltipService.hide();
+      }, 50); // Reduced from 100ms to 50ms for snappier response
+    }
+  }
+
+  // Glossary of theological terms
+  private readonly tooltips: Record<string, string> = {
+    'Filioque': 'Latin phrase meaning "and the Son", added to the Nicene Creed by the Western church, stating that the Holy Spirit proceeds from both the Father and the Son',
+    'Sola Scriptura': 'Latin phrase meaning "Scripture alone", the Protestant doctrine that the Bible is the sole infallible authority for faith and practice',
+    'Magisterium': 'The teaching authority of the Catholic Church, exercised by the Pope and bishops in communion with him',
+    'miaphysitism': 'The Christological doctrine that Christ has one united nature (divine and human together), held by Oriental Orthodox churches',
+    'dyophysitism': 'The Christological doctrine that Christ has two distinct natures (divine and human) united in one person, affirmed at Chalcedon',
+    'theosis': 'The Orthodox doctrine of becoming partakers of the divine nature through union with Christ, also called deification',
+    'apostolic succession': 'The unbroken line of bishops tracing back to the apostles, believed to preserve authentic church authority and sacramental validity',
+    'ex cathedra': 'Latin phrase meaning "from the chair", referring to the Pope\'s most solemn and authoritative pronouncements',
+    'papal infallibility': 'The Catholic doctrine that the Pope cannot err when officially defining doctrine on faith or morals',
+    'icon veneration': 'The practice of showing reverence to sacred images, distinguished from worship which is due to God alone',
+    'TULIP': 'Acronym for the five points of Calvinism: Total depravity, Unconditional election, Limited atonement, Irresistible grace, Perseverance of the saints',
+    'covenant theology': 'Reformed theological framework viewing God\'s relationship with humanity through successive covenants',
+    'regulative principle': 'The Reformed principle that worship should include only what God has commanded in Scripture',
+    'prevenient grace': 'The Wesleyan/Arminian doctrine of God\'s grace that precedes and enables human response to the Gospel',
+    'entire sanctification': 'The Wesleyan doctrine of complete cleansing from sin and full consecration to God, possible in this life',
+    'baptismal regeneration': 'The doctrine that baptism effects spiritual rebirth and washing away of sin',
+    'Real Presence': 'The doctrine that Christ is truly present in the Eucharist, understood differently by various traditions',
+    'transubstantiation': 'The Catholic doctrine that the bread and wine become the actual body and blood of Christ while retaining the appearance of bread and wine',
+    'consubstantiation': 'The Lutheran view that Christ\'s body and blood are present "in, with, and under" the bread and wine',
+    'memorial view': 'The belief that the Lord\'s Supper is primarily a symbolic remembrance of Christ\'s sacrifice',
+    'cessationism': 'The doctrine that miraculous spiritual gifts like prophecy and tongues ceased with the apostolic age',
+    'continuationism': 'The belief that all spiritual gifts, including miraculous ones, continue to be active in the church today',
+    'believer\'s baptism': 'The practice of baptizing only those who personally profess faith in Christ, typically associated with Baptist and Anabaptist traditions',
+    'infant baptism': 'The practice of baptizing children of believers, based on covenant theology or sacramental regeneration',
+    'episcopal polity': 'Church government by bishops in hierarchical succession',
+    'presbyterian polity': 'Church government by elders (presbyters) in representative assemblies',
+    'congregational polity': 'Church government where each local congregation is self-governing and autonomous'
+  };
+
+  private formatResult(result: string | null): SafeHtml {
+    if (!result) return '';
+    
+    console.log('Formatting result:', result);
+    let formatted = result;
+    
+    // Simple word replacement - check each word in the tooltips dictionary
+    Object.entries(this.tooltips).forEach(([term, definition]) => {
+      // Create a case-insensitive regex that matches the exact term (with word boundaries)
+      const regex = new RegExp(`\\b${term}\\b`, 'gi');
+      
+      // Replace all occurrences of the term
+      formatted = formatted.replace(regex, (match) => {
+        console.log(`Found and replacing: ${match}`);
+        return `<span class="tooltip-term" data-tooltip="${definition.replace(/"/g, '&quot;')}">${match}</span>`;
+      });
+    });
+    
+    console.log('Formatted HTML:', formatted);
+    return this.sanitizer.bypassSecurityTrustHtml(formatted);
   }
 
   private async loadTreeData(): Promise<void> {
@@ -109,17 +216,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
                 'Device pixel ratio:', window.devicePixelRatio);
   }
 
-  private makeChildrenVisible(nodeId: string): void {
-    const node = this.findNodeById(this.treeData, nodeId);
-    if (node && node.children) {
-      node.children.forEach(child => {
-        this.visibleNodes.add(child.id);
-      });
-      this.updateTree();
-    }
-  }
-
-  private makeSpecificChildVisible(childId: string): void {
+  private makeSpecificChildVisible(childId: string, fromNodeId?: string): void {
     // Add the specific clicked child to visible nodes
     this.visibleNodes.add(childId);
     
@@ -134,6 +231,13 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     // Update the current result text
     if (clickedNode?.result) {
       this.currentResult = clickedNode.result;
+      this.currentResultIcon = clickedNode.icon || null;
+      this.currentResultDenomination = clickedNode.denomination || null;
+    }
+    
+    // Animate the fuse effect if we have a source node
+    if (fromNodeId) {
+      this.animateFuseEffect(fromNodeId, childId);
     }
     
     // Update the tree structure
@@ -159,6 +263,10 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     this.headerExpanded = !this.headerExpanded;
   }
 
+  public reset(): void {
+    this.resetQuiz();
+  }
+
   private showAllNodes(): void {
     // Make all nodes visible
     const addAllNodes = (node: TreeNode) => {
@@ -176,9 +284,29 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     this.visibleNodes = new Set<string>(['root', 'bible-authority']);
     this.visitHistory = ['root', 'bible-authority'];
     this.currentLevel = 0;
+    this.currentResult = null;
+    this.currentResultIcon = null;
+    this.currentResultDenomination = null;
+    this.selectedNodeId = null;
+    
+    // Clear all fuse effects
+    this.clearAllFuseEffects();
+    
     this.updateTree();
     // Center the root node
     this.panToNode('root');
+  }
+
+  private clearAllFuseEffects(): void {
+    if (this.g) {
+      // Remove all fuse effect groups
+      this.g.selectAll('.fuse-effect').remove();
+      
+      // Remove all fuse gradients
+      if (this.svg) {
+        this.svg.selectAll('defs linearGradient[id^="fuseGradient"]').remove();
+      }
+    }
   }
 
   private panToNode(nodeId: string): void {
@@ -220,39 +348,6 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     this.svg.call(this.zoom);
   }
 
-  private enableZoom(): void {
-    this.enablePanZoom();
-  }
-
-  private disableZoom(): void {
-    // We keep zoom/pan enabled now, just don't call this anymore
-    if (!this.svg) return;
-    this.svg.on('.zoom', null);
-  }
-
-  private startQuiz(): void {
-    // This function is no longer needed since we auto-start
-    // But keeping it in case it's referenced elsewhere
-    this.currentLevel = 0;
-    this.updateTree();
-  }
-
-  private updateTreeWithPan(): void {
-    // First, update the tree structure with new visible nodes
-    this.updateTreeStructure();
-    
-    // Calculate how much to pan based on current level with responsive spacing
-    const scale = this.scaleFactor;
-    const levelSpacing = 200 * scale;
-    const yOffset = this.currentLevel * levelSpacing;
-    const leftMargin = this.isMobile ? 50 : 100;
-    const topMargin = this.isMobile ? 50 : 100;
-    
-    this.g.transition()
-      .duration(750)
-      .attr('transform', `translate(${leftMargin}, ${topMargin - yOffset})`);
-  }
-
   private findNodeById(node: TreeNode, id: string): TreeNode | null {
     if (node.id === id) return node;
     if (node.children) {
@@ -283,20 +378,9 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     // Update existing elements instead of recreating
     this.updateLinks(root);
     this.updateNodes(root);
-  }
-
-  private getMaxDepth(): number {
-    let maxDepth = 0;
-    const traverse = (node: TreeNode, depth: number) => {
-      if (this.visibleNodes.has(node.id)) {
-        maxDepth = Math.max(maxDepth, depth);
-        if (node.children) {
-          node.children.forEach(child => traverse(child, depth + 1));
-        }
-      }
-    };
-    traverse(this.treeData, 0);
-    return maxDepth + 1;
+    
+    // Update button interactivity based on current visibility
+    this.updateButtonStates();
   }
 
   private getMaxTreeDepth(node: TreeNode, depth: number = 0): number {
@@ -437,22 +521,44 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .style('fill', 'rgba(30, 41, 59, 0.95)')
       .style('stroke', '#a855f7')
       .style('stroke-width', 2 * scale)
-      .style('cursor', 'pointer')
+      .style('cursor', (d: any) => {
+        // In quiz mode, only visible nodes are clickable
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return 'default';
+        }
+        return 'pointer';
+      })
       .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))')
       .on('click', (event: any, d: any) => {
         event.stopPropagation();
+        // In quiz mode, only allow clicking visible nodes
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return;
+        }
         if (d.data.result) {
+          selfRef.selectedNodeId = d.data.id;
           selfRef.currentResult = d.data.result;
+          selfRef.currentResultIcon = d.data.icon || null;
+          selfRef.currentResultDenomination = d.data.denomination || null;
+          selfRef.updateSelectedState();
         }
       })
-      .on('mouseover', function(this: SVGRectElement) {
-        d3.select(this).transition()
+      .on('mouseover', function(this: SVGRectElement, event: any, d: any) {
+        // In quiz mode, only visible nodes should have hover effect
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return;
+        }
+        d3.select(this).interrupt().transition()
           .duration(150)
           .style('stroke-width', 3 * scale)
           .style('filter', 'drop-shadow(0px 6px 16px rgba(168, 85, 247, 0.5))');
       })
-      .on('mouseout', function(this: SVGRectElement) {
-        d3.select(this).transition()
+      .on('mouseout', function(this: SVGRectElement, event: any, d: any) {
+        // In quiz mode, only visible nodes should have hover effect
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return;
+        }
+        d3.select(this).interrupt().transition()
           .duration(150)
           .style('stroke-width', 2 * scale)
           .style('filter', 'drop-shadow(0px 4px 12px rgba(168, 85, 247, 0.3))');
@@ -466,22 +572,44 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .attr('r', circleRadius)
       .style('fill', (d: any) => d.data.color || '#ffffff')
       .style('stroke', 'none')
-      .style('cursor', 'pointer')
+      .style('cursor', (d: any) => {
+        // In quiz mode, only visible nodes are clickable
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return 'default';
+        }
+        return 'pointer';
+      })
       .style('filter', 'drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.2))')
       .on('click', (event: any, d: any) => {
         event.stopPropagation();
+        // In quiz mode, only allow clicking visible nodes
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return;
+        }
         if (d.data.result) {
+          selfRef.selectedNodeId = d.data.id;
           selfRef.currentResult = d.data.result;
+          selfRef.currentResultIcon = d.data.icon || null;
+          selfRef.currentResultDenomination = d.data.denomination || null;
+          selfRef.updateSelectedState();
         }
       })
-      .on('mouseover', function(this: SVGCircleElement) {
-        d3.select(this).transition()
+      .on('mouseover', function(this: SVGCircleElement, event: any, d: any) {
+        // In quiz mode, only visible nodes should have hover effect
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return;
+        }
+        d3.select(this).interrupt().transition()
           .duration(150)
           .attr('r', circleRadius * 1.15)
           .style('filter', 'drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.25))');
       })
-      .on('mouseout', function(this: SVGCircleElement) {
-        d3.select(this).transition()
+      .on('mouseout', function(this: SVGCircleElement, event: any, d: any) {
+        // In quiz mode, only visible nodes should have hover effect
+        if (selfRef.mode === 'quiz' && !selfRef.visibleNodes.has(d.data.id)) {
+          return;
+        }
+        d3.select(this).interrupt().transition()
           .duration(150)
           .attr('r', circleRadius)
           .style('filter', 'drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.2))');
@@ -492,12 +620,12 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       .filter((d: any) => d.data.icon)
       .append('image')
       .attr('xlink:href', (d: any) => d.data.icon)
-      .attr('x', -circleRadius)
-      .attr('y', -circleRadius)
-      .attr('width', circleRadius * 2)
-      .attr('height', circleRadius * 2)
+      .attr('x', -circleRadius * 1.1)
+      .attr('y', -circleRadius * 1.1)
+      .attr('width', circleRadius * 2.2)
+      .attr('height', circleRadius * 2.2)
       .style('pointer-events', 'none')
-      .attr('clip-path', 'circle(50%)');
+      .attr('clip-path', `circle(${circleRadius}px at ${circleRadius * 1.1}px ${circleRadius * 1.1}px)`);
 
     // Add text labels for questions
     nodeEnter.filter((d: any) => d.data.question && !d.data.denomination)
@@ -566,12 +694,22 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
         
         children.forEach((child: TreeNode, index: number) => {
           if (child.answer) {
+            const isParentVisible = selfRef.visibleNodes.has(d.data.id);
+            const isClickable = selfRef.mode === 'free' || isParentVisible;
+            
             const buttonGroup = nodeGroup.append('g')
               .attr('class', 'answer-button')
-              .style('cursor', 'pointer')
+              .style('cursor', isClickable ? 'pointer' : 'default')
+              .style('opacity', isClickable ? 1 : 0.4)
+              .style('display', selfRef.mode === 'free' ? 'none' : 'block')
               .on('click', (event: any) => {
                 event.stopPropagation();
-                selfRef.makeSpecificChildVisible(child.id);
+                // Check visibility dynamically at click time, not at creation time
+                const isCurrentlyVisible = selfRef.visibleNodes.has(d.data.id);
+                if (selfRef.mode === 'quiz' && !isCurrentlyVisible) {
+                  return;
+                }
+                selfRef.makeSpecificChildVisible(child.id, d.data.id);
               });
 
             const yOffset = 60 * scale;
@@ -583,19 +721,25 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
               .attr('width', buttonWidth)
               .attr('height', buttonHeight)
               .attr('rx', 16 * scale)
-              .style('fill', child.answer === 'Yes' ? '#4caf50' : '#ff9800')
+              .style('fill', child.answer === 'Yes' ? '#6366f1' : '#8b5cf6')
               .style('stroke', 'none')
               .style('opacity', 1)
               .style('filter', 'drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.16))')
               .on('mouseover', function(this: SVGRectElement) {
-                d3.select(this)
+                const parentGroup = d3.select((this as any).parentNode);
+                const isClickable = parentGroup.attr('data-clickable') === 'true';
+                if (!isClickable) return;
+                d3.select(this).interrupt()
                   .transition()
                   .duration(150)
                   .style('filter', 'drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.24))')
                   .attr('y', yOffset - (buttonHeight / 2) - 2);
               })
               .on('mouseout', function(this: SVGRectElement) {
-                d3.select(this)
+                const parentGroup = d3.select((this as any).parentNode);
+                const isClickable = parentGroup.attr('data-clickable') === 'true';
+                if (!isClickable) return;
+                d3.select(this).interrupt()
                   .transition()
                   .duration(150)
                   .style('filter', 'drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.16))')
@@ -668,15 +812,114 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     setTimeout(() => this.panToNode('root'), 100);
   }
 
-  private filterVisibleNodes(node: TreeNode): TreeNode {
-    const filtered: TreeNode = { ...node };
+  private updateSelectedState(): void {
+    // Update all rectangles (question nodes)
+    this.svg.selectAll('.node rect')
+      .classed('selected', (d: any) => d.data.id === this.selectedNodeId);
     
-    if (node.children) {
-      filtered.children = node.children
-        .filter(child => this.visibleNodes.has(child.id))
-        .map(child => this.filterVisibleNodes(child));
-    }
+    // Update all circles (denomination nodes)
+    this.svg.selectAll('.node circle')
+      .classed('selected', (d: any) => d.data.id === this.selectedNodeId);
+  }
+
+  private updateButtonStates(): void {
+    const selfRef = this;
     
-    return filtered;
+    // Update all answer button groups
+    this.svg.selectAll('.answer-button')
+      .each(function(this: SVGGElement, d: any) {
+        const buttonGroup = d3.select(this);
+        const parentNodeId = d.data.id;
+        const isParentVisible = selfRef.visibleNodes.has(parentNodeId);
+        const isClickable = selfRef.mode === 'free' || isParentVisible;
+        
+        // Update cursor, opacity, display, and clickable state
+        buttonGroup
+          .style('cursor', isClickable ? 'pointer' : 'default')
+          .style('opacity', isClickable ? 1 : 0.4)
+          .style('display', selfRef.mode === 'free' ? 'none' : 'block')
+          .attr('data-clickable', isClickable ? 'true' : 'false');
+      });
+  }
+
+  public closeResult(): void {
+    this.currentResult = null;
+    this.currentResultIcon = null;
+    this.currentResultDenomination = null;
+    this.selectedNodeId = null;
+    this.updateSelectedState();
+  }
+
+  private animateFuseEffect(fromNodeId: string, toNodeId: string): void {
+    // Find the source and target node positions
+    const tree = this.setupTreeLayout();
+    const root = this.createHierarchy(tree);
+    
+    const sourceNode = root.descendants().find((d: any) => d.data.id === fromNodeId);
+    const targetNode = root.descendants().find((d: any) => d.data.id === toNodeId);
+    
+    if (!sourceNode || !targetNode) return;
+    
+    // Insert the fuse group at the beginning (behind links and nodes)
+    const fuseGroup = this.g.insert('g', ':first-child').attr('class', 'fuse-effect');
+    
+    // Create the glowing fuse line
+    const fusePath = fuseGroup.append('path')
+      .attr('d', `M${sourceNode.x},${sourceNode.y} L${targetNode.x},${targetNode.y}`)
+      .style('stroke', 'url(#fuseGradient)')
+      .style('stroke-width', 4)
+      .style('fill', 'none')
+      .style('stroke-linecap', 'round')
+      .style('filter', 'drop-shadow(0px 0px 8px rgba(251, 191, 36, 0.8))');
+    
+    // Create gradient for the fuse effect
+    const defs = this.svg.select('defs').empty() 
+      ? this.svg.append('defs') 
+      : this.svg.select('defs');
+    
+    const gradient = defs.append('linearGradient')
+      .attr('id', 'fuseGradient')
+      .attr('gradientUnits', 'userSpaceOnUse')
+      .attr('x1', sourceNode.x)
+      .attr('y1', sourceNode.y)
+      .attr('x2', targetNode.x)
+      .attr('y2', targetNode.y);
+    
+    gradient.append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', '#fbbf24')
+      .attr('stop-opacity', 0);
+    
+    gradient.append('stop')
+      .attr('offset', '30%')
+      .attr('stop-color', '#f59e0b')
+      .attr('stop-opacity', 1);
+    
+    gradient.append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', '#ef4444')
+      .attr('stop-opacity', 0);
+    
+    // Animate the gradient to create the burning fuse effect
+    const totalLength = fusePath.node().getTotalLength();
+    
+    fusePath
+      .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
+      .attr('stroke-dashoffset', totalLength)
+      .transition()
+      .duration(600)
+      .ease(d3.easeLinear)
+      .attr('stroke-dashoffset', 0)
+      .on('end', () => {
+        // Keep the colored line visible - transition to solid color
+        fusePath
+          .transition()
+          .duration(200)
+          .style('stroke', '#f59e0b')
+          .style('filter', 'none')
+          .on('end', () => {
+            gradient.remove();
+          });
+      });
   }
 }

@@ -7,3 +7,53 @@
 /* Import Leaflet marker cluster styles */
 @import 'leaflet.markercluster/dist/MarkerCluster.css';
 @import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
+/* Tooltip fade-in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out forwards;
+}
+
+/* Styling for tooltip library */
+.custom-tooltip  {
+  max-width: 500px !important;
+  padding: 12px 16px !important;
+  background: rgba(15, 23, 42, 0.98) !important;
+  border: 1px solid rgba(168, 85, 247, 0.5) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(8px) !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: #e2e8f0 !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  z-index: 99999 !important;
+}
+
+.lc-tooltip-container::before {
+  display: none !important; /* Hide default arrow if any */
+}
+
+/* Selected state for tree nodes */
+.node rect.selected {
+  stroke: #c084fc !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0px 6px 20px rgba(192, 132, 252, 0.6)) !important;
+}
+
+.node circle.selected {
+  stroke: #c084fc !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0px 8px 20px rgba(192, 132, 252, 0.5)) !important;
+}

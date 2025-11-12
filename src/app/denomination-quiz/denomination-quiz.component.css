@@ -95,6 +95,35 @@
   box-shadow: 0 4px 16px rgba(168, 85, 247, 0.4);
 }
 
+.reset-button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.reset-button:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #fbbf24;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+.reset-button svg {
+  width: 16px;
+  height: 16px;
+}
+
 .attribution {
   display: flex;
   align-items: center;
@@ -327,4 +356,18 @@
     width: 28px;
     height: 28px;
   }
+}
+
+/* Tooltip term styling */
+::ng-deep .tooltip-term {
+  text-decoration: underline dotted;
+  text-decoration-color: rgb(168, 85, 247);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  cursor: help;
+  position: relative;
+}
+
+::ng-deep .tooltip-term:hover {
+  text-decoration-color: rgb(192, 132, 252);
 }

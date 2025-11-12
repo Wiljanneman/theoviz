@@ -13,12 +13,12 @@
                     </svg>
                 </div>
                 <div class="text-xl font-semibold text-slate-50">
-                    Redeemed <span class="text-fuchsia-400">Zoomer</span>
+                    Theo<span class="text-fuchsia-400">Viz</span>
                 </div>
             </div>
 
             <!-- Desktop Navigation -->
-            <div class="hidden md:flex items-center space-x-8">
+            <div class="hidden">
                 <a href="#" class="text-slate-300 hover:text-fuchsia-400 transition-colors duration-200 font-medium">
                     Reformed Theology
                 </a>
@@ -38,15 +38,7 @@
 
             <!-- CTA Button & Mobile Menu -->
             <div class="flex items-center gap-4">
-                <a routerLink="/denomination-quiz"
-                    class="hidden sm:flex items-center gap-2 bg-fuchsia-500 hover:bg-fuchsia-400 text-white px-4 py-2 rounded-xl font-medium text-sm transition-colors duration-200">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                        </path>
-                    </svg>
-                    Take Quiz
-                </a>
+
 
                 <!-- Mobile Menu Button -->
                 <button
@@ -66,47 +58,7 @@
     class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden pt-4">
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center space-y-16">
-            <!-- Feature Cards -->
-            <div class="grid md:grid-cols-3 gap-8 pt-16">
-                <!-- Interactive Decision Trees -->
-                <div
-                    class="w-full group bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-2">
-                    <div
-                        class="mx-auto w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <img src="https://static.wixstatic.com/media/49d392_5e4ec277707f42ccacf7680866dab9dd~mv2.png/v1/fill/w_120,h_120,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Recon_Logo-01.png" alt="Operation Reconquista Logo" class="w-12 h-12 mx-auto">
-                    </div>
-                    <h3 class="text-2xl font-semibold text-slate-50 mb-4"> Operation Reconquista</h3>
-                    <p class="text-violet-300 leading-relaxed">
-                        Join the movement to restore the Mainline Protestant Churches by creating Bible-believing sub-communities within them
-                    </p>
-                </div>
 
-                <!-- Comprehensive Resources -->
-                <div
-                    class="w-full group bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-2">
-                    <div
-                        class="mx-auto w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-bible text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-semibold text-slate-50 mb-4">Theology Resources</h3>
-                    <p class="text-violet-300 leading-relaxed">
-                        Explore a vast library of resources on all sorts of topics, from Church history, to apologetics, to different Christian denominations.
-                    </p>
-                </div>
-
-                <!-- Find Your Community (restored) -->
-                <div
-                    class="w-full group bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-2">
-                    <div
-                        class="mx-auto w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-church text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-semibold text-slate-50 mb-4">Find a Church</h3>
-                    <p class="text-violet-300 leading-relaxed">
-                        Find a historic, beautiful, and doctrinally sound Protestant Church to be a part of – for those who want one but don’t want to be in the Reconquista.
-                    </p>
-                </div>
-            </div>
         </div>
             <!-- Embedded Map Section -->
             <section class="relative mt-10">
@@ -270,42 +222,51 @@
                     </a>
 
                     <!-- Denomination Wheel Card -->
-                    <a routerLink="/denomination-wheel"
-                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/10 hover:-translate-y-2">
+                    <div
+                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden transition-all duration-300 cursor-not-allowed relative">
+                        <!-- Grey Overlay -->
+                        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-10"></div>
+                        
                         <div class="aspect-video bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent"></div>
                             
                             <!-- Live D3 Wheel Preview -->
-                            <div class="absolute inset-0 opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+                            <div class="absolute inset-0 opacity-60 transition-opacity duration-300">
                                 <app-denomination-wheel-preview></app-denomination-wheel-preview>
                             </div>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-semibold text-slate-50 mb-2 group-hover:text-amber-400 transition-colors">
-                                Denomination Wheel
-                            </h3>
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="text-xl font-semibold text-slate-50">
+                                    Denomination Wheel
+                                </h3>
+                                <span class="text-xs px-2 py-1 bg-amber-500/20 text-amber-300 rounded-full">Coming Soon</span>
+                            </div>
                             <p class="text-violet-300 text-sm leading-relaxed mb-4">
                                 Visualize the theological relationships between Christian denominations in a circular diagram
                             </p>
                             <div class="flex items-center gap-2 text-amber-400 text-sm font-medium">
                                 <span>Explore Wheel</span>
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </div>
                         </div>
-                    </a>
+                    </div>
 
                     <!-- Theological Timeline Card -->
                     <div
-                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-2 cursor-pointer">
+                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden transition-all duration-300 cursor-not-allowed relative">
+                        <!-- Grey Overlay -->
+                        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-20"></div>
+                        
                         <div class="aspect-video bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent"></div>
-                            <i class="fas fa-timeline text-6xl text-cyan-400 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                            <i class="fas fa-timeline text-6xl text-cyan-400 relative"></i>
                         </div>
                         <div class="p-6">
                             <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-xl font-semibold text-slate-50 group-hover:text-cyan-400 transition-colors">
+                                <h3 class="text-xl font-semibold text-slate-50">
                                     Church History Timeline
                                 </h3>
                                 <span class="text-xs px-2 py-1 bg-cyan-500/20 text-cyan-300 rounded-full">Coming Soon</span>
@@ -315,7 +276,7 @@
                             </p>
                             <div class="flex items-center gap-2 text-cyan-400 text-sm font-medium">
                                 <span>View Timeline</span>
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </div>
@@ -324,14 +285,17 @@
 
                     <!-- Doctrine Comparison Card -->
                     <div
-                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-2 cursor-pointer">
+                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden transition-all duration-300 cursor-not-allowed relative">
+                        <!-- Grey Overlay -->
+                        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-20"></div>
+                        
                         <div class="aspect-video bg-gradient-to-br from-emerald-500/20 to-green-600/20 flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent"></div>
-                            <i class="fas fa-balance-scale text-6xl text-emerald-400 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                            <i class="fas fa-balance-scale text-6xl text-emerald-400 relative"></i>
                         </div>
                         <div class="p-6">
                             <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-xl font-semibold text-slate-50 group-hover:text-emerald-400 transition-colors">
+                                <h3 class="text-xl font-semibold text-slate-50">
                                     Doctrine Comparison
                                 </h3>
                                 <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-300 rounded-full">Coming Soon</span>
@@ -341,7 +305,7 @@
                             </p>
                             <div class="flex items-center gap-2 text-emerald-400 text-sm font-medium">
                                 <span>Compare Doctrines</span>
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </div>
@@ -350,14 +314,17 @@
 
                     <!-- Creeds & Confessions Card -->
                     <div
-                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/10 hover:-translate-y-2 cursor-pointer">
+                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden transition-all duration-300 cursor-not-allowed relative">
+                        <!-- Grey Overlay -->
+                        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-20"></div>
+                        
                         <div class="aspect-video bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent"></div>
-                            <i class="fas fa-scroll text-6xl text-amber-400 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                            <i class="fas fa-scroll text-6xl text-amber-400 relative"></i>
                         </div>
                         <div class="p-6">
                             <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-xl font-semibold text-slate-50 group-hover:text-amber-400 transition-colors">
+                                <h3 class="text-xl font-semibold text-slate-50">
                                     Historic Creeds
                                 </h3>
                                 <span class="text-xs px-2 py-1 bg-amber-500/20 text-amber-300 rounded-full">Coming Soon</span>
@@ -367,7 +334,7 @@
                             </p>
                             <div class="flex items-center gap-2 text-amber-400 text-sm font-medium">
                                 <span>Explore Creeds</span>
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </div>
@@ -376,14 +343,17 @@
 
                     <!-- Apologetics Arguments Card -->
                     <div
-                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-rose-500/10 hover:-translate-y-2 cursor-pointer">
+                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden transition-all duration-300 cursor-not-allowed relative">
+                        <!-- Grey Overlay -->
+                        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-20"></div>
+                        
                         <div class="aspect-video bg-gradient-to-br from-rose-500/20 to-pink-600/20 flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-transparent"></div>
-                            <i class="fas fa-shield-alt text-6xl text-rose-400 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                            <i class="fas fa-shield-alt text-6xl text-rose-400 relative"></i>
                         </div>
                         <div class="p-6">
                             <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-xl font-semibold text-slate-50 group-hover:text-rose-400 transition-colors">
+                                <h3 class="text-xl font-semibold text-slate-50">
                                     Apologetics Guide
                                 </h3>
                                 <span class="text-xs px-2 py-1 bg-rose-500/20 text-rose-300 rounded-full">Coming Soon</span>
@@ -393,7 +363,7 @@
                             </p>
                             <div class="flex items-center gap-2 text-rose-400 text-sm font-medium">
                                 <span>Learn More</span>
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </div>
@@ -402,14 +372,17 @@
 
                     <!-- Biblical Themes Card -->
                     <div
-                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-2 cursor-pointer">
+                        class="group block bg-slate-800/50 backdrop-blur-sm border border-violet-500/20 rounded-2xl overflow-hidden transition-all duration-300 cursor-not-allowed relative">
+                        <!-- Grey Overlay -->
+                        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-20"></div>
+                        
                         <div class="aspect-video bg-gradient-to-br from-indigo-500/20 to-purple-600/20 flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent"></div>
-                            <i class="fas fa-book-open text-6xl text-indigo-400 relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                            <i class="fas fa-book-open text-6xl text-indigo-400 relative"></i>
                         </div>
                         <div class="p-6">
                             <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-xl font-semibold text-slate-50 group-hover:text-indigo-400 transition-colors">
+                                <h3 class="text-xl font-semibold text-slate-50">
                                     Biblical Themes
                                 </h3>
                                 <span class="text-xs px-2 py-1 bg-indigo-500/20 text-indigo-300 rounded-full">Coming Soon</span>
@@ -419,7 +392,7 @@
                             </p>
                             <div class="flex items-center gap-2 text-indigo-400 text-sm font-medium">
                                 <span>Explore Themes</span>
-                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </div>
@@ -429,7 +402,7 @@
             </section>
 
             <!-- My Story Section -->
-            <section class="relative mt-16">
+            <!-- <section class="relative mt-16">
                 <div class="w-full flex items-center justify-center">
                     <div
                         role="region"
@@ -437,7 +410,7 @@
                         class="w-full max-w-7xl mx-auto rounded-3xl overflow-hidden border border-violet-500/20 bg-slate-800/50 backdrop-blur-sm hover:border-violet-400/40 transition-all duration-300 hover:shadow-xl hover:shadow-fuchsia-500/10">
                         
                         <div class="grid grid-cols-4 md:grid-cols-4 gap-0">
-                            <!-- Left: Text Blurb -->
+                       
                             <div class="flex flex-col col-span-3 justify-center p-8 md:p-12 space-y-4">
                                 <h2 class="text-3xl md:text-4xl font-bold text-slate-50">
                                     My <span class="text-fuchsia-400">Story</span>
@@ -458,11 +431,11 @@
                                 </div>
                             </div>
 
-                            <!-- Right: Photo -->
+              
                             <div class="w-full h-full relative overflow-hidden bg-gradient-to-br from-fuchsia-500/10 to-violet-600/10">
      
                                 
-                                <!-- Main photo -->
+                      
                                 <img 
                                     src="/rz_photo.png" 
                                     alt="RZ Photo" 
@@ -472,7 +445,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
     </div>
 
     <!-- Background Effects -->

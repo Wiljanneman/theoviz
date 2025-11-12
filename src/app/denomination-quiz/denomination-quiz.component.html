@@ -2,7 +2,7 @@
 <div class="header-drawer" [class.collapsed]="!headerExpanded">
   <div class="drawer-card">
     <div class="drawer-content">
-      <h1 class="drawer-title">Denomination Finder</h1>
+      <h1 class="drawer-title">Denomination Flow Chart</h1>
       <p class="drawer-description" *ngIf="headerExpanded">
         Discover which Christian denomination aligns with your theological beliefs through a series of questions about Biblical authority, sacraments, and church governance.
       </p>
@@ -11,7 +11,7 @@
           [class.active]="mode === 'quiz'" 
           (click)="setMode('quiz')"
           class="mode-button">
-          Quiz Mode
+          Guided Mode
         </button>
         <button 
           [class.active]="mode === 'free'" 
@@ -19,12 +19,21 @@
           class="mode-button">
           Free Mode
         </button>
+        <button 
+          (click)="reset()"
+          class="reset-button"
+          title="Reset the chart">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Reset
+        </button>
       </div>
       
       <!-- Attribution -->
       <div class="attribution" *ngIf="headerExpanded">
         <span class="attribution-text">Based on content by Redeemed Zoomer</span>
-        <a href="https://www.youtube.com/@redeemed_zoomer" 
+        <a href="https://www.youtube.com/watch?v=4cug_xLQe8U" 
            target="_blank" 
            rel="noopener noreferrer"
            class="youtube-link"
@@ -50,19 +59,28 @@
 </div>
 
 <!-- Result Card -->
-<div *ngIf="currentResult" 
+<div #resultCard
+     *ngIf="currentResult" 
      class="fixed top-4 right-4 w-96 bg-slate-800/95 backdrop-blur-md rounded-xl shadow-2xl border-2 border-purple-500 overflow-hidden z-50 animate-slide-in">
   <div class="p-6">
-    <div class="flex items-start justify-end mb-4">
+    <div class="flex items-start justify-between mb-4">
+      <!-- Icon and Denomination Name -->
+      <div class="flex items-center gap-3 flex-1">
+        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center overflow-hidden flex-shrink-0" *ngIf="currentResultIcon">
+          <img [src]="currentResultIcon" [alt]="currentResultDenomination" class="w-full h-full object-cover">
+        </div>
+        <h3 class="text-lg font-semibold text-purple-300" *ngIf="currentResultDenomination">{{ currentResultDenomination }}</h3>
+      </div>
+      <!-- Close Button -->
       <button 
-        (click)="currentResult = null" 
-        class="text-white hover:text-red-400 transition-colors -mt-1 -mr-1">
+        (click)="closeResult()" 
+        class="text-white hover:text-red-400 transition-colors flex-shrink-0 ml-2">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
-    <p class="text-sm text-slate-200 leading-relaxed">{{ currentResult }}</p>
+    <p class="text-sm text-slate-200 leading-relaxed" [innerHTML]="formattedResult"></p>
   </div>
 </div>
 

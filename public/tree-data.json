@@ -1,6 +1,6 @@
 {
   "id": "root",
-  "question": "Find Your Denomination",
+  "question": "Start",
   "result": "Welcome to the Denomination Finder! This interactive tool helps you explore Christian denominations based on theological positions. Each question represents a historic point of division in Christian tradition. Answer honestly based on your beliefs to discover which tradition aligns most closely with your convictions.",
   "children": [
     {
