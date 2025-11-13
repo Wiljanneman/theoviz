@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import * as d3 from 'd3';
 import { TooltipService } from '@babybeet/angular-tooltip';
+import { TutorialService } from '../services/tutorial.service';
 
 interface TreeNode {
   id: string;
@@ -85,7 +86,12 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   private visibleNodes = new Set<string>(['root', 'bible-authority']); // Start with root and first question visible
 
-  constructor(private renderer: Renderer2, private sanitizer: DomSanitizer, private tooltipService: TooltipService) {}
+  constructor(
+    private renderer: Renderer2, 
+    private sanitizer: DomSanitizer, 
+    private tooltipService: TooltipService,
+    private tutorialService: TutorialService
+  ) {}
 
   ngOnInit(): void {
     this.loadTreeData();
@@ -183,6 +189,13 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       
       // Create the tree after data is loaded
       this.createTree();
+      
+      // Start tutorial for first-time users after a short delay
+      setTimeout(() => {
+        if (!this.tutorialService.hasSeenTutorial()) {
+          this.tutorialService.startTutorial();
+        }
+      }, 500);
     } catch (error) {
       console.error('Failed to load tree data:', error);
     }
@@ -204,6 +217,8 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     if (this.resizeListener) {
       window.removeEventListener('resize', this.resizeListener);
     }
+    // Clean up tutorial when component is destroyed
+    this.tutorialService.cancelTour();
   }
 
   private setDimensions(): void {
@@ -268,6 +283,10 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   public reset(): void {
     this.resetQuiz();
+  }
+
+  public startTutorial(): void {
+    this.tutorialService.startTutorial();
   }
 
   private updateLinkLabels(): void {
