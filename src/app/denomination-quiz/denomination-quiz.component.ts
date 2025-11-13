@@ -257,6 +257,9 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
       // In quiz mode, reset to guided experience
       this.resetQuiz();
     }
+    
+    // Update link label visibility based on mode
+    this.updateLinkLabels();
   }
 
   public toggleHeader(): void {
@@ -265,6 +268,14 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   public reset(): void {
     this.resetQuiz();
+  }
+
+  private updateLinkLabels(): void {
+    // Update visibility of link labels based on mode
+    if (this.g) {
+      this.g.selectAll('.link-label')
+        .style('display', this.mode === 'free' ? 'block' : 'none');
+    }
   }
 
   private showAllNodes(): void {
@@ -423,6 +434,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
 
   private renderLinks(root: any, isUpdate: boolean = false): void {
     const selfRef = this;
+    const scale = this.scaleFactor;
     
     if (isUpdate) {
       // Update pattern for existing SVG
@@ -448,6 +460,30 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
           return `M${d.source.x},${d.source.y}
                 L${d.target.x},${d.target.y}`;
         });
+      
+      // Update link labels
+      const linkLabelSelection = this.g.selectAll('.link-label')
+        .data(root.links().filter((d: any) => d.target.data.answer), (d: any) => `${d.source.data.id}-${d.target.data.id}`);
+
+      linkLabelSelection.exit().remove();
+
+      linkLabelSelection.enter()
+        .append('text')
+        .attr('class', 'link-label')
+        .merge(linkLabelSelection)
+        .attr('x', (d: any) => (d.source.x + d.target.x) / 2)
+        .attr('y', (d: any) => (d.source.y + d.target.y) / 2)
+        .attr('text-anchor', 'middle')
+        .attr('dy', -5 * scale)
+        .style('font-size', `${12 * scale}px`)
+        .style('font-weight', '600')
+        .style('fill', (d: any) => d.target.data.answer === 'Yes' ? '#6366f1' : '#8b5cf6')
+        .style('pointer-events', 'none')
+        .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
+        .style('text-shadow', '0px 1px 3px rgba(0, 0, 0, 0.8)')
+        .style('display', selfRef.mode === 'free' ? 'block' : 'none')
+        .text((d: any) => d.target.data.answer || '');
+        
     } else {
       // Initial creation
       this.g.selectAll('.link')
@@ -464,6 +500,25 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
         .style('fill', 'none')
         .style('opacity', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 0.8 : 0.2)
         .style('filter', (d: any) => selfRef.visibleNodes.has(d.target.data.id) ? 'none' : 'blur(2px)');
+      
+      // Add link labels (answer text) in free mode
+      this.g.selectAll('.link-label')
+        .data(root.links().filter((d: any) => d.target.data.answer))
+        .enter()
+        .append('text')
+        .attr('class', 'link-label')
+        .attr('x', (d: any) => (d.source.x + d.target.x) / 2)
+        .attr('y', (d: any) => (d.source.y + d.target.y) / 2)
+        .attr('text-anchor', 'middle')
+        .attr('dy', -5 * scale)
+        .style('font-size', `${12 * scale}px`)
+        .style('font-weight', '600')
+        .style('fill', (d: any) => d.target.data.answer === 'Yes' ? '#6366f1' : '#8b5cf6')
+        .style('pointer-events', 'none')
+        .style('font-family', 'Roboto, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif')
+        .style('text-shadow', '0px 1px 3px rgba(0, 0, 0, 0.8)')
+        .style('display', selfRef.mode === 'free' ? 'block' : 'none')
+        .text((d: any) => d.target.data.answer || '');
     }
   }
 
