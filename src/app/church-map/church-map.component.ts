@@ -109,8 +109,6 @@ export class ChurchMapComponent implements OnInit, AfterViewInit, OnDestroy {
           localStorage.setItem(CACHE_KEY, kmlContent);
           console.log('KML cached to localStorage, length:', kmlContent.length);
           
-          // Download the KML file for inspection
-          this.downloadKML(kmlContent);
         } else {
           console.warn('No KML file found in KMZ');
         }
