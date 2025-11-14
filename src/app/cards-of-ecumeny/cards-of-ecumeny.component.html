@@ -1,0 +1,156 @@
+<div class="flex flex-col h-screen p-4 gap-4">
+  
+  <!-- ROW 1: Scenario View -->
+  <div class="header-drawer">
+    <div class="drawer-card">
+      <div class="drawer-content">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">⛪</div>
+          <div class="flex-1">
+            <h1 class="drawer-title">{{ scenario.title }}</h1>
+            <div class="flex gap-4 text-sm text-light mb-3">
+              <span class="font-semibold">{{ scenario.council }}</span>
+              <span>•</span>
+              <span>{{ scenario.date }}</span>
+            </div>
+            <p class="drawer-description">{{ scenario.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Four Column Drop Zones -->
+  <div class="flex-1 grid grid-cols-4 gap-4 min-h-0">
+    
+    <!-- Column 1: Two Rows (Characters/Individuals and Location) -->
+    <div class="flex flex-col gap-4">
+      <!-- Characters/Individuals -->
+      <div class="flex-1 glass-dropzone p-4 overflow-y-auto">
+        <h3 class="text-lg font-bold text-blue-200 mb-3 flex items-center gap-2">
+          <span>👤</span> Characters / Individuals
+        </h3>
+        <div class="text-xs text-blue-300 mb-2">Info section</div>
+      </div>
+      <!-- Location -->
+      <div class="flex-1 glass-dropzone p-4 overflow-y-auto">
+        <h3 class="text-lg font-bold text-green-200 mb-3 flex items-center gap-2">
+          <span>📍</span> Location
+        </h3>
+        <div class="text-xs text-green-300 mb-2">Info section</div>
+      </div>
+    </div>
+
+    <!-- Column 2: Approved by Council -->
+    <div 
+      class="glass-dropzone p-4 overflow-y-auto transition-all"
+      [class.border-emerald-600]="dragOverZone !== 'approved'"
+      [class.border-emerald-800]="dragOverZone === 'approved'"
+      [class.bg-emerald-900]="dragOverZone === 'approved'"
+      (dragover)="onDragOver($event, 'approved')"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event, 'approved')">
+      <h3 class="text-lg font-bold text-emerald-200 mb-3 flex items-center gap-2">
+        <span>✅</span> Approved by Council
+      </h3>
+      <div class="space-y-2">
+        <div 
+          *ngFor="let card of approvedCards"
+          class="glass-card p-3 border-l-4 cursor-move hover:shadow-lg transition-shadow"
+          [ngClass]="getCardTypeColor(card.type)"
+          draggable="true"
+          (dragstart)="onDragStart($event, card)"
+          (dragend)="onDragEnd($event)">
+          <div class="flex items-start gap-2">
+            <span class="text-xl">{{ getCardTypeIcon(card.type) }}</span>
+            <div class="flex-1">
+              <h4 class="font-bold text-sm text-white">{{ card.title }}</h4>
+              <p class="text-xs text-light mt-1">{{ card.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 3: Rejected by Council -->
+    <div 
+      class="glass-dropzone p-4 overflow-y-auto transition-all"
+      [class.border-red-600]="dragOverZone !== 'rejected'"
+      [class.border-red-800]="dragOverZone === 'rejected'"
+      [class.bg-red-900]="dragOverZone === 'rejected'"
+      (dragover)="onDragOver($event, 'rejected')"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event, 'rejected')">
+      <h3 class="text-lg font-bold text-red-200 mb-3 flex items-center gap-2">
+        <span>❌</span> Rejected by Council
+      </h3>
+      <div class="space-y-2">
+        <div 
+          *ngFor="let card of rejectedCards"
+          class="glass-card p-3 border-l-4 cursor-move hover:shadow-lg transition-shadow"
+          [ngClass]="getCardTypeColor(card.type)"
+          draggable="true"
+          (dragstart)="onDragStart($event, card)"
+          (dragend)="onDragEnd($event)">
+          <div class="flex items-start gap-2">
+            <span class="text-xl">{{ getCardTypeIcon(card.type) }}</span>
+            <div class="flex-1">
+              <h4 class="font-bold text-sm text-white">{{ card.title }}</h4>
+              <p class="text-xs text-light mt-1">{{ card.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 4: Not Related to Council -->
+    <div 
+      class="glass-dropzone p-4 overflow-y-auto transition-all"
+      [class.border-gray-600]="dragOverZone !== 'not-related'"
+      [class.border-gray-800]="dragOverZone === 'not-related'"
+      [class.bg-gray-900]="dragOverZone === 'not-related'"
+      (dragover)="onDragOver($event, 'not-related')"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event, 'not-related')">
+      <h3 class="text-lg font-bold text-gray-200 mb-3 flex items-center gap-2">
+        <span>⊘</span> Not Related to Council
+      </h3>
+      <div class="space-y-2">
+        <div 
+          *ngFor="let card of notRelatedCards"
+          class="glass-card p-3 border-l-4 cursor-move hover:shadow-lg transition-shadow"
+          [ngClass]="getCardTypeColor(card.type)"
+          draggable="true"
+          (dragstart)="onDragStart($event, card)"
+          (dragend)="onDragEnd($event)">
+          <div class="flex items-start gap-2">
+            <span class="text-xl">{{ getCardTypeIcon(card.type) }}</span>
+            <div class="flex-1">
+              <h4 class="font-bold text-sm text-white">{{ card.title }}</h4>
+              <p class="text-xs text-light mt-1">{{ card.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Card Hand at Bottom - Playing Card Style -->
+  <div class="flex-none card-hand p-4 transition-all">
+    <h3 class="text-lg font-bold text-white mb-3">Your Cards</h3>
+    <div class="playing-hand">
+      <div *ngFor="let card of handCards; let i = index"
+        class="playing-card"
+        draggable="true"
+        (dragstart)="onDragStart($event, card)"
+        (dragend)="onDragEnd($event)">
+        <div class="card-title">{{ card.title }}</div>
+        <div class="card-block-bg {{ card.type }}">
+          {{ getCardTypeIcon(card.type) }}
+        </div>
+        <div class="card-type">{{ card.type | titlecase }}</div>
+      </div>
+    </div>
+  </div>
+  
+</div>
