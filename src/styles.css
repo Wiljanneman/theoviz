@@ -8,6 +8,9 @@
 @import 'leaflet.markercluster/dist/MarkerCluster.css';
 @import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
+/* Import MapLibre GL styles */
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
 /* Import Shepherd.js styles */
 @import 'shepherd.js/dist/css/shepherd.css';
 

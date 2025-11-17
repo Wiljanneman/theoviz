@@ -1,0 +1,331 @@
+[
+  {
+    "step": 1,
+    "type": "map",
+    "title": "The World of James 1:2-18",
+    "description": "James, a bondservant of God and of the Lord Jesus Christ, wrote to the twelve tribes scattered abroad (in the Dispersion). James was Jesus' half-brother who became leader of the Jerusalem church. He wrote to Jewish believers dispersed throughout the Roman world, many facing trials, testing, and temptation.",
+    "mapData": {
+      "center": [35.5, 35.0],
+      "zoom": 5,
+      "layers": [
+        {
+          "name": "Roman Empire",
+          "url": "https://www.openhistoricalmap.org/map-styles/main/main.json",
+          "attribution": "© OpenHistoricalMap contributors"
+        }
+      ],
+      "markers": [
+        {
+          "lat": 31.7683,
+          "lng": 35.2137,
+          "label": "Jerusalem - James the Just",
+          "description": "Where James, a bondservant of God and the Lord Jesus Christ, led the Jerusalem church. Known as 'James the Just,' he was martyred around 62 AD.",
+          "type": "author",
+          "icon": "fas fa-pen-fancy"
+        },
+        {
+          "lat": 31.7780,
+          "lng": 35.2354,
+          "label": "Stephen's Martyrdom - Scattering Begins",
+          "description": "Stephen's death (Acts 7-8) triggered great persecution in Jerusalem, causing believers to scatter throughout Judea, Samaria, and beyond (Acts 8:1)",
+          "type": "persecution",
+          "icon": "fas fa-skull-crossbones"
+        },
+        {
+          "lat": 41.9028,
+          "lng": 12.4964,
+          "label": "Trials in Rome",
+          "description": "Jewish believers in Rome faced suspicion from both Jewish synagogues and Roman authorities, experiencing social ostracism and economic hardship",
+          "type": "trial",
+          "icon": "fas fa-fire"
+        },
+        {
+          "lat": 37.9795,
+          "lng": 23.7162,
+          "label": "Persecution in Greece",
+          "description": "Scattered believers in Athens and Corinth faced trials from pagan neighbors and Jewish opposition (Acts 17-18)",
+          "type": "trial",
+          "icon": "fas fa-fire"
+        },
+        {
+          "lat": 37.8746,
+          "lng": 27.2658,
+          "label": "Trials in Asia Minor",
+          "description": "Jewish Christians in Ephesus and surrounding regions faced persecution from both synagogues and pagan merchants (Acts 19)",
+          "type": "trial",
+          "icon": "fas fa-fire"
+        },
+        {
+          "lat": 36.2021,
+          "lng": 36.1604,
+          "label": "Poverty & Testing in Antioch",
+          "description": "Diaspora believers in Antioch faced economic trials and famine, requiring relief from other churches (Acts 11:27-30)",
+          "type": "trial",
+          "icon": "fas fa-wheat-awn-slash"
+        },
+        {
+          "lat": 31.2001,
+          "lng": 29.9187,
+          "label": "Hostility in Alexandria",
+          "description": "Jewish believers in Egypt's largest city faced opposition from traditional Jewish communities and Greek-speaking pagans",
+          "type": "trial",
+          "icon": "fas fa-fire"
+        },
+        {
+          "lat": 41.9973,
+          "lng": 21.4280,
+          "label": "Macedonia - Philippi & Thessalonica",
+          "description": "Regions in northern Greece where Jewish Christian communities were established among the diaspora",
+          "type": "audience",
+          "icon": "fas fa-users"
+        },
+        {
+          "lat": 37.9795,
+          "lng": 23.7162,
+          "label": "Achaia - Athens & Corinth",
+          "description": "Southern Greece region with significant Jewish diaspora communities receiving James's letter",
+          "type": "audience",
+          "icon": "fas fa-users"
+        },
+        {
+          "lat": 37.8746,
+          "lng": 27.2658,
+          "label": "Asia - Ephesus",
+          "description": "Major province in western Asia Minor with large Jewish Christian populations in the Dispersion",
+          "type": "audience",
+          "icon": "fas fa-people-group"
+        },
+        {
+          "lat": 38.6234,
+          "lng": 34.7286,
+          "label": "Galatia & Cappadocia",
+          "description": "Central Asia Minor regions where Jewish believers were scattered (1 Peter 1:1)",
+          "type": "audience",
+          "icon": "fas fa-people-group"
+        },
+        {
+          "lat": 40.1828,
+          "lng": 29.0667,
+          "label": "Bithynia & Pontus",
+          "description": "Northern Asia Minor provinces along the Black Sea with diaspora Jewish communities",
+          "type": "audience",
+          "icon": "fas fa-people-group"
+        },
+        {
+          "lat": 36.2021,
+          "lng": 36.1604,
+          "label": "Syria - Antioch",
+          "description": "Major diaspora hub where Jewish believers scattered by persecution preached the gospel (Acts 11:19-26)",
+          "type": "audience",
+          "icon": "fas fa-users"
+        },
+        {
+          "lat": 35.1264,
+          "lng": 33.4299,
+          "label": "Cyprus - Paphos",
+          "description": "Island where Jewish believers from Cyprus fled and established communities (Acts 11:19-20)",
+          "type": "audience",
+          "icon": "fas fa-people-group"
+        },
+        {
+          "lat": 35.1856,
+          "lng": 25.1300,
+          "label": "Crete",
+          "description": "Mediterranean island with Jewish communities part of the broader Dispersion",
+          "type": "audience",
+          "icon": "fas fa-people-group"
+        },
+        {
+          "lat": 31.2001,
+          "lng": 29.9187,
+          "label": "Egypt - Alexandria",
+          "description": "Major center of Jewish diaspora with large communities of Hellenistic Jews",
+          "type": "audience",
+          "icon": "fas fa-users"
+        },
+        {
+          "lat": 32.8872,
+          "lng": 21.9011,
+          "label": "Cyrene (Libya)",
+          "description": "North African region with significant Jewish diaspora (Acts 11:20 mentions men from Cyrene)",
+          "type": "audience",
+          "icon": "fas fa-users"
+        },
+        {
+          "lat": 41.9028,
+          "lng": 12.4964,
+          "label": "Rome - Italy",
+          "description": "Imperial capital with large Jewish population, some believing in Jesus among the Dispersion",
+          "type": "audience",
+          "icon": "fas fa-landmark"
+        }
+      ],
+      "arrows": [
+        {
+          "from": [31.7683, 35.2137],
+          "to": [36.2021, 36.1604],
+          "label": "Scattering to Antioch",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [35.1264, 33.4299],
+          "label": "Scattering to Cyprus",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [37.8746, 27.2658],
+          "label": "Scattering to Asia Minor",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [37.9795, 23.7162],
+          "label": "Scattering to Greece",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [41.9973, 21.4280],
+          "label": "Scattering to Macedonia",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [31.2001, 29.9187],
+          "label": "Scattering to Egypt",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [32.8872, 21.9011],
+          "label": "Scattering to Cyrene",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [41.9028, 12.4964],
+          "label": "Scattering to Rome",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [40.1828, 29.0667],
+          "label": "Scattering to Bithynia",
+          "color": "#3b82f6"
+        },
+        {
+          "from": [31.7683, 35.2137],
+          "to": [35.1856, 25.1300],
+          "label": "Scattering to Crete",
+          "color": "#3b82f6"
+        }
+      ]
+    }
+  },
+  {
+    "step": 2,
+    "title": "The Audience: Twelve Tribes Scattered Abroad",
+    "description": "James addresses 'the twelve tribes which are scattered abroad' (James 1:1), referring to Jewish believers in Jesus dispersed throughout the Roman Empire. These Christians faced various trials and testings. James wrote to encourage them to have a living, active faith - not mere intellectual agreement, but faith demonstrated through godly living and good works.",
+    "content": [
+      {
+        "subtitle": "Who Were the 'Twelve Tribes'?",
+        "text": "The phrase 'twelve tribes scattered abroad' refers to Jewish Christians living outside of Palestine. After Stephen's martyrdom (Acts 7-8), persecution forced many believers to flee Jerusalem and scatter throughout the Mediterranean world. These were not just ethnic Jews, but believers in Jesus as Messiah who maintained their Jewish identity while following Christ."
+      },
+      {
+        "subtitle": "The Dispersion (Diaspora)",
+        "text": "The Dispersion (Greek: diaspora) describes Jews living outside the land of Israel. By the first century, more Jews lived outside Palestine than within it. Major diaspora communities existed in Syria, Asia Minor, Greece, Egypt, and Rome. James writes to believers scattered among these communities who were maintaining their faith while facing hostility from both Jewish and Gentile neighbors."
+      },
+      {
+        "subtitle": "Trials and Testing",
+        "text": "James 1:2-4 immediately addresses trials: 'Count it all joy when you fall into various trials, knowing that the testing of your faith produces patience.' These scattered believers faced persecution, poverty, social ostracism, and temptation to abandon their faith. James teaches that these trials test and strengthen genuine faith, producing spiritual maturity and endurance."
+      },
+      {
+        "subtitle": "The Need for Wisdom",
+        "text": "In verses 5-8, James addresses the need for wisdom in trials: 'If any of you lacks wisdom, let him ask of God.' The scattered believers needed divine wisdom to navigate persecution, make difficult decisions, and respond to suffering with faith rather than doubt. James promises that God gives wisdom generously to those who ask in faith."
+      },
+      {
+        "subtitle": "Living Faith",
+        "text": "James's primary concern is that these believers demonstrate living, active faith - not mere intellectual agreement with doctrine. He later writes, 'Faith without works is dead' (James 2:26). In their scattered condition, facing various trials, they needed faith that produced godly character, compassion for the poor, control of the tongue, and practical righteousness."
+      }
+    ]
+  },
+  {
+    "step": 3,
+    "title": "Key Themes in James 1:2-18",
+    "description": "Understanding the major theological themes James addresses in this foundational passage.",
+    "content": [
+      {
+        "subtitle": "1. Trials and Joy (v. 2-4)",
+        "text": "James begins with a paradox: 'Count it all joy when you fall into various trials.' This doesn't mean believers should enjoy suffering, but should recognize its purpose. Trials test and prove the genuineness of faith, producing patience (endurance/perseverance). The goal is spiritual maturity - being 'perfect and complete, lacking nothing.'"
+      },
+      {
+        "subtitle": "2. Asking for Wisdom (v. 5-8)",
+        "text": "When facing trials, believers need wisdom to respond correctly. James instructs: 'Let him ask of God, who gives to all liberally.' However, we must 'ask in faith, with no doubting,' because the double-minded person is 'unstable in all his ways.' Wisdom from God enables us to see trials from His perspective and respond with faith rather than fear."
+      },
+      {
+        "subtitle": "3. Perspective on Poverty and Wealth (v. 9-11)",
+        "text": "James addresses both poor and rich believers. The poor brother should 'glory in his exaltation' - his true wealth in Christ. The rich should 'glory in his humiliation' - recognizing that earthly wealth is temporary 'like a flower of the field' that withers. This counters worldly values and reminds all believers of what truly matters."
+      },
+      {
+        "subtitle": "4. Enduring Temptation (v. 12-15)",
+        "text": "James distinguishes between trials (external tests) and temptations (internal enticements to sin). 'Blessed is the man who endures temptation,' receiving 'the crown of life.' Crucially, God never tempts anyone to sin - temptation comes from our own desires. When desire conceives, 'it gives birth to sin; and sin, when it is full-grown, brings forth death.'"
+      },
+      {
+        "subtitle": "5. God's Good Gifts (v. 16-18)",
+        "text": "James concludes by pointing to God's character: 'Every good gift and every perfect gift is from above.' Unlike the source of temptation, God gives only good things. He 'chose to give us birth through the word of truth' - making us 'a kind of firstfruits of His creatures.' This regeneration is God's gracious work, not human achievement, securing our identity as His children."
+      }
+    ]
+  },
+  {
+    "step": 4,
+    "title": "Practical Application",
+    "description": "How James 1:2-18 applies to Christian living today.",
+    "content": [
+      {
+        "subtitle": "Responding to Trials",
+        "text": "When you face difficulties - illness, financial pressure, relational conflict, persecution - consider it an opportunity for spiritual growth. Ask yourself: What is God teaching me? How is this testing and strengthening my faith? Rather than asking 'Why me?' ask 'What now?' Trust that God is using this trial to develop perseverance and maturity."
+      },
+      {
+        "subtitle": "Praying for Wisdom",
+        "text": "In any challenging situation, make James 1:5 your first response: 'If any of you lacks wisdom, let him ask of God.' Don't rely solely on human understanding. Pray specifically for divine wisdom in decisions, relationships, work situations, and moral dilemmas. Expect God to answer - He gives generously without reproach."
+      },
+      {
+        "subtitle": "Fighting Temptation",
+        "text": "Recognize the pattern James describes: desire → temptation → sin → death. Interrupt this cycle early. Identify your particular vulnerabilities and set up accountability. Remember that God is not the source of temptation - don't blame Him for your struggles. Take responsibility for your desires and flee from situations that trigger them."
+      },
+      {
+        "subtitle": "Valuing Eternal Riches",
+        "text": "Whether you're wealthy or poor by worldly standards, find your identity and worth in Christ, not in economic status. The poor should resist envy and materialism; the rich should resist pride and self-sufficiency. Both should 'glory' in their spiritual position - children of God and heirs of eternal life."
+      },
+      {
+        "subtitle": "Gratitude for God's Gifts",
+        "text": "Develop a habit of recognizing that 'every good and perfect gift' comes from God. This includes salvation, spiritual gifts, relationships, daily provisions, and even trials that produce growth. A grateful heart protects against both entitlement and despair. Thank God specifically and regularly for His gifts."
+      }
+    ]
+  },
+  {
+    "step": 5,
+    "title": "Summary and Reflection",
+    "description": "Review the key insights from James 1:2-18 and consider next steps.",
+    "content": [
+      {
+        "subtitle": "Main Points to Remember",
+        "text": "• Trials test and strengthen genuine faith, producing spiritual maturity\n• God gives wisdom generously to those who ask in faith\n• Both poverty and wealth are temporary - our true identity is in Christ\n• Temptation comes from our own desires, not from God\n• Every good gift, including our spiritual birth, comes from God"
+      },
+      {
+        "subtitle": "James's Call to Action",
+        "text": "James doesn't just want you to know these truths - he wants you to live them. As you continue in the book of James, you'll see repeated emphasis on being 'doers of the word, and not hearers only' (James 1:22). Living faith produces changed lives: patience in trials, wisdom in decisions, generosity to the poor, control of speech, and pure religion that cares for the vulnerable."
+      },
+      {
+        "subtitle": "Reflection Questions",
+        "text": "1. What trials am I currently facing? How can I view them as opportunities for growth?\n2. In what area of life do I most need God's wisdom right now?\n3. What temptations do I struggle with? What desires fuel those temptations?\n4. Am I more focused on earthly wealth or eternal riches?\n5. What good gifts from God have I taken for granted?"
+      },
+      {
+        "subtitle": "Next Steps",
+        "text": "• Memorize James 1:5 - 'If any of you lacks wisdom, let him ask of God, who gives to all liberally and without reproach, and it will be given to him.'\n• Keep a journal tracking how God uses trials to develop your character\n• Find an accountability partner to help you fight specific temptations\n• Practice daily gratitude by listing three 'good and perfect gifts' from God\n• Continue studying James chapters 2-5 to see how living faith is demonstrated"
+      }
+    ]
+  }
+]

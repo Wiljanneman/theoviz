@@ -1,0 +1,43 @@
+<div class="w-full h-full relative">
+  <div id="map" class="w-full h-full"></div>
+  
+  <!-- Filter overlay -->
+  <div class="map-filter-overlay">
+    <div class="filter-header">Explore the Context</div>
+    <button 
+      class="filter-button" 
+      [class.active]="activeFilter === 'all'"
+      (click)="filterMarkers('all')">
+      <i class="fas fa-layer-group"></i>
+      <span>Show All</span>
+    </button>
+    <button 
+      class="filter-button" 
+      [class.active]="activeFilter === 'author'"
+      (click)="filterMarkers('author')">
+      <i class="fas fa-pen-fancy"></i>
+      <span>Who wrote the letter?</span>
+    </button>
+    <button 
+      class="filter-button" 
+      [class.active]="activeFilter === 'audience'"
+      (click)="filterMarkers('audience')">
+      <i class="fas fa-users"></i>
+      <span>Who was the audience?</span>
+    </button>
+    <button 
+      class="filter-button" 
+      [class.active]="activeFilter === 'persecution'"
+      (click)="filterMarkers('persecution')">
+      <i class="fas fa-skull-crossbones"></i>
+      <span>What persecutions occurred?</span>
+    </button>
+    <button 
+      class="filter-button" 
+      [class.active]="activeFilter === 'trial'"
+      (click)="filterMarkers('trial')">
+      <i class="fas fa-fire"></i>
+      <span>What trials did they face?</span>
+    </button>
+  </div>
+</div>

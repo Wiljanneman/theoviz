@@ -1,0 +1,37 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { MapData } from '../map-view/map-view.component';
+
+import { MapViewComponent } from '../map-view/map-view.component';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-interactive-study',
+  templateUrl: './interactive-study.component.html',
+  styleUrls: ['./interactive-study.component.css'],
+  imports: [MapViewComponent, CommonModule]
+})
+export class InteractiveStudyComponent implements OnInit {
+  steps: any[] = [];
+  currentStepIndex = 0;
+  mapData: MapData | null = null;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get<any[]>('/theoviz/stepper-content.json').subscribe(data => {
+      this.steps = data;
+      this.setStep(0);
+    });
+  }
+
+  setStep(index: number) {
+    this.currentStepIndex = index;
+    const step = this.steps[index];
+    if (step && step.type === 'map' && step.mapData) {
+      this.mapData = step.mapData;
+    } else {
+      this.mapData = null;
+    }
+  }
+}

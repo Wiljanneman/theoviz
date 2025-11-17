@@ -1,0 +1,27 @@
+[
+  {
+    "step": 1,
+    "title": "Introduction",
+    "description": "Overview of the study and objectives."
+  },
+  {
+    "step": 2,
+    "title": "Key Concepts",
+    "description": "Learn the main ideas and terms."
+  },
+  {
+    "step": 3,
+    "title": "Case Study",
+    "description": "Apply concepts to a real-world scenario."
+  },
+  {
+    "step": 4,
+    "title": "Quiz",
+    "description": "Test your understanding with interactive questions."
+  },
+  {
+    "step": 5,
+    "title": "Summary",
+    "description": "Review and next steps."
+  }
+]
