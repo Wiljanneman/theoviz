@@ -1,0 +1,58 @@
+<div class="w-full h-full flex flex-col bg-gradient-to-br from-slate-900 to-slate-800">
+  <!-- Header -->
+  <div class="p-6 border-b border-purple-500/30">
+    <div class="flex justify-between items-start mb-2">
+      <div>
+        <h2 class="text-2xl font-bold text-white mb-2">{{ clusterData?.title }}</h2>
+        <p class="text-slate-300 text-sm">{{ clusterData?.description }}</p>
+      </div>
+      <button 
+        (click)="toggleMode()"
+        class="px-4 py-2 rounded-lg transition flex items-center gap-2"
+        [ngClass]="isGuidedMode ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-slate-700 hover:bg-slate-600 text-slate-300'">
+        <i class="fas" [ngClass]="isGuidedMode ? 'fa-route' : 'fa-hand-pointer'"></i>
+        <span>{{ isGuidedMode ? 'Guided Mode' : 'Free Mode' }}</span>
+      </button>
+    </div>
+    <div *ngIf="isGuidedMode" class="mt-3 bg-purple-900/30 border border-purple-500/30 rounded-lg p-3">
+      <div class="text-purple-200 text-sm">
+        <i class="fas fa-info-circle mr-2"></i>
+        Step {{ currentStep + 1 }} of {{ clusterData?.nodes?.length }}: Use the navigation buttons in the detail panel to explore each section sequentially
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex overflow-hidden">
+    <!-- Visualization Container -->
+    <div class="flex-1 flex items-center justify-center p-8">
+      <svg #clusterContainer id="cluster-viz"></svg>
+    </div>
+
+    <!-- Detail Panel (shown when a node is selected) -->
+    <div id="detail-panel" 
+         class="hidden w-96 bg-slate-800 border-l border-purple-500/30 overflow-y-auto">
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div id="cluster-tooltip" 
+       class="absolute hidden bg-slate-800/95 backdrop-blur-md text-white p-4 rounded-xl border border-purple-500/30 shadow-2xl max-w-xs z-50"
+       style="pointer-events: none;">
+  </div>
+
+  <!-- Legend -->
+  <div class="p-6 border-t border-purple-500/30" *ngIf="clusterData?.nodes">
+    <div class="flex flex-wrap gap-4 justify-center">
+      <div *ngFor="let node of clusterData.nodes" class="flex items-center gap-2">
+        <div 
+          class="w-6 h-6 rounded-full"
+          [style.background]="node.color || 'linear-gradient(135deg, ' + getSectionGradient(node.section)[0] + ', ' + getSectionGradient(node.section)[1] + ')'">
+        </div>
+        <span class="text-slate-300 text-sm">
+          <span *ngIf="node.section">Section {{ node.section }}: </span>{{ node.label }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

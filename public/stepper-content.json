@@ -226,105 +226,144 @@
   },
   {
     "step": 2,
-    "title": "The Audience: Twelve Tribes Scattered Abroad",
-    "description": "James addresses 'the twelve tribes which are scattered abroad' (James 1:1), referring to Jewish believers in Jesus dispersed throughout the Roman Empire. These Christians faced various trials and testings. James wrote to encourage them to have a living, active faith - not mere intellectual agreement, but faith demonstrated through godly living and good works.",
+    "type": "cluster",
+    "title": "Structure of James 1:2-18",
+    "description": "James 1:2-18 is carefully structured into five interconnected sections, each building on the previous to present a complete picture of how believers should respond to trials and understand God's character.",
+    "clusterData": {
+      "title": "Five Sections of James 1:2-18",
+      "description": "Explore the interconnected themes by clicking on each section",
+      "nodes": [
+        {
+          "id": "section-a",
+          "label": "Joy in Trials",
+          "section": "A",
+          "verses": "v. 2-4",
+          "description": "Count it all joy when you fall into various trials, knowing that the testing of your faith produces patience. Let patience have its perfect work, that you may be perfect and complete, lacking nothing.",
+          "theme": "Joy in Trials → Perseverance & Maturity",
+          "keywords": ["joy", "trials", "testing", "patience", "perseverance", "maturity", "complete"],
+          "thoughtProvoking": [
+            {
+              "type": "observe",
+              "text": "Notice James doesn't say 'if' trials come, but 'when' - as though difficulty is guaranteed in the Christian life."
+            },
+            {
+              "type": "consider",
+              "text": "Consider the paradox: counting it 'all joy' when facing trials. James isn't asking you to enjoy suffering, but to see beyond it."
+            },
+            {
+              "type": "reflect",
+              "text": "The goal isn't just endurance, but becoming 'perfect and complete, lacking nothing' - what might God be developing in you right now through difficulty?"
+            },
+            {
+              "type": "consider",
+              "text": "Think about how a goldsmith refines gold - the heat doesn't destroy it, it purifies it. How does this image change your view of trials?"
+            },
+            {
+              "type": "question",
+              "text": "James says trials 'test' your faith - not to prove it's fake, but to prove it's real. What's the difference?"
+            }
+          ]
+        },
+        {
+          "id": "section-b",
+          "label": "Ask for Wisdom",
+          "section": "B",
+          "verses": "v. 5-8",
+          "description": "If any of you lacks wisdom, let him ask of God, who gives to all liberally and without reproach. But let him ask in faith, with no doubting, for he who doubts is like a wave of the sea driven and tossed by the wind.",
+          "theme": "Ask for Wisdom → God Gives Generously",
+          "keywords": ["wisdom", "ask", "faith", "doubt", "double-minded", "unstable", "God gives"],
+          "thoughtProvoking": [
+            "Notice the connection: when trials come, the first thing we need isn't strength or courage, but wisdom to see what God is doing.",
+            "God gives 'liberally and without reproach' - He won't scold you for asking, or make you feel foolish for not knowing. Have you been hesitant to ask?",
+            "Consider the image of a wave tossed by wind - unstable, going nowhere, exhausting itself. This is what doubt does to prayer.",
+            "The double-minded person is literally 'two-souled' - trying to trust God and trust themselves at the same time. Where do you see this in your own heart?",
+            "James promises wisdom will 'be given' - not earned, not deserved, but generously given. What does this tell you about God's character?"
+          ]
+        },
+        {
+          "id": "section-c",
+          "label": "Humility & Perspective",
+          "section": "C",
+          "verses": "v. 9-11",
+          "description": "Let the lowly brother glory in his exaltation, and the rich in his humiliation, because as a flower of the field he will pass away. For no sooner has the sun risen with a burning heat than it withers the grass.",
+          "theme": "Humility & Perspective → Rich & Poor Contrasted",
+          "keywords": ["poor", "rich", "exaltation", "humiliation", "temporary", "perspective", "glory"],
+          "thoughtProvoking": [
+            "Notice the reversal: the poor should boast in being lifted up, the rich in being brought low. Both find their worth outside their wallet.",
+            "Consider the flower - beautiful one day, withered the next. James says this is the rich person 'in the midst of his pursuits.' What are you pursuing that won't last?",
+            "The poor brother has 'exaltation' - not someday in heaven, but now. What riches do you already have in Christ that economic status can't touch?",
+            "Think about it: if your bank account doesn't define the poor Christian, why would it define the wealthy one? What does define you?",
+            "Both poverty and wealth are called temporary - like grass that withers. What remains when everything else fades?"
+          ]
+        },
+        {
+          "id": "section-d",
+          "label": "Enduring Temptation",
+          "section": "D",
+          "verses": "v. 12-15",
+          "description": "Blessed is the man who endures temptation; for when he has been approved, he will receive the crown of life. Let no one say when he is tempted, 'I am tempted by God'; for God cannot be tempted by evil, nor does He Himself tempt anyone.",
+          "theme": "Temptation → Blessing for Those Who Persevere",
+          "keywords": ["temptation", "endure", "crown of life", "desire", "sin", "death", "blessed"],
+          "thoughtProvoking": [
+            "Notice the crucial distinction: trials come from outside to strengthen you; temptation comes from inside to destroy you.",
+            "James is emphatic: 'Let no one say when tempted, I am tempted by God.' Why is it so important that we don't blame God for our sin?",
+            "Consider the progression James describes: desire → enticed → conceived → birth → death. It's like watching sin grow from seed to deadly fruit. Where can you stop it?",
+            "The promise is clear: endure temptation and receive 'the crown of life.' But notice - the crown comes after enduring, not after giving in.",
+            "Think about your own patterns: what desires typically entice you? What would change if you interrupted the cycle earlier?"
+          ]
+        },
+        {
+          "id": "section-e",
+          "label": "God's Good Gifts",
+          "section": "E",
+          "verses": "v. 16-18",
+          "description": "Every good gift and every perfect gift is from above, and comes down from the Father of lights, with whom there is no variation or shadow of turning. Of His own will He brought us forth by the word of truth, that we might be a kind of firstfruits of His creatures.",
+          "theme": "God is the Source of Good → New Birth & Divine Purpose",
+          "keywords": ["good gift", "perfect gift", "Father", "no variation", "word of truth", "new birth", "firstfruits"],
+          "thoughtProvoking": [
+            "Notice the contrast: verses 13-15 describe evil's source (our own desires); verses 16-18 describe good's source (God alone). Two very different origins.",
+            "Consider what 'no variation or shadow of turning' means - God doesn't change His mind, doesn't have mood swings, doesn't alternate between good and evil. He is consistently, unchangingly good.",
+            "The ultimate good gift isn't health, wealth, or even wisdom - it's being 'brought forth by the word of truth.' You were born again by God's choice, not your own effort.",
+            "Think about being called 'firstfruits' - the first and best portion, set apart for God. What does this identity mean for how you face trials?",
+            "Look back: trials test you (v.2-4), wisdom guides you (v.5-8), perspective steadies you (v.9-11), endurance crowns you (v.12-15), and God's character anchors everything (v.16-18). See how it all connects?"
+          ]
+        }
+      ]
+    },
     "content": [
       {
-        "subtitle": "Who Were the 'Twelve Tribes'?",
-        "text": "The phrase 'twelve tribes scattered abroad' refers to Jewish Christians living outside of Palestine. After Stephen's martyrdom (Acts 7-8), persecution forced many believers to flee Jerusalem and scatter throughout the Mediterranean world. These were not just ethnic Jews, but believers in Jesus as Messiah who maintained their Jewish identity while following Christ."
+        "subtitle": "Section A: Joy in Trials (v. 2-4)",
+        "text": "**'Count it all joy when you fall into various trials'**\n\nJames begins with a paradoxical command: find joy in trials. The key word is 'when' (not 'if') - trials are inevitable. These 'various trials' test the genuineness of our faith, producing perseverance (endurance). The goal is spiritual maturity - being 'perfect and complete, lacking nothing.' Trials aren't punishment but opportunities for growth.",
+        "verses": "James 1:2-4",
+        "theme": "Joy in Trials → Perseverance & Maturity"
       },
       {
-        "subtitle": "The Dispersion (Diaspora)",
-        "text": "The Dispersion (Greek: diaspora) describes Jews living outside the land of Israel. By the first century, more Jews lived outside Palestine than within it. Major diaspora communities existed in Syria, Asia Minor, Greece, Egypt, and Rome. James writes to believers scattered among these communities who were maintaining their faith while facing hostility from both Jewish and Gentile neighbors."
+        "subtitle": "Section B: Ask for Wisdom (v. 5-8)",
+        "text": "**'If any of you lacks wisdom, let him ask of God'**\n\nWhen facing trials, we need divine wisdom to respond correctly. James promises that God 'gives to all liberally and without reproach' - generously and without criticism. However, we must 'ask in faith, with no doubting.' The double-minded person (wavering between faith and doubt) is 'unstable in all his ways' and receives nothing. Wisdom comes through unwavering trust in God's character.",
+        "verses": "James 1:5-8",
+        "theme": "Ask for Wisdom → God Gives Generously"
       },
       {
-        "subtitle": "Trials and Testing",
-        "text": "James 1:2-4 immediately addresses trials: 'Count it all joy when you fall into various trials, knowing that the testing of your faith produces patience.' These scattered believers faced persecution, poverty, social ostracism, and temptation to abandon their faith. James teaches that these trials test and strengthen genuine faith, producing spiritual maturity and endurance."
+        "subtitle": "Section C: Humility & Perspective (v. 9-11)",
+        "text": "**'Let the lowly brother glory in his exaltation, and the rich in his humiliation'**\n\nJames addresses both poor and wealthy believers with a radical perspective shift. The poor should 'glory' in their spiritual exaltation in Christ - they have riches that transcend economics. The rich should 'glory' in their humiliation - recognizing that earthly wealth is temporary, fading 'like a flower of the field.' This counters worldly values and reminds all believers that true worth is found in Christ alone.",
+        "verses": "James 1:9-11",
+        "theme": "Humility & Perspective → Rich & Poor Contrasted"
       },
       {
-        "subtitle": "The Need for Wisdom",
-        "text": "In verses 5-8, James addresses the need for wisdom in trials: 'If any of you lacks wisdom, let him ask of God.' The scattered believers needed divine wisdom to navigate persecution, make difficult decisions, and respond to suffering with faith rather than doubt. James promises that God gives wisdom generously to those who ask in faith."
+        "subtitle": "Section D: Temptation (v. 12-15)",
+        "text": "**'Blessed is the man who endures temptation'**\n\nJames distinguishes between trials (external tests from circumstances) and temptations (internal enticements to sin). Those who endure receive 'the crown of life' - eternal reward. Crucially, God never tempts anyone to evil. Temptation arises from our own desires. James traces the progression: desire → enticement → conception → birth of sin → maturity → death. Understanding this pattern helps us interrupt it before sin takes root.",
+        "verses": "James 1:12-15",
+        "theme": "Temptation → Blessing for Those Who Persevere"
       },
       {
-        "subtitle": "Living Faith",
-        "text": "James's primary concern is that these believers demonstrate living, active faith - not mere intellectual agreement with doctrine. He later writes, 'Faith without works is dead' (James 2:26). In their scattered condition, facing various trials, they needed faith that produced godly character, compassion for the poor, control of the tongue, and practical righteousness."
-      }
-    ]
-  },
-  {
-    "step": 3,
-    "title": "Key Themes in James 1:2-18",
-    "description": "Understanding the major theological themes James addresses in this foundational passage.",
-    "content": [
-      {
-        "subtitle": "1. Trials and Joy (v. 2-4)",
-        "text": "James begins with a paradox: 'Count it all joy when you fall into various trials.' This doesn't mean believers should enjoy suffering, but should recognize its purpose. Trials test and prove the genuineness of faith, producing patience (endurance/perseverance). The goal is spiritual maturity - being 'perfect and complete, lacking nothing.'"
+        "subtitle": "Section E: God is the Source of Good (v. 16-18)",
+        "text": "**'Every good gift and every perfect gift is from above'**\n\nJames concludes by pointing to God's unchanging character. Unlike the source of temptation, God gives only good gifts. There is no variation or shadow in Him - He is perfectly consistent. The ultimate good gift is spiritual rebirth: 'He chose to give us birth through the word of truth, that we might be a kind of firstfruits of his creatures.' Our new birth is God's gracious work, securing our identity as His children and guaranteeing His ongoing goodness toward us.",
+        "verses": "James 1:16-18",
+        "theme": "God is the Source of Good → New Birth & Divine Purpose"
       },
       {
-        "subtitle": "2. Asking for Wisdom (v. 5-8)",
-        "text": "When facing trials, believers need wisdom to respond correctly. James instructs: 'Let him ask of God, who gives to all liberally.' However, we must 'ask in faith, with no doubting,' because the double-minded person is 'unstable in all his ways.' Wisdom from God enables us to see trials from His perspective and respond with faith rather than fear."
-      },
-      {
-        "subtitle": "3. Perspective on Poverty and Wealth (v. 9-11)",
-        "text": "James addresses both poor and rich believers. The poor brother should 'glory in his exaltation' - his true wealth in Christ. The rich should 'glory in his humiliation' - recognizing that earthly wealth is temporary 'like a flower of the field' that withers. This counters worldly values and reminds all believers of what truly matters."
-      },
-      {
-        "subtitle": "4. Enduring Temptation (v. 12-15)",
-        "text": "James distinguishes between trials (external tests) and temptations (internal enticements to sin). 'Blessed is the man who endures temptation,' receiving 'the crown of life.' Crucially, God never tempts anyone to sin - temptation comes from our own desires. When desire conceives, 'it gives birth to sin; and sin, when it is full-grown, brings forth death.'"
-      },
-      {
-        "subtitle": "5. God's Good Gifts (v. 16-18)",
-        "text": "James concludes by pointing to God's character: 'Every good gift and every perfect gift is from above.' Unlike the source of temptation, God gives only good things. He 'chose to give us birth through the word of truth' - making us 'a kind of firstfruits of His creatures.' This regeneration is God's gracious work, not human achievement, securing our identity as His children."
-      }
-    ]
-  },
-  {
-    "step": 4,
-    "title": "Practical Application",
-    "description": "How James 1:2-18 applies to Christian living today.",
-    "content": [
-      {
-        "subtitle": "Responding to Trials",
-        "text": "When you face difficulties - illness, financial pressure, relational conflict, persecution - consider it an opportunity for spiritual growth. Ask yourself: What is God teaching me? How is this testing and strengthening my faith? Rather than asking 'Why me?' ask 'What now?' Trust that God is using this trial to develop perseverance and maturity."
-      },
-      {
-        "subtitle": "Praying for Wisdom",
-        "text": "In any challenging situation, make James 1:5 your first response: 'If any of you lacks wisdom, let him ask of God.' Don't rely solely on human understanding. Pray specifically for divine wisdom in decisions, relationships, work situations, and moral dilemmas. Expect God to answer - He gives generously without reproach."
-      },
-      {
-        "subtitle": "Fighting Temptation",
-        "text": "Recognize the pattern James describes: desire → temptation → sin → death. Interrupt this cycle early. Identify your particular vulnerabilities and set up accountability. Remember that God is not the source of temptation - don't blame Him for your struggles. Take responsibility for your desires and flee from situations that trigger them."
-      },
-      {
-        "subtitle": "Valuing Eternal Riches",
-        "text": "Whether you're wealthy or poor by worldly standards, find your identity and worth in Christ, not in economic status. The poor should resist envy and materialism; the rich should resist pride and self-sufficiency. Both should 'glory' in their spiritual position - children of God and heirs of eternal life."
-      },
-      {
-        "subtitle": "Gratitude for God's Gifts",
-        "text": "Develop a habit of recognizing that 'every good and perfect gift' comes from God. This includes salvation, spiritual gifts, relationships, daily provisions, and even trials that produce growth. A grateful heart protects against both entitlement and despair. Thank God specifically and regularly for His gifts."
-      }
-    ]
-  },
-  {
-    "step": 5,
-    "title": "Summary and Reflection",
-    "description": "Review the key insights from James 1:2-18 and consider next steps.",
-    "content": [
-      {
-        "subtitle": "Main Points to Remember",
-        "text": "• Trials test and strengthen genuine faith, producing spiritual maturity\n• God gives wisdom generously to those who ask in faith\n• Both poverty and wealth are temporary - our true identity is in Christ\n• Temptation comes from our own desires, not from God\n• Every good gift, including our spiritual birth, comes from God"
-      },
-      {
-        "subtitle": "James's Call to Action",
-        "text": "James doesn't just want you to know these truths - he wants you to live them. As you continue in the book of James, you'll see repeated emphasis on being 'doers of the word, and not hearers only' (James 1:22). Living faith produces changed lives: patience in trials, wisdom in decisions, generosity to the poor, control of speech, and pure religion that cares for the vulnerable."
-      },
-      {
-        "subtitle": "Reflection Questions",
-        "text": "1. What trials am I currently facing? How can I view them as opportunities for growth?\n2. In what area of life do I most need God's wisdom right now?\n3. What temptations do I struggle with? What desires fuel those temptations?\n4. Am I more focused on earthly wealth or eternal riches?\n5. What good gifts from God have I taken for granted?"
-      },
-      {
-        "subtitle": "Next Steps",
-        "text": "• Memorize James 1:5 - 'If any of you lacks wisdom, let him ask of God, who gives to all liberally and without reproach, and it will be given to him.'\n• Keep a journal tracking how God uses trials to develop your character\n• Find an accountability partner to help you fight specific temptations\n• Practice daily gratitude by listing three 'good and perfect gifts' from God\n• Continue studying James chapters 2-5 to see how living faith is demonstrated"
+        "subtitle": "How the Sections Connect",
+        "text": "These five sections form a logical progression:\n\n1. **Trials are opportunities** for spiritual growth (v. 2-4)\n2. **Wisdom is needed** to navigate trials rightly (v. 5-8)\n3. **Perspective matters** - eternal values trump earthly ones (v. 9-11)\n4. **Temptation must be resisted** - it leads to death, not life (v. 12-15)\n5. **God's character is trustworthy** - He gives only good gifts (v. 16-18)\n\nTogether, they teach believers how to face suffering: with joy, seeking wisdom, maintaining proper perspective, resisting temptation, and trusting in God's goodness."
       }
     ]
   }

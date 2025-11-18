@@ -24,6 +24,7 @@
   <main class="w-full h-full">
     <ng-container *ngIf="steps.length">
       <app-map-view *ngIf="mapData" [mapData]="mapData" class="w-full h-full"></app-map-view>
+      <app-cluster-view *ngIf="clusterData" [clusterData]="clusterData" class="w-full h-full"></app-cluster-view>
       <!-- Add other step types here -->
     </ng-container>
     <ng-container *ngIf="!steps.length">

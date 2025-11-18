@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MapData } from '../map-view/map-view.component';
+import { ClusterData } from '../cluster-view/cluster-view.component';
 
 import { MapViewComponent } from '../map-view/map-view.component';
+import { ClusterViewComponent } from '../cluster-view/cluster-view.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-interactive-study',
   templateUrl: './interactive-study.component.html',
   styleUrls: ['./interactive-study.component.css'],
-  imports: [MapViewComponent, CommonModule]
+  imports: [MapViewComponent, ClusterViewComponent, CommonModule]
 })
 export class InteractiveStudyComponent implements OnInit {
   steps: any[] = [];
   currentStepIndex = 0;
   mapData: MapData | null = null;
+  clusterData: ClusterData | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -28,10 +31,17 @@ export class InteractiveStudyComponent implements OnInit {
   setStep(index: number) {
     this.currentStepIndex = index;
     const step = this.steps[index];
-    if (step && step.type === 'map' && step.mapData) {
-      this.mapData = step.mapData;
-    } else {
-      this.mapData = null;
+    
+    // Reset data
+    this.mapData = null;
+    this.clusterData = null;
+    
+    if (step) {
+      if (step.type === 'map' && step.mapData) {
+        this.mapData = step.mapData;
+      } else if (step.type === 'cluster' && step.clusterData) {
+        this.clusterData = step.clusterData;
+      }
     }
   }
 }
