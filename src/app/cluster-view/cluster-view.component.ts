@@ -64,6 +64,10 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   isLoadingVerses = false;
   verseLoadError = false;
 
+  // Flip card properties
+  flippedCards = new Set<number>();
+  modalCardIndex: number | null = null;
+
   getSectionGradient(section: string): string[] {
     if (!this.sectionColors[section]) {
       this.sectionColors = this.clusterData?.defaultColors || this.getDefaultColors();
@@ -460,6 +464,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
 
   toggleMode() {
     this.isGuidedMode = !this.isGuidedMode;
+    this.flippedCards.clear(); // Reset flipped cards
     if (this.isGuidedMode) {
       this.currentStep = 0;
       // Only show guided step if verses are already loaded
@@ -474,6 +479,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   nextStep() {
     if (this.currentStep < this.clusterData.nodes.length - 1) {
       this.currentStep++;
+      this.flippedCards.clear(); // Reset flipped cards
       this.showGuidedStep(this.currentStep);
     }
   }
@@ -481,6 +487,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   previousStep() {
     if (this.currentStep > 0) {
       this.currentStep--;
+      this.flippedCards.clear(); // Reset flipped cards
       this.showGuidedStep(this.currentStep);
     }
   }
@@ -754,5 +761,65 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       'I': ['#14b8a6', '#0d9488'], // teal
       'J': ['#fb923c', '#f97316']  // orange
     };
+  }
+
+  /**
+   * Get thought-provoking prompts for the current node
+   */
+  getCurrentNodePrompts(): ThoughtProvokingItem[] {
+    if (!this.clusterData?.nodes || this.currentStep >= this.clusterData.nodes.length) {
+      return [];
+    }
+    
+    const node = this.clusterData.nodes[this.currentStep];
+    if (!node.thoughtProvoking) {
+      return [];
+    }
+
+    // Convert to structured format if needed
+    return node.thoughtProvoking.map(item => {
+      if (typeof item === 'string') {
+        // Legacy format - try to detect type
+        let type: 'observe' | 'consider' | 'reflect' | 'question' = 'reflect';
+        if (item.toLowerCase().startsWith('notice')) {
+          type = 'observe';
+        } else if (item.toLowerCase().startsWith('consider') || item.toLowerCase().startsWith('think')) {
+          type = 'consider';
+        } else if (item.includes('?')) {
+          type = 'question';
+        }
+        return { type, text: item };
+      }
+      return item;
+    });
+  }
+
+  /**
+   * Get icon class for prompt type
+   */
+  getPromptIcon(type: string): string {
+    switch (type) {
+      case 'observe':
+        return 'fa-eye';
+      case 'consider':
+        return 'fa-brain';
+      case 'reflect':
+        return 'fa-heart';
+      case 'question':
+        return 'fa-circle-question';
+      default:
+        return 'fa-lightbulb';
+    }
+  }
+
+  /**
+   * Toggle flip card state
+   */
+  toggleCard(index: number): void {
+    this.modalCardIndex = index;
+  }
+
+  closeModal(): void {
+    this.modalCardIndex = null;
   }
 }
