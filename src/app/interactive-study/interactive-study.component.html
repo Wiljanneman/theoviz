@@ -23,6 +23,7 @@
   <!-- Content Area -->
   <main class="w-full h-full">
     <ng-container *ngIf="steps.length">
+      <app-bible-reading *ngIf="readingData" [readingData]="readingData" [verseReference]="verseReference" class="w-full h-full"></app-bible-reading>
       <app-map-view *ngIf="mapData" [mapData]="mapData" class="w-full h-full"></app-map-view>
       <app-cluster-view *ngIf="clusterData" [clusterData]="clusterData" class="w-full h-full"></app-cluster-view>
       <!-- Add other step types here -->

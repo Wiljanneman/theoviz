@@ -1,6 +1,7 @@
 import { Component, Input, AfterViewInit, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as d3 from 'd3';
+import { BibleService, BibleVerse } from '../services/bible.service';
 
 export interface ThoughtProvokingItem {
   type: 'observe' | 'consider' | 'reflect' | 'question';
@@ -12,7 +13,9 @@ export interface ClusterNode {
   label: string;
   section: string;
   verses?: string;
+  verseReference?: string; // API reference like "james 1:2-4"
   description: string;
+  verseText?: string; // Fetched from API
   theme?: string;
   keywords?: string[];
   thoughtProvoking?: (string | ThoughtProvokingItem)[]; // Support both formats
@@ -43,6 +46,8 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   @Input() clusterData!: ClusterData;
   @ViewChild('clusterContainer', { static: false }) clusterContainer!: ElementRef;
 
+  constructor(private bibleService: BibleService) {}
+
   private svg: any;
   private width = 1200;
   private height = 800;
@@ -53,6 +58,11 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   // Guided mode properties
   isGuidedMode = true;
   currentStep = 0;
+  
+  // Bible API properties
+  verseCache = new Map<string, string>();
+  isLoadingVerses = false;
+  verseLoadError = false;
 
   getSectionGradient(section: string): string[] {
     if (!this.sectionColors[section]) {
@@ -63,14 +73,13 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.renderCluster();
-    if (this.isGuidedMode && this.clusterData?.nodes?.length) {
-      // Start guided mode on first node after rendering completes
-      setTimeout(() => this.showGuidedStep(0), 500);
-    }
+    this.loadVerseContent();
+    // Note: showGuidedStep(0) is now called from loadVerseContent after verses load
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['clusterData'] && this.svg) {
+      this.loadVerseContent();
       this.renderCluster();
     }
   }
@@ -118,11 +127,17 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
         .attr('stop-color', colors[1]);
     });
 
-    // Prepare data
-    const nodes = this.clusterData.nodes.map(node => ({
+    // Prepare data with horizontal left-to-right positioning
+    const nodeCount = this.clusterData.nodes.length;
+    const horizontalSpacing = (this.width * 0.8) / (nodeCount - 1 || 1); // Use 80% of width
+    const startX = this.width * 0.1; // Start at 10% from left
+    
+    const nodes = this.clusterData.nodes.map((node, index) => ({
       ...node,
-      x: this.width / 2,
-      y: this.height / 2
+      x: startX + (index * horizontalSpacing),
+      y: this.height / 2,
+      fx: startX + (index * horizontalSpacing), // Fix x position to enforce left-to-right
+      fy: null // Allow vertical movement
     }));
 
     // Create links between nodes in sequence
@@ -185,13 +200,33 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       .attr('font-weight', 'bold')
       .text((d: any) => d.section ? `Section ${d.section}` : d.label);
 
-    // Add verse references (if available)
-    node.append('text')
-      .attr('text-anchor', 'middle')
-      .attr('dy', 15)
-      .attr('fill', '#fff')
-      .attr('font-size', '12px')
-      .text((d: any) => d.verses || '');
+    // Add verse references with enhanced styling (if available)
+    node.each(function(this: SVGGElement, d: any) {
+      if (d.verses) {
+        const nodeGroup = d3.select(this);
+        
+        // Add background rectangle for verse reference
+        const verseBg = nodeGroup.append('rect')
+          .attr('x', -40)
+          .attr('y', 5)
+          .attr('width', 80)
+          .attr('height', 20)
+          .attr('rx', 10)
+          .attr('fill', 'rgba(255, 255, 255, 0.2)')
+          .attr('stroke', 'rgba(255, 255, 255, 0.4)')
+          .attr('stroke-width', 1);
+        
+        // Add verse text with better styling
+        nodeGroup.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', 19)
+          .attr('fill', '#fff')
+          .attr('font-size', '11px')
+          .attr('font-weight', '600')
+          .attr('letter-spacing', '0.5px')
+          .text(d.verses);
+      }
+    });
 
     // Define base and expanded radius for use in event handlers
     const baseRadius = this.nodeRadius;
@@ -229,22 +264,39 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
         .duration(200)
         .attr('r', expandedRadius);
       
-      // Show tooltip with dynamic content
+      // Show tooltip with dynamic content and enhanced verse styling
       const tooltip = d3.select('#cluster-tooltip');
-      let tooltipHTML = `<div class="font-bold mb-2">${d.label}</div>`;
+      let tooltipHTML = '';
       
+      // Section header with verse badge
       if (d.section) {
-        tooltipHTML = `<div class="font-bold mb-2">Section ${d.section}: ${d.label}</div>`;
+        tooltipHTML = `<div class="flex items-center justify-between mb-3">
+          <div class="font-bold text-lg">Section ${d.section}: ${d.label}</div>`;
+        if (d.verses) {
+          tooltipHTML += `<div class="inline-flex items-center bg-purple-600/40 border border-purple-400/50 rounded px-2 py-1 ml-2">
+            <i class="fas fa-book-open text-purple-200 text-xs mr-1"></i>
+            <span class="text-xs font-medium text-purple-100">${d.verses}</span>
+          </div>`;
+        }
+        tooltipHTML += `</div>`;
+      } else {
+        tooltipHTML = `<div class="flex items-center justify-between mb-3">
+          <div class="font-bold text-lg">${d.label}</div>`;
+        if (d.verses) {
+          tooltipHTML += `<div class="inline-flex items-center bg-purple-600/40 border border-purple-400/50 rounded px-2 py-1 ml-2">
+            <i class="fas fa-book-open text-purple-200 text-xs mr-1"></i>
+            <span class="text-xs font-medium text-purple-100">${d.verses}</span>
+          </div>`;
+        }
+        tooltipHTML += `</div>`;
       }
       
-      if (d.verses) {
-        tooltipHTML += `<div class="text-sm mb-2">${d.verses}</div>`;
-      }
-      
-      tooltipHTML += `<div class="text-sm">${d.description}</div>`;
+      tooltipHTML += `<div class="text-sm leading-relaxed">${d.description}</div>`;
       
       if (d.keywords && d.keywords.length > 0) {
-        tooltipHTML += `<div class="text-xs mt-2 opacity-70">Keywords: ${d.keywords.join(', ')}</div>`;
+        tooltipHTML += `<div class="text-xs mt-3 pt-2 border-t border-purple-500/30 opacity-80">
+          <span class="text-purple-300">Keywords:</span> ${d.keywords.join(', ')}
+        </div>`;
       }
       
       tooltip.style('display', 'block')
@@ -303,11 +355,117 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       .on('end', dragended);
   }
 
+  getCurrentVerse(): string {
+    if (!this.clusterData?.nodes || this.currentStep >= this.clusterData.nodes.length) {
+      return '';
+    }
+    return this.clusterData.nodes[this.currentStep].verses || '';
+  }
+
+  /**
+   * Load verse content from Bible API for all nodes
+   */
+  private loadVerseContent(): void {
+    if (!this.clusterData?.nodes) {
+      return;
+    }
+
+    this.isLoadingVerses = true;
+    
+    // Get all unique verse references
+    const references = this.clusterData.nodes
+      .filter(node => node.verseReference)
+      .map(node => node.verseReference!);
+
+    if (references.length === 0) {
+      this.isLoadingVerses = false;
+      return;
+    }
+
+    // Fetch verses from API
+    this.bibleService.getMultipleVerses(references).subscribe({
+      next: (results) => {
+        // Update nodes with fetched verse text
+        this.clusterData.nodes.forEach(node => {
+          if (node.verseReference && results[node.verseReference]) {
+            const bibleVerse = results[node.verseReference];
+            if (bibleVerse) {
+              node.verseText = this.bibleService.getFormattedVerseText(bibleVerse);
+              this.verseCache.set(node.verseReference, node.verseText);
+            }
+          }
+        });
+        
+        this.isLoadingVerses = false;
+        // Re-render to show updated verse content
+        this.renderCluster();
+        
+        // If in guided mode and this is the initial load, show the first step
+        if (this.isGuidedMode && this.currentStep === 0) {
+          setTimeout(() => this.showGuidedStep(0), 200);
+        }
+        
+        // If detail panel is open, refresh it with new verse content
+        const detailPanel = d3.select('#detail-panel');
+        if (!detailPanel.classed('hidden')) {
+          // Find the currently displayed node and refresh its details
+          const currentNode = this.clusterData.nodes[this.currentStep];
+          if (currentNode) {
+            this.showNodeDetails(currentNode);
+          }
+        }
+      },
+      error: (error) => {
+        console.error('Failed to load verse content:', error);
+        this.isLoadingVerses = false;
+        this.verseLoadError = true;
+        
+        // Show user-friendly error message
+        this.showVerseLoadError();
+      }
+    });
+  }
+
+  /**
+   * Get verse text for a node (from cache or API)
+   */
+  getVerseText(node: ClusterNode): string {
+    if (node.verseText) {
+      return node.verseText;
+    }
+    
+    if (node.verseReference && this.verseCache.has(node.verseReference)) {
+      return this.verseCache.get(node.verseReference)!;
+    }
+    
+    return node.description; // Fallback to description
+  }
+
+  /**
+   * Show error message for verse loading failure
+   */
+  private showVerseLoadError(): void {
+    // Could implement toast notification or modal here
+    console.warn('Unable to load Bible verses. Check your internet connection.');
+  }
+
+  /**
+   * Retry loading verse content
+   */
+  retryLoadVerses(): void {
+    this.verseLoadError = false;
+    this.verseCache.clear(); // Clear cache to force fresh API calls
+    this.loadVerseContent();
+  }
+
   toggleMode() {
     this.isGuidedMode = !this.isGuidedMode;
     if (this.isGuidedMode) {
       this.currentStep = 0;
-      this.showGuidedStep(0);
+      // Only show guided step if verses are already loaded
+      if (!this.isLoadingVerses && this.clusterData?.nodes?.some(n => n.verseText)) {
+        this.showGuidedStep(0);
+      }
     } else {
       this.resetGuidedMode();
     }
@@ -383,11 +541,22 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
     const headerDiv = content.append('div')
       .attr('class', 'flex justify-between items-start mb-4');
     
-    headerDiv.append('div')
-      .html(`
-        <h2 class="text-2xl font-bold text-white mb-1">${node.label}</h2>
-        <div class="text-lg text-slate-300">${node.verses || ''}</div>
-      `);
+    const headerContent = headerDiv.append('div');
+    
+    headerContent.append('h2')
+      .attr('class', 'text-2xl font-bold text-white mb-2')
+      .text(node.label);
+    
+    if (node.verses) {
+      headerContent.append('div')
+        .attr('class', 'flex items-center gap-2 mb-1')
+        .html(`
+          <div class="inline-flex items-center bg-purple-600/30 border border-purple-500/50 rounded-full px-3 py-1">
+            <i class="fas fa-book-open text-purple-300 text-xs mr-2"></i>
+            <span class="text-sm font-semibold text-purple-100">${node.verses}</span>
+          </div>
+        `);
+    }
     
     // Close button (only in free mode)
     if (!this.isGuidedMode) {
@@ -407,30 +576,29 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
                <div class="text-white">${node.theme}</div>`);
     }
 
-    // Description
-    if (node.description) {
+    // Bible verse content (if available from API)
+    const verseText = this.getVerseText(node);
+    if (verseText && verseText !== node.description) {
       content.append('div')
-        .attr('class', 'text-slate-200 mb-4 leading-relaxed')
-        .text(node.description);
-    }
-
-    // Keywords
-    if (node.keywords && node.keywords.length > 0) {
-      const keywordsDiv = content.append('div')
-        .attr('class', 'mb-4');
-      
-      keywordsDiv.append('div')
-        .attr('class', 'text-sm font-semibold text-slate-300 mb-2')
-        .text('Key Concepts:');
-
-      const keywordsContainer = keywordsDiv.append('div')
-        .attr('class', 'flex flex-wrap gap-2');
-
-      node.keywords.forEach((keyword: string) => {
-        keywordsContainer.append('span')
-          .attr('class', 'bg-slate-700 text-slate-200 px-3 py-1 rounded-full text-sm')
-          .text(keyword);
-      });
+        .attr('class', 'bg-slate-700/30 border border-slate-600 rounded-lg p-4 mb-4')
+        .html(`
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fas fa-bible text-purple-400"></i>
+            <span class="text-sm font-semibold text-purple-300">Scripture Text</span>
+            ${this.isLoadingVerses ? '<i class="fas fa-spinner fa-spin text-purple-400 ml-2"></i>' : ''}
+          </div>
+          <div class="text-slate-100 leading-relaxed" style="line-height: 1.6;">
+            ${this.isLoadingVerses ? 
+              'Loading verse content...' : 
+              (this.verseLoadError ? 
+                `<div class="flex items-center gap-2 text-amber-300">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <span>Unable to load verse content. <button onclick="this.closest('.cluster-view').retryLoadVerses()" class="underline hover:text-amber-200">Retry</button></span>
+                </div>` : 
+                verseText)
+            }
+          </div>
+        `);
     }
 
     // Thought-Provoking Prompts (Collapsible)
