@@ -47,15 +47,22 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
   private markers: Array<{ marker: maplibregl.Marker; type: string; element: HTMLElement }> = [];
   private arrowLayersAdded: boolean = false;
   activeFilter: string = 'all';
+  expandedFilter: string | null = null;
 
   private getDefaultIcon(type: string): string {
     const iconMap: { [key: string]: string } = {
       persecution: 'fas fa-skull-crossbones',
       author: 'fas fa-pen-fancy',
       audience: 'fas fa-users',
-      trial: 'fas fa-fire'
+      trial: 'fas fa-fire',
+      'notable-event': 'fas fa-fire'
     };
     return iconMap[type] || 'fas fa-map-pin';
+  }
+
+  toggleExpand(filterType: string, event: Event): void {
+    event.stopPropagation();
+    this.expandedFilter = this.expandedFilter === filterType ? null : filterType;
   }
 
   filterMarkers(filterType: string): void {

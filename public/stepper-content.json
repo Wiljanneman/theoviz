@@ -39,63 +39,63 @@
           "lat": 31.7683,
           "lng": 35.2137,
           "label": "Jerusalem - James the Just",
-          "description": "Where James, a bondservant of God and the Lord Jesus Christ, led the Jerusalem church. Known as 'James the Just,' he was martyred around 62 AD.",
+          "description": "James, the half-brother of Jesus, led the Jerusalem church and was known for his exceptional holiness and devotion to prayer. Ancient historians record he was called 'James the Just' and had knees like a camel from constant kneeling in prayer. He was martyred by stoning around 62 AD by order of the high priest Ananus.",
           "type": "author",
           "icon": "fas fa-pen-fancy"
         },
         {
           "lat": 31.7780,
           "lng": 35.2354,
-          "label": "Stephen's Martyrdom - Scattering Begins",
-          "description": "Stephen's death (Acts 7-8) triggered great persecution in Jerusalem, causing believers to scatter throughout Judea, Samaria, and beyond (Acts 8:1)",
-          "type": "persecution",
+          "label": "Stephen's Martyrdom - The Great Scattering",
+          "description": "Stephen's stoning (Acts 7:54-60) marked the beginning of intense persecution. Saul (later Paul) went house to house dragging Christians to prison. This persecution scattered believers throughout Judea, Samaria, and beyond - the very audience James addresses as 'the twelve tribes in the Dispersion' (James 1:1).",
+          "type": "notable-event",
           "icon": "fas fa-skull-crossbones"
         },
         {
           "lat": 41.9028,
           "lng": 12.4964,
           "label": "Trials in Rome",
-          "description": "Jewish believers in Rome faced suspicion from both Jewish synagogues and Roman authorities, experiencing social ostracism and economic hardship",
-          "type": "trial",
+          "description": "Emperor Claudius expelled Jews (including Jewish Christians) from Rome around 49 AD due to disputes about 'Chrestus' (likely Christ). Believers faced the double trial of religious persecution from synagogues who rejected Jesus as Messiah, and political suspicion from Roman authorities. Economic hardship followed as they lost homes and businesses.",
+          "type": "notable-event",
           "icon": "fas fa-fire"
         },
         {
           "lat": 37.9795,
           "lng": 23.7162,
           "label": "Persecution in Greece",
-          "description": "Scattered believers in Athens and Corinth faced trials from pagan neighbors and Jewish opposition (Acts 17-18)",
-          "type": "trial",
+          "description": "In Athens, philosophers mocked Paul's resurrection teaching. In Corinth, Jews united to bring charges against Paul before the proconsul Gallio (Acts 18:12-17). Greek believers faced contempt from educated elites who saw Christianity as foolishness, while also experiencing Jewish synagogue opposition.",
+          "type": "notable-event",
           "icon": "fas fa-fire"
         },
         {
           "lat": 37.8746,
           "lng": 27.2658,
           "label": "Trials in Asia Minor",
-          "description": "Jewish Christians in Ephesus and surrounding regions faced persecution from both synagogues and pagan merchants (Acts 19)",
-          "type": "trial",
+          "description": "The riot in Ephesus (Acts 19:23-41) shows the economic persecution believers faced. Silversmiths who profited from Artemis worship incited a city-wide uproar, shouting 'Great is Artemis of the Ephesians' for two hours. When people left idolatry to follow Christ, entire industries suffered - creating violent opposition.",
+          "type": "notable-event",
           "icon": "fas fa-fire"
         },
         {
           "lat": 36.2021,
           "lng": 36.1604,
           "label": "Poverty & Testing in Antioch",
-          "description": "Diaspora believers in Antioch faced economic trials and famine, requiring relief from other churches (Acts 11:27-30)",
-          "type": "trial",
-          "icon": "fas fa-wheat-awn-slash"
+          "description": "The prophet Agabus predicted a severe famine throughout the Roman world during Claudius's reign (Acts 11:27-28). This tested believers' faith as they faced hunger. The Antioch church responded by sending relief to Judea through Barnabas and Saul - demonstrating how trials can produce endurance and practical love.",
+          "type": "notable-event",
+          "icon": "fas fa-fire"
         },
         {
           "lat": 31.2001,
           "lng": 29.9187,
           "label": "Hostility in Alexandria",
-          "description": "Jewish believers in Egypt's largest city faced opposition from traditional Jewish communities and Greek-speaking pagans",
-          "type": "trial",
+          "description": "Alexandria had the largest Jewish population outside Palestine - over 200,000 Jews living in two of the city's five districts. Jewish Christians here faced intense persecution from their own people who viewed Jesus as heresy against Moses. Greek mobs also attacked Jewish quarters, as recorded by Philo, creating a hostile environment from all sides.",
+          "type": "notable-event",
           "icon": "fas fa-fire"
         },
         {
           "lat": 41.9973,
           "lng": 21.4280,
           "label": "Macedonia - Philippi & Thessalonica",
-          "description": "Regions in northern Greece where Jewish Christian communities were established among the diaspora",
+          "description": "In Philippi, Paul and Silas were beaten and imprisoned (Acts 16). In Thessalonica, jealous Jews formed a mob, dragging believers before city authorities. These Macedonian churches faced persecution yet displayed extraordinary generosity - giving out of their extreme poverty to help others (2 Cor 8:1-5).",
           "type": "audience",
           "icon": "fas fa-users"
         },
@@ -103,7 +103,7 @@
           "lat": 37.9795,
           "lng": 23.7162,
           "label": "Achaia - Athens & Corinth",
-          "description": "Southern Greece region with significant Jewish diaspora communities receiving James's letter",
+          "description": "Athens was the intellectual capital where philosophers debated, but most considered the gospel 'foolishness' (1 Cor 1:23). Corinth was a wealthy port city notorious for immorality - the temple of Aphrodite employed 1,000 prostitutes. Jewish believers navigated between Greek wisdom, pagan immorality, and synagogue rejection.",
           "type": "audience",
           "icon": "fas fa-users"
         },
@@ -111,7 +111,7 @@
           "lat": 37.8746,
           "lng": 27.2658,
           "label": "Asia - Ephesus",
-          "description": "Major province in western Asia Minor with large Jewish Christian populations in the Dispersion",
+          "description": "Ephesus was Asia's capital and commercial hub, home to the magnificent Temple of Artemis (Diana) - one of the Seven Wonders of the Ancient World. The city was steeped in magical arts - when believers turned to Christ, they burned their magic scrolls worth 50,000 silver pieces (Acts 19:19). This economic and spiritual transformation sparked fierce opposition.",
           "type": "audience",
           "icon": "fas fa-people-group"
         },
@@ -119,7 +119,7 @@
           "lat": 38.6234,
           "lng": 34.7286,
           "label": "Galatia & Cappadocia",
-          "description": "Central Asia Minor regions where Jewish believers were scattered (1 Peter 1:1)",
+          "description": "Central Asia Minor's rugged highlands housed scattered Jewish communities among Celtic and Greek populations. These churches faced pressure from Judaizers - teachers who insisted Gentile believers must follow Jewish law and be circumcised. This created confusion about faith versus works, a tension James addresses by showing faith proves itself through actions.",
           "type": "audience",
           "icon": "fas fa-people-group"
         },
@@ -127,7 +127,7 @@
           "lat": 40.1828,
           "lng": 29.0667,
           "label": "Bithynia & Pontus",
-          "description": "Northern Asia Minor provinces along the Black Sea with diaspora Jewish communities",
+          "description": "These remote provinces along the Black Sea coast housed isolated Jewish diaspora communities. Pliny the Younger's later letter to Emperor Trajan (112 AD) reveals systematic persecution here - Christians who refused to curse Christ and worship Roman gods were executed. Peter specifically addresses these believers (1 Peter 1:1), encouraging them to stand firm under trial.",
           "type": "audience",
           "icon": "fas fa-people-group"
         },
@@ -135,7 +135,7 @@
           "lat": 36.2021,
           "lng": 36.1604,
           "label": "Syria - Antioch",
-          "description": "Major diaspora hub where Jewish believers scattered by persecution preached the gospel (Acts 11:19-26)",
+          "description": "The third largest city in the Roman Empire and major diaspora hub. After Stephen's death, scattered believers preached here, establishing one of the first predominantly Gentile churches (Acts 11:19-26). It was here that followers were first called 'Christians'. The church faced famine and economic hardship requiring relief from other congregations.",
           "type": "audience",
           "icon": "fas fa-users"
         },
@@ -143,7 +143,7 @@
           "lat": 35.1264,
           "lng": 33.4299,
           "label": "Cyprus - Paphos",
-          "description": "Island where Jewish believers from Cyprus fled and established communities (Acts 11:19-20)",
+          "description": "Barnabas's home island became an early destination for scattered believers after Stephen's martyrdom (Acts 11:19). These Cypriot believers, along with men from Cyrene, were the first to preach to Greeks at Antioch. The island governor Sergius Paulus became a believer despite opposition from the sorcerer Elymas (Acts 13:6-12).",
           "type": "audience",
           "icon": "fas fa-people-group"
         },
@@ -151,7 +151,7 @@
           "lat": 35.1856,
           "lng": 25.1300,
           "label": "Crete",
-          "description": "Mediterranean island with Jewish communities part of the broader Dispersion",
+          "description": "Jews from Crete were present at Pentecost (Acts 2:11), likely bringing the gospel back to their island. Paul later left Titus to organize the Cretan churches and appoint elders in every city (Titus 1:5). The Cretan believers faced challenges from their culture - even quoted as saying 'Cretans are always liars, evil beasts, lazy gluttons' (Titus 1:12).",
           "type": "audience",
           "icon": "fas fa-people-group"
         },
@@ -159,7 +159,7 @@
           "lat": 31.2001,
           "lng": 29.9187,
           "label": "Egypt - Alexandria",
-          "description": "Major center of Jewish diaspora with large communities of Hellenistic Jews",
+          "description": "Alexandria was the intellectual heart of Hellenistic Judaism - where the Septuagint (Greek Old Testament) was translated. Over 40% of the city was Jewish. Apollos, 'eloquent and mighty in the Scriptures,' came from here (Acts 18:24). Jewish Christians navigated between Greek philosophy, traditional Judaism, and their new faith in Jesus.",
           "type": "audience",
           "icon": "fas fa-users"
         },
@@ -167,7 +167,7 @@
           "lat": 32.8872,
           "lng": 21.9011,
           "label": "Cyrene (Libya)",
-          "description": "North African region with significant Jewish diaspora (Acts 11:20 mentions men from Cyrene)",
+          "description": "This North African Jewish community produced Simon who carried Jesus's cross (Mark 15:21). After the scattering, 'men from Cyprus and Cyrene' went to Antioch and were the first to preach to Gentiles (Acts 11:20) - breaking the Jewish-only barrier. Cyrenian Jews had their own synagogue in Jerusalem (Acts 6:9).",
           "type": "audience",
           "icon": "fas fa-users"
         },
@@ -175,7 +175,7 @@
           "lat": 41.9028,
           "lng": 12.4964,
           "label": "Rome - Italy",
-          "description": "Imperial capital with large Jewish population, some believing in Jesus among the Dispersion",
+          "description": "Rome's Jewish population numbered 40,000-50,000, living primarily in Trastevere. Emperor Claudius expelled Jews around 49 AD over 'Chrestus' disputes - forcing out believers like Priscilla and Aquila (Acts 18:2). Roman Jewish Christians faced constant tension: maintaining Jewish identity, confessing Christ as Lord (not Caesar), and navigating imperial suspicion.",
           "type": "audience",
           "icon": "fas fa-landmark"
         }

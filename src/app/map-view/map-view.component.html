@@ -4,40 +4,69 @@
   <!-- Filter overlay -->
   <div class="map-filter-overlay">
     <div class="filter-header">Explore the Context</div>
-    <button 
-      class="filter-button" 
-      [class.active]="activeFilter === 'all'"
-      (click)="filterMarkers('all')">
-      <i class="fas fa-layer-group"></i>
-      <span>Show All</span>
-    </button>
-    <button 
-      class="filter-button" 
-      [class.active]="activeFilter === 'author'"
-      (click)="filterMarkers('author')">
-      <i class="fas fa-pen-fancy"></i>
-      <span>Who wrote the letter?</span>
-    </button>
-    <button 
-      class="filter-button" 
-      [class.active]="activeFilter === 'audience'"
-      (click)="filterMarkers('audience')">
-      <i class="fas fa-users"></i>
-      <span>Who was the audience?</span>
-    </button>
-    <button 
-      class="filter-button" 
-      [class.active]="activeFilter === 'persecution'"
-      (click)="filterMarkers('persecution')">
-      <i class="fas fa-skull-crossbones"></i>
-      <span>What persecutions occurred?</span>
-    </button>
-    <button 
-      class="filter-button" 
-      [class.active]="activeFilter === 'trial'"
-      (click)="filterMarkers('trial')">
-      <i class="fas fa-fire"></i>
-      <span>What trials did they face?</span>
-    </button>
+    
+    <div class="filter-item">
+      <button 
+        class="filter-button" 
+        [class.active]="activeFilter === 'all'"
+        (click)="filterMarkers('all')">
+        <i class="fas fa-layer-group"></i>
+        <span>Show All</span>
+        <i class="fas fa-chevron-down chevron-icon" 
+           [class.rotated]="expandedFilter === 'all'"
+           (click)="toggleExpand('all', $event)"></i>
+      </button>
+      <div class="filter-description" [class.expanded]="expandedFilter === 'all'">
+        View all markers showing the complete historical context of James's letter.
+      </div>
+    </div>
+    
+    <div class="filter-item">
+      <button 
+        class="filter-button" 
+        [class.active]="activeFilter === 'author'"
+        (click)="filterMarkers('author')">
+        <i class="fas fa-pen-fancy"></i>
+        <span>Who wrote the letter?</span>
+        <i class="fas fa-chevron-down chevron-icon" 
+           [class.rotated]="expandedFilter === 'author'"
+           (click)="toggleExpand('author', $event)"></i>
+      </button>
+      <div class="filter-description" [class.expanded]="expandedFilter === 'author'">
+        James, Jesus's half-brother, led the Jerusalem church. Known as "James the Just" for his exceptional holiness, he likely wrote this letter around 45-49 AD - making it possibly the earliest New Testament book. He was eventually martyred by stoning in 62 AD.
+      </div>
+    </div>
+    
+    <div class="filter-item">
+      <button 
+        class="filter-button" 
+        [class.active]="activeFilter === 'audience'"
+        (click)="filterMarkers('audience')">
+        <i class="fas fa-users"></i>
+        <span>Who was the audience?</span>
+        <i class="fas fa-chevron-down chevron-icon" 
+           [class.rotated]="expandedFilter === 'audience'"
+           (click)="toggleExpand('audience', $event)"></i>
+      </button>
+      <div class="filter-description" [class.expanded]="expandedFilter === 'audience'">
+        "The twelve tribes scattered abroad" - Jewish believers who fled persecution after Stephen's death. By the first century, more Jews lived outside Palestine than within it. These diaspora communities maintained their Jewish identity while following Jesus as Messiah, facing hostility from both Jews and Gentiles.
+      </div>
+    </div>
+    
+    <div class="filter-item">
+      <button 
+        class="filter-button" 
+        [class.active]="activeFilter === 'notable-event'"
+        (click)="filterMarkers('notable-event')">
+        <i class="fas fa-fire"></i>
+        <span>Notable Events & Trials</span>
+        <i class="fas fa-chevron-down chevron-icon" 
+           [class.rotated]="expandedFilter === 'notable-event'"
+           (click)="toggleExpand('notable-event', $event)"></i>
+      </button>
+      <div class="filter-description" [class.expanded]="expandedFilter === 'notable-event'">
+        From Stephen's martyrdom to economic hardship, social ostracism, and persecution across the Empire - these trials tested their faith. James wrote to encourage them to see suffering not as punishment, but as an opportunity for spiritual growth and maturity.
+      </div>
+    </div>
   </div>
 </div>
