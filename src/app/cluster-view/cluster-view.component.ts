@@ -807,9 +807,34 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
         return 'fa-heart';
       case 'question':
         return 'fa-circle-question';
+      case 'discover':
+        return 'fa-book';
+      case 'apply':
+        return 'fa-tools';
+      case 'reframe':
+        return 'fa-glasses';
+      case 'become':
+        return 'fa-hand-holding-heart';
       default:
         return 'fa-lightbulb';
     }
+  }
+
+  /**
+   * Get display label and subtext for prompt type
+   */
+  getPromptLabel(type: string): { label: string; subtext: string } {
+    const labels: { [key: string]: { label: string; subtext: string } } = {
+      'observe': { label: 'Observe', subtext: '' },
+      'consider': { label: 'Consider', subtext: '' },
+      'reflect': { label: 'Reflect', subtext: '' },
+      'question': { label: 'Question', subtext: '' },
+      'discover': { label: 'Discover', subtext: 'Propositional' },
+      'apply': { label: 'Apply', subtext: 'Procedural' },
+      'reframe': { label: 'Reframe', subtext: 'Perspectival' },
+      'become': { label: 'Become', subtext: 'Participatory' }
+    };
+    return labels[type] || { label: type, subtext: '' };
   }
 
   /**

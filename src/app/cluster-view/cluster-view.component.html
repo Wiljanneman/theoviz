@@ -32,10 +32,12 @@
                  (click)="toggleCard(i)">
               <div class="flip-card-inner">
                 <!-- Front -->
-                <div class="flip-card-front" [attr.data-type]="prompt.type">
-                  <div class="flex flex-col items-center gap-4">
-                    <i class="fas fa-lg" [ngClass]="getPromptIcon(prompt.type)"></i>
-                    <span class="text-xs uppercase font-bold">{{ prompt.type }}</span>
+                <div class="flip-card-front" [attr.data-type]="prompt.type">                  <div class="flex flex-col items-center justify-center gap-1">
+                    <i class="fas fa-lg mb-2" [ngClass]="getPromptIcon(prompt.type)"></i>
+                    <div class="text-center">
+                      <div class="text-xs uppercase font-bold">{{ getPromptLabel(prompt.type).label }}</div>
+                      <div *ngIf="getPromptLabel(prompt.type).subtext" class="text-[10px] opacity-70 mt-0.5">{{ getPromptLabel(prompt.type).subtext }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -53,9 +55,15 @@
           <div class="overlay-header">
             <i class="fas fa-2x" 
                [ngClass]="getPromptIcon(getCurrentNodePrompts()[modalCardIndex].type) + ' ' + getCurrentNodePrompts()[modalCardIndex].type"></i>
-            <h3 class="overlay-type" [ngClass]="getCurrentNodePrompts()[modalCardIndex].type">
-              {{ getCurrentNodePrompts()[modalCardIndex].type }}
-            </h3>
+            <div>
+              <h3 class="overlay-type" [ngClass]="getCurrentNodePrompts()[modalCardIndex].type">
+                {{ getPromptLabel(getCurrentNodePrompts()[modalCardIndex].type).label }}
+              </h3>
+              <p *ngIf="getPromptLabel(getCurrentNodePrompts()[modalCardIndex].type).subtext" 
+                 class="text-sm opacity-60 mt-1">
+                {{ getPromptLabel(getCurrentNodePrompts()[modalCardIndex].type).subtext }}
+              </p>
+            </div>
           </div>
           <div class="overlay-body">
             {{ getCurrentNodePrompts()[modalCardIndex].text }}
