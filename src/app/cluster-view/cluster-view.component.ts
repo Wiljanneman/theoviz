@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { BibleService, BibleVerse } from '../services/bible.service';
 
 export interface ThoughtProvokingItem {
-  type: 'observe' | 'consider' | 'reflect' | 'question';
+  type: 'discover' | 'apply' | 'reframe' | 'become';
   text: string;
 }
 
@@ -647,22 +647,22 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
         
         if (typeof item === 'string') {
           // Legacy format - try to detect type from text
-          if (item.toLowerCase().startsWith('notice')) {
-            itemType = 'observe';
+          if (item.toLowerCase().startsWith('notice') || item.toLowerCase().startsWith('observe')) {
+            itemType = 'discover';
             iconClass = 'fa-eye';
             iconColor = 'text-blue-400';
-          } else if (item.toLowerCase().startsWith('consider') || item.toLowerCase().startsWith('think')) {
-            itemType = 'consider';
-            iconClass = 'fa-brain';
-            iconColor = 'text-purple-400';
-          } else if (item.includes('?')) {
-            itemType = 'question';
-            iconClass = 'fa-circle-question';
+          } else if (item.toLowerCase().startsWith('practice') || item.toLowerCase().startsWith('apply')) {
+            itemType = 'apply';
+            iconClass = 'fa-hands';
+            iconColor = 'text-green-400';
+          } else if (item.toLowerCase().startsWith('this reframes') || item.toLowerCase().startsWith('reframe')) {
+            itemType = 'reframe';
+            iconClass = 'fa-lightbulb';
             iconColor = 'text-amber-400';
           } else {
-            itemType = 'reflect';
-            iconClass = 'fa-heart';
-            iconColor = 'text-rose-400';
+            itemType = 'become';
+            iconClass = 'fa-seedling';
+            iconColor = 'text-emerald-400';
           }
           itemText = item;
         } else {
@@ -671,21 +671,21 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
           itemText = item.text;
           
           switch (item.type) {
-            case 'observe':
+            case 'discover':
               iconClass = 'fa-eye';
               iconColor = 'text-blue-400';
               break;
-            case 'consider':
-              iconClass = 'fa-brain';
-              iconColor = 'text-purple-400';
+            case 'apply':
+              iconClass = 'fa-hands';
+              iconColor = 'text-green-400';
               break;
-            case 'reflect':
-              iconClass = 'fa-heart';
-              iconColor = 'text-rose-400';
-              break;
-            case 'question':
-              iconClass = 'fa-circle-question';
+            case 'reframe':
+              iconClass = 'fa-lightbulb';
               iconColor = 'text-amber-400';
+              break;
+            case 'become':
+              iconClass = 'fa-seedling';
+              iconColor = 'text-emerald-400';
               break;
           }
         }
@@ -780,13 +780,13 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
     return node.thoughtProvoking.map(item => {
       if (typeof item === 'string') {
         // Legacy format - try to detect type
-        let type: 'observe' | 'consider' | 'reflect' | 'question' = 'reflect';
-        if (item.toLowerCase().startsWith('notice')) {
-          type = 'observe';
-        } else if (item.toLowerCase().startsWith('consider') || item.toLowerCase().startsWith('think')) {
-          type = 'consider';
-        } else if (item.includes('?')) {
-          type = 'question';
+        let type: 'discover' | 'apply' | 'reframe' | 'become' = 'discover';
+        if (item.toLowerCase().startsWith('practice') || item.toLowerCase().startsWith('apply')) {
+          type = 'apply';
+        } else if (item.toLowerCase().startsWith('this reframes') || item.toLowerCase().startsWith('reframe')) {
+          type = 'reframe';
+        } else if (item.toLowerCase().startsWith('are you becoming')) {
+          type = 'become';
         }
         return { type, text: item };
       }
@@ -799,22 +799,14 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
    */
   getPromptIcon(type: string): string {
     switch (type) {
-      case 'observe':
-        return 'fa-eye';
-      case 'consider':
-        return 'fa-brain';
-      case 'reflect':
-        return 'fa-heart';
-      case 'question':
-        return 'fa-circle-question';
       case 'discover':
-        return 'fa-book';
+        return 'fa-eye';
       case 'apply':
-        return 'fa-tools';
+        return 'fa-hands';
       case 'reframe':
-        return 'fa-glasses';
+        return 'fa-lightbulb';
       case 'become':
-        return 'fa-hand-holding-heart';
+        return 'fa-seedling';
       default:
         return 'fa-lightbulb';
     }
@@ -825,10 +817,6 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
    */
   getPromptLabel(type: string): { label: string; subtext: string } {
     const labels: { [key: string]: { label: string; subtext: string } } = {
-      'observe': { label: 'Observe', subtext: '' },
-      'consider': { label: 'Consider', subtext: '' },
-      'reflect': { label: 'Reflect', subtext: '' },
-      'question': { label: 'Question', subtext: '' },
       'discover': { label: 'Discover', subtext: 'Propositional' },
       'apply': { label: 'Apply', subtext: 'Procedural' },
       'reframe': { label: 'Reframe', subtext: 'Perspectival' },

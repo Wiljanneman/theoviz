@@ -247,12 +247,47 @@
   {
     "step": 3,
     "type": "cluster",
-    "title": "Structure of James 1:2-27",
-    "description": "James 1:2-27 is carefully structured into nine interconnected sections, each building on the previous to present a complete picture of how believers should respond to trials, understand God's character, and live out true religion through practical faith.",
+    "title": "Structure of James 1",
+    "description": "James 1 is carefully structured, beginning with the author's introduction and moving through interconnected themes about trials, wisdom, temptation, and true religion.",
     "clusterData": {
-      "title": "Nine Sections of James 1:2-27",
+      "title": "Sections of James 1",
       "description": "Explore the interconnected themes by clicking on each section",
       "nodes": [
+        {
+          "id": "section-intro",
+          "label": "James's Greeting",
+          "section": "Intro",
+          "verses": "v. 1",
+          "verseReference": "james 1:1",
+          "description": "James introduces himself not as 'the brother of Jesus' but as 'a bondservant of God and of the Lord Jesus Christ.' He writes to 'the twelve tribes scattered abroad' - Jewish believers dispersed throughout the Roman world after persecution.",
+          "theme": "James's Identity → Servant, Not Brother",
+          "keywords": ["James", "bondservant", "twelve tribes", "scattered", "dispersion"],
+          "crossReferences": [
+            { "reference": "Matthew 13:55", "votes": 45 },
+            { "reference": "Acts 15:13", "votes": 42 },
+            { "reference": "1 Corinthians 15:7", "votes": 38 },
+            { "reference": "John 7:5", "votes": 35 },
+            { "reference": "Jude 1", "votes": 30 }
+          ],
+          "thoughtProvoking": [
+            {
+              "type": "discover",
+              "text": "James was Jesus's half-brother (Matthew 13:55), yet he introduces himself as 'a bondservant' - literally a slave (doulos). He doesn't trade on family connection but emphasizes submission to Christ as Lord (kurios - master)."
+            },
+            {
+              "type": "apply",
+              "text": "James probably converted after Jesus appeared to him following the resurrection (1 Corinthians 15:7). Before that, Jesus's brothers were unsupportive (John 7:5). Have you had a similar transformation from skepticism to devotion?"
+            },
+            {
+              "type": "reframe",
+              "text": "Early church tradition says James prayed so much his knees 'had large and thick calluses, making them look like the knees of a camel.' This reframes leadership - not about status but about prayer and servanthood."
+            },
+            {
+              "type": "become",
+              "text": "James could have promoted himself as Jesus's brother, but he chose the title 'bondservant.' What earthly credentials or relationships are you tempted to rely on instead of simply being Christ's servant?"
+            }
+          ]
+        },
         {
           "id": "section-a",
           "label": "Joy in Trials",
@@ -272,19 +307,19 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 2-4: James reveals that trials are inevitable ('when' not 'if') and serve a divine purpose - testing faith produces perseverance, which leads to maturity. The goal is being 'perfect and complete, lacking nothing.'"
+              "text": "James says 'when' not 'if' you fall into trials - they're inevitable. 'Fall into' means being precipitated or plunged in, so surrounded there's no escaping. Yet these are occasions for joy, not discouraged resignation."
             },
             {
               "type": "apply",
-              "text": "Verse 2: 'Count it all joy' - this is a deliberate cognitive choice, not a feeling. Practice reframing trials by asking: 'What perseverance is this building in me?' rather than 'Why is this happening to me?'"
+              "text": "'Count it all joy' - not feel it all joy. This is faith's response to trials. Trials don't produce faith (Romans 10:17 says faith comes by hearing God's word), but when received with faith, trials produce patience (hupomone - active endurance)."
             },
             {
               "type": "reframe",
-              "text": "Verse 3-4: The Greek 'hupomone' means 'to remain under' - choosing to stay beneath the weight rather than escape. This reframes trials from obstacles to avoid into opportunities for growth. Maturity requires endurance, not avoidance."
+              "text": "Patience (hupomone) comes from hupo (under) and meno (to remain). It means 'to remain under' - staying beneath a heavy load instead of escaping. Philo called it 'the queen of virtues.' This isn't passive waiting but active endurance, like finishing a marathon."
             },
             {
               "type": "become",
-              "text": "Verse 2-4: When you fall into trials, you're participating in the transformative process God uses to make you complete. The testing of your faith is God's refining work - are you yielding to it or resisting?"
+              "text": "Spurgeon said: 'I have looked back to times of trial with a kind of longing... to feel the strength of God as I felt it then, to hang upon God's powerful arm as I hung upon it then.' Are you letting patience have its perfect work, or cutting it an inch shorter than the affliction?"
             }
           ]
         },
@@ -307,54 +342,54 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 5-8: James reveals God's character - He gives wisdom 'liberally and without reproach' to all who ask. But there's a condition: asking 'in faith, with no doubting.' The double-minded person (dipsuchos - literally 'two souls') is unstable in all his ways and receives nothing from the Lord."
+              "text": "Trials reveal we need wisdom more than knowledge. Knowledge is raw information; wisdom knows how to use it. 'Knowledge is the ability to take things apart, but wisdom is the ability to put things together.' We must know if God wants us to eliminate a trial by faith or persevere in it by faith."
             },
             {
               "type": "apply",
-              "text": "Verse 5: The direct instruction is 'let him ask of God' - not books, not people, not ceremonies. Practice bringing your confusion directly to God in prayer before consulting other resources. Come empty-handed, confessing you have no merit of your own, trusting His generous character."
+              "text": "Spurgeon: 'We are all so ready to go to books, to go to men, to go to ceremonies, to anything except to God.' Simply ask of God - use the beggar's word. Come empty-handed, confessing you have no merit. God gives liberally 'and without reproach' - He never despises or resents you for asking."
             },
             {
               "type": "reframe",
-              "text": "Verse 6-8: The doubter is compared to a wave of the sea - without rest, unstable, driven by winds. This reframes doubt not as intellectual honesty but as spiritual instability. The double-minded person has 'one soul for earth, and another for heaven' - trying to secure both worlds, ending up with neither."
+              "text": "'Double-minded' (dipsuchos) is literally 'two-souled' - one soul for earth, another for heaven, trying to secure both worlds. The doubter is 'like a wave of the sea driven and tossed' - without rest, unstable, driven by winds, capable of great destruction. Calvin: God is 'ready ever to add new blessings to former ones, without any end or limitation.'"
             },
             {
               "type": "become",
-              "text": "Verse 5: God gives like Alexander the Great who gave a poor man a city. When told it was too great, Alexander replied: 'The business is not what you are fit to receive, but what it becomes me to give.' Are you becoming someone who asks in faith, believing God's generosity matches His character?"
+              "text": "An old story tells of Alexander the Great giving a poor man a city. When the man said it was too great, Alexander replied: 'The business is not what you are fit to receive, but what it becomes me to give.' Are you asking in faith, believing God gives according to His character, not your merit?"
             }
           ]
         },
         {
           "id": "section-c",
-          "label": "Humility & Perspective",
+          "label": "Rich & Poor",
           "section": "C",
           "verses": "v. 9-11",
           "verseReference": "james 1:9-11",
-          "description": "James addresses both poor and wealthy believers with a radical perspective shift. The poor should 'glory' in their spiritual exaltation in Christ - they have riches that transcend economics. The rich should 'glory' in their humiliation - recognizing that earthly wealth is temporary, fading 'like a flower of the field.' This counters worldly values and reminds all believers that true worth is found in Christ alone.",
-          "theme": "Humility & Perspective → Rich & Poor Contrasted",
-          "keywords": ["poor", "rich", "exaltation", "humiliation", "temporary", "perspective", "glory"],
+          "description": "James addresses both the lowly and the rich. The lowly should rejoice in their spiritual exaltation in Christ, while the rich should rejoice in their humiliation through trials. Using the image of grass withering under the sun, James warns that earthly riches are temporary - 'as a flower of the field he will pass away.' The rich man's pursuits and wealth will fade; what matters is being rich toward God.",
+          "theme": "Eternal vs. Temporal → Glory in What Endures",
+          "keywords": ["lowly", "rich", "exaltation", "humiliation", "flower", "fade", "temporary"],
           "crossReferences": [
-            { "reference": "1 Peter 1:24", "votes": 16 },
-            { "reference": "Jeremiah 9:23-24", "votes": 21 },
-            { "reference": "James 2:5-6", "votes": 12 },
-            { "reference": "1 John 2:17", "votes": 11 },
-            { "reference": "Proverbs 19:1", "votes": 11 }
+            { "reference": "1 Timothy 6:17-19", "votes": 89 },
+            { "reference": "Luke 12:16-21", "votes": 76 },
+            { "reference": "Psalm 103:15-16", "votes": 68 },
+            { "reference": "Isaiah 40:6-8", "votes": 65 },
+            { "reference": "Matthew 6:19-21", "votes": 61 }
           ],
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 9-11: James reveals a radical reversal - the lowly brother should glory in his spiritual exaltation in Christ, while the rich should glory in his humiliation. Earthly wealth is temporary, fading 'like a flower of the field' when the sun rises with burning heat. True worth is found in Christ alone, not economics."
+              "text": "James makes a sudden shift from trials and wisdom to riches and humility - like Proverbs and Old Testament wisdom literature, jumping from topic to topic. Yet this connects: both poverty and riches can be trials testing living faith. Lenski: 'As the poor brother forgets all his earthly poverty, so the rich brother forgets all his earthly riches. By faith in Christ the two are equals.'"
             },
             {
               "type": "apply",
-              "text": "Verse 9-11: Practice seeing yourself and others through eternity's lens. In church gatherings, deliberately treat all believers as spiritual equals, forgetting earthly distinctions. When tempted to boast in wealth or status, remember the withering flowers of Israel - beautiful today, gone tomorrow."
+              "text": "In Israel, beautiful flowers spring to life when rains come but last only a short time before withering. On eternity's scale, this is how quickly 'the rich man also will fade away in his pursuits.' If you put your life and identity into things that fade, you will fade too. When a worldly-rich man dies, he leaves his riches. When a God-rich man dies, he goes to his riches."
             },
             {
               "type": "reframe",
-              "text": "Verse 10-11: This reframes identity and security. If you put your life and identity into things that fade, you will fade also. But if a man is only rich in this world, when he dies he leaves his riches. If a man is rich before God, when he dies he goes to his riches."
+              "text": "It's appropriate for the lowly to rejoice when lifted up by God - but 'far more difficult' for the rich to rejoice when brought to humiliation by trials. Trials remind the comfortable that 'it is still only this life, which fades as the grass grows brown and the flowers fade away.' The sun rises 'with a burning heat' and the flower's 'beautiful appearance perishes.'"
             },
             {
               "type": "become",
-              "text": "Verse 9-11: On eternity's scale, 'the rich man will fade away in his pursuits' as quickly as flowers wither. Are you becoming someone whose glory is in Christ's exaltation, or are you fading with temporary pursuits? Your earthly status - whether high or low - is equally temporary."
+              "text": "How much better to put your life and identity into things that will never fade! Are you building an identity on temporal pursuits and comfort, or on eternal riches before God? What would it mean to 'glory in your humiliation' when trials strip away earthly securities?"
             }
           ]
         },
@@ -377,19 +412,19 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 12-15: James reveals that blessing comes to those who endure temptation - they will receive 'the crown of life' promised to those who love God. Crucially, God never tempts anyone. Temptation arises from our own desires. James traces the deadly progression: desire entices → conceives → births sin → matures → produces death."
+              "text": "God 'cannot be tempted by evil, nor does He Himself tempt anyone.' Poole: 'Lust hath a greater hand in it than either the devil or his instruments, who cannot make us sin without ourselves.' Spurgeon: 'Satan tempts: God tries. But the same trial may be both a temptation and a trial... just as Job suffered from Satan, and it was a temptation; but he also suffered from God through Satan, and so it was a trial.'"
             },
             {
               "type": "apply",
-              "text": "Verse 14-15: Interrupt sin's progression before it takes root. When you feel desire enticing you, recognize it's at the 'conception' stage - stop it there before it gives birth. Practice identifying temptation's early stages and 'girding up your loins to quicken your pace,' knowing the crown is certain for those who run with patience."
+              "text": "'Drawn away' is 'a metaphor taken from a fish enticed by a bait, and drawn after it, or rather from a harlot drawing a young man out of the right way.' (Poole) Satan tempts, but the only reason temptation has a hook is our own fallen nature. We often give Satan too much credit and fail to recognize: we are drawn away by our own desires. Some people practically beg Satan to tempt them."
             },
             {
               "type": "reframe",
-              "text": "Verse 15: This reframes the stakes of temptation. Lust brings forth sin and death. God's will brings forth salvation and the crown of life. Two very different outcomes from two very different sources. The blessing is not for those never tempted, but for those who endure it."
+              "text": "Clarke: 'James represents men's lust as a harlot, which entices their understanding and will into its impure embraces, and from that conjunction conceives sin. Sin, being brought forth, immediately acts, and is nourished by frequent repetition, until at length it gains such strength that in its turn it begets death. This is the true genealogy of sin and death.' Calvin: God never makes himself 'the author of sin.'"
             },
             {
               "type": "become",
-              "text": "Verse 12: Jesus' Beatitudes didn't list every way to be blessed, but here James adds one: 'Blessed is the man who endures temptation.' Are you becoming someone whose motivation to resist is love for God - a passion greater than love for sin - rather than merely fear of consequences?"
+              "text": "'Do not be deceived, my beloved brethren.' Satan's great strategy is convincing us that pursuing corrupt desires will produce life and goodness. Remember: Satan only comes 'to steal, and to kill, and to destroy' (John 10:10). The progression to death is inevitable - but Satan always tries to hide this from us."
             }
           ]
         },
@@ -412,19 +447,19 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 16-18: James reveals God's unchanging character - 'the Father of lights' with no variation or shadow of turning. Every good and perfect gift comes from Him. The ultimate gift is spiritual rebirth: 'He brought us forth by the word of truth, that we might be a kind of firstfruits of His creatures' - God doing the office of a mother, bringing us into life."
+              "text": "'Every good gift and every perfect gift is from above' - we expect no true goodness from our fallen natures or those who entice us. God is 'the Father of the lights' (celestial bodies). Hiebert: The sun and stars never stop giving light, even when we can't see them. When night comes, the darkness isn't the fault of the sun; it shines as brightly as before. Instead, the earth has turned from the sun."
             },
             {
               "type": "apply",
-              "text": "Verse 17-18: Practice measuring God's gifts by eternity's scale, not earth's temporary values. When experiencing spiritual darkness, remember it's not God who moved - like the sun shining as brightly during night, it's the earth that turned. Cultivate gratitude for the greatest gift: new birth through the word of truth."
+              "text": "Trapp: 'He brought us forth' means 'He did the office of a mother to us, bringing us into the light of life.' Spurgeon: 'Mostly, men who are generous need to have their generosity excited... they must be pressed; an example must lead them on. But of his own will God did to us all that has been done, without any incentive or prompting, moved only by himself, because he delighteth in mercy; because his name and his nature are love.'"
             },
             {
               "type": "reframe",
-              "text": "Verse 17: This reframes God's nature against modern 'process theology' that says God is 'maturing' and 'growing.' The Bible says there is no variation or shadow of turning with God. The sun and stars never stop giving light, even when we can't see them - God's character is perfectly consistent."
+              "text": "'There is no variation or shadow of turning' with God. God never changes - He isn't 'maturing' or 'growing' or 'in process.' Contrast: In previous verses, James told us what the lust of man brings forth - sin and death. Here he tells us what the will of the good God brings: salvation to us, as 'a kind of firstfruits of His creatures.'"
             },
             {
               "type": "become",
-              "text": "Verse 18: Are you becoming someone who lives as God's firstfruits, born 'of His own will, without any incentive or prompting, because He delights in mercy'? You are not a random accident but the deliberate work of a giving God who chose to bring you forth into the light of life."
+              "text": "James expected these firstfruits (mainly Jewish-background Christians) to be followed by 'a subsequent and greater harvest of Christians from a Gentile background.' Are you living as a firstfruit of God's redemptive harvest - showing others what God's goodness produces?"
             }
           ]
         },
@@ -447,19 +482,19 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 19-20: James teaches that believers should be swift to hear, slow to speak, and slow to wrath. The theological truth is stark: 'the wrath of man does not produce the righteousness of God.' Our anger almost always defends or promotes our own agenda, not God's righteousness. In light of God's unchanging goodness (v.17), controlling anger is essential."
+              "text": "James gives three commands: 'swift to hear, slow to speak, slow to wrath.' Nature itself teaches this - you have two ears (always open) and one tongue (hedged with teeth and lips)."
             },
             {
               "type": "apply",
-              "text": "Verse 19: Practice being others-centered, not self-centered. Be swift to hear - carefully listen before responding. Be slow to speak - consider your words before releasing them. Nature teaches this: you have two ears (open) and one tongue (hedged with teeth and lips). Both require humility and self-control."
+              "text": "'The wrath of man does not produce the righteousness of God' - our anger almost always simply defends or promotes our own agenda, not God's righteousness. This is the key test: does your anger accomplish God's purposes or yours?"
             },
             {
               "type": "reframe",
-              "text": "Verse 19-20: This reframes anger from a justified response to a self-centered problem. Much of our wrath comes from being self-centered rather than others-centered. When did your anger last accomplish God's righteousness rather than your own agenda? The answer reveals whether you're defending God's interests or your own."
+              "text": "Being 'slow to wrath' requires being 'swift to hear' and 'slow to speak.' Much anger comes from being self-centered rather than others-centered. When do you find yourself most prone to anger?"
             },
             {
               "type": "become",
-              "text": "Verse 19-20: Are you becoming someone whose first response is listening rather than reacting? Someone who carefully weighs words before speaking? Someone whose wrath, if it comes at all, defends God's righteousness rather than your wounded pride? The design of your body teaches this principle - two ears, one tongue."
+              "text": "In light of God's unchanging goodness (v.17), how should believers respond to offense or provocation differently than the world responds?"
             }
           ]
         },
@@ -482,19 +517,19 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 21: James reveals the gospel truth - we are saved 'not by what we give to God, but by what God gives to us.' The command is to 'receive with meekness the implanted word, which is able to save your souls.' When God's word is implanted (engraptos - grafted, planted deep) in the human heart with a teachable spirit, it carries the power to save."
+              "text": "Trapp: 'All filthiness' is 'the stinking filth of a pestilent ulcer. Sin is the devil's vomit, the soul's excrement, the superfluity or garbage of naughtiness... as it is here called by an allusion to the garbage of the sacrifices cast into the brook Kedron, that is, the town-ditch.' The older King James translates this as 'superfluity of naughtiness.'"
             },
             {
               "type": "apply",
-              "text": "Verse 21: First, lay aside all filthiness and overflow of wickedness. Then practice receiving God's word - 'receive' is the door through which God's grace enters. We are not saved by working, but by receiving. Cultivate meekness (a teachable spirit) when reading Scripture, letting it be grafted deep into your heart."
+              "text": "Spurgeon: 'That word receive is a very instructive gospel word; it is the door through which God's grace enters to us. We are not saved by working, but by receiving; not by what we give to God, but by what God gives to us, and we receive from him.' The implanted word is 'able to save your souls' - it carries the power of God."
             },
             {
               "type": "reframe",
-              "text": "Verse 21: This reframes sin's severity - 'all filthiness' is described as 'the stinking filth of a pestilent ulcer. Sin is the devil's vomit, the soul's excrement, the garbage of naughtiness... cast into the brook Kedron, the town-ditch.' This is God's view of what you must lay aside to receive His word."
+              "text": "In contrast to impure living, we should 'receive with meekness the implanted word' - doing it with a teachable heart. The purity of God's word can preserve us even in an impure age. When the word is implanted in the human heart, it carries spiritual power."
             },
             {
               "type": "become",
-              "text": "Verse 21: Are you becoming someone who receives God's word with a teachable heart, or are you living with an overflow of wickedness? The word of God carries the power of God - when implanted in you, it is able to save your soul both in your current situation and eternally."
+              "text": "What filthiness and overflow of wickedness needs to be laid aside - put far from you? Are you receiving God's word with meekness (teachability), or with pride and resistance? The same word can save or condemn depending on how it's received."
             }
           ]
         },
@@ -517,19 +552,19 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 22-25: James reveals the danger of self-deception - being hearers only, not doers. Those who hear but don't do are like someone who looks in a mirror then forgets what they saw. But 'whoever looks into the perfect law of liberty and continues in it' - not forgetting but doing - 'this one will be blessed in what he does.' The mirror shows inner motives and heart condition."
+              "text": "Spurgeon: 'The glass of the Word is not like our ordinary looking-glass, which merely shows us our external features; but... the man sees in it the face of his birth; that is, the face of his nature. He that reads and hears the Word may see not only his actions there, but his motives, his desires, his inward condition.' Observing means 'careful scrutiny' - Bible experts who still don't do it."
             },
             {
               "type": "apply",
-              "text": "Verse 22-25: Practice being a doer, not just a hearer. When you study Scripture, examine it as carefully as someone scrutinizing every detail in a mirror. Then ask: 'Has this sermon been done, or only said?' Look intently into 'the perfect law of liberty' and continue in it - this is the path to blessing."
+              "text": "Spurgeon tells the old story: 'When Donald came out of church sooner than usual, Sandy said to him, What, Donald, is the sermon all done? No, said Donald, it is all said, but it is not begun to be done yet.' Jesus concluded the Sermon on the Mount this way: hearing without doing is building on sand; hearing and doing is building on rock (Matthew 7:24-27)."
             },
             {
               "type": "reframe",
-              "text": "Verse 25: This reframes Scripture as 'the perfect law of liberty' - the whole doctrine of Scripture, especially the gospel. It's called a law because it's a rule, but a law of liberty because it shows the way to freedom from sin, bondage, and wrath. Knowledge without obedience is self-deception."
+              "text": "Spurgeon: 'I fear we have many such in all congregations; admiring hearers, affectionate hearers, attached hearers, but all the while unblest hearers, because they are not doers of the word.' Clarke: 'He sorrows, and purposes amendment; but when the preaching is over, the mirror is removed... he soon forgets what manner of man he was... he reasons himself out of the necessity of repentance and amendment of life, and thus deceives his soul.'"
             },
             {
               "type": "become",
-              "text": "Verse 22-25: Are you becoming a doer of the word? Many congregations have 'admiring hearers, affectionate hearers, attached hearers, but all the while unblessed hearers, because they are not doers of the word.' The Greek word for 'observing' means careful scrutiny - even Bible experts can be self-deceived if knowledge doesn't lead to obedience."
+              "text": "'Looks into' (Greek parakupto) means 'a penetrating examination, so that a person would even bend over to get a better look.' 'Continues' (parameinas) is like 'females who spend much time at their glass... and not leave one hair, or the smallest ornament, out of its place.' (Clarke) The perfect law of liberty - in the New Covenant, God writes His law on transformed hearts by the Spirit."
             }
           ]
         },
@@ -552,19 +587,19 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Verse 26-27: James defines true religion - if anyone thinks he's religious yet doesn't bridle his tongue, his religion is useless. Pure and undefiled religion before God is: (1) to visit orphans and widows in their affliction, and (2) to keep oneself unspotted from the world. Charity and purity are the two great garments of Christianity."
+              "text": "The New Testament never uses 'religious' positively (Acts 17:22, 25:19, 26:5, Col 2:23). James uses it of someone religious but not right with God - evident because they don't 'bridle the tongue.' Poole: This 'seems to reflect upon the hypocritical Jews, whose religion consisted so much in external observances... when yet they were sullied with so many moral ones' (Matt 23:23, John 18:28)."
             },
             {
               "type": "apply",
-              "text": "Verse 27: Practice both compassion and purity. True religion doesn't merely give something for relief, but visits them, takes oversight, goes to their houses, speaks to their hearts, relieves their wants, sympathizes with them, instructs them in divine things. Simultaneously, keep yourself unspotted from the world - not in a glass case, but with an invisible shield."
+              "text": "Clarke: 'True religion does not merely give something for the relief of the distressed, but it visits them, it takes the oversight of them, it takes them under its care... It goes to their houses, and speaks to their hearts; it relieves their wants, sympathizes with them in their distresses, instructs them in divine things, and recommends them to God. And all this it does for the Lord's sake.'"
             },
             {
               "type": "reframe",
-              "text": "Verse 26-27: This reframes religiosity - the New Testament never uses threskos ('religious') positively. It describes someone religious but not right with God. External religion without heart transformation is useless. The true embodiment of inward faith is visiting the fatherless and widows, and keeping unspotted from the world. Being in the world but not of it."
+              "text": "Spurgeon: 'Charity and purity are the two great garments of Christianity.' The ideal is not retreating from the world - Christians interact with orphans/widows and those in need. 'I would like to see a Christian, not kept in a glass case away from trial and temptation, but yet covered with an invisible shield, so that, wherever he went, he would be guarded and protected from the evil influences.'"
             },
             {
               "type": "become",
-              "text": "Verse 26-27: Are you becoming someone who engages the world with compassion while maintaining purity, or are you retreating from both the world and its needs? Are you bridling your tongue? Are you visiting those in affliction? Are you keeping yourself unspotted? These are the marks of pure and undefiled religion before God."
+              "text": "Meyer: 'There is no book with so lofty an ideal of what life may become when it is yielded to the grace of Christ. A cleansed heart, and an unspotted robe; no sin allowed and permitted in the soul, and no evil habit allowed to dominate and enthrall the life.' Lot is an example of a man spotted by the world - he lost everything, saved only by the skin of his teeth."
             }
           ]
         }
@@ -572,8 +607,14 @@
     },
     "content": [
       {
+        "subtitle": "Introduction: James's Greeting (v. 1)",
+        "text": "**'James, a bondservant of God and of the Lord Jesus Christ'**\n\nJames introduces himself not as Jesus's brother but as His bondservant (slave). Writing to 'the twelve tribes scattered abroad,' he addresses Jewish Christians dispersed by persecution. Early tradition says James prayed so much his knees resembled camel knees from calluses. He was martyred in Jerusalem around 62 AD.",
+        "verses": "James 1:1",
+        "theme": "James's Identity → Servant, Not Brother"
+      },
+      {
         "subtitle": "Section A: Joy in Trials (v. 2-4)",
-        "text": "**'Count it all joy when you fall into various trials'**\n\nJames begins with a paradoxical command: find joy in trials. The key word is 'when' (not 'if') - trials are inevitable. These 'various trials' test the genuineness of our faith, producing perseverance (endurance). The goal is spiritual maturity - being 'perfect and complete, lacking nothing.' Trials aren't punishment but opportunities for growth.",
+        "text": "**'Count it all joy when you fall into various trials'**\n\nJames says 'when' not 'if' - trials are inevitable. 'Count it all joy' is faith's response, not a feeling. The testing of faith produces patience (hupomone - from 'to remain under'), an active endurance like finishing a marathon. Spurgeon: 'I have looked back to times of trial... to feel the strength of God as I felt it then.' Let patience have its perfect work - don't cut it an inch shorter than the affliction.",
         "verses": "James 1:2-4",
         "theme": "Joy in Trials → Perseverance & Maturity"
       },
@@ -627,7 +668,7 @@
       },
       {
         "subtitle": "How the Sections Connect",
-        "text": "These nine sections form a logical progression:\n\n1. **Trials are opportunities** for spiritual growth (v. 2-4)\n2. **Wisdom is needed** to navigate trials rightly (v. 5-8)\n3. **Perspective matters** - eternal values trump earthly ones (v. 9-11)\n4. **Temptation must be resisted** - it leads to death, not life (v. 12-15)\n5. **God's character is trustworthy** - He gives only good gifts (v. 16-18)\n6. **Anger must be controlled** - human wrath doesn't produce God's righteousness (v. 19-20)\n7. **God's word must be received** - with meekness and a teachable heart (v. 21)\n8. **God's word must be obeyed** - doers, not just hearers (v. 22-25)\n9. **True religion is practical** - compassion for the needy and purity from the world (v. 26-27)\n\nTogether, they teach believers how to face suffering with joy, seek wisdom, maintain proper perspective, resist temptation, trust in God's goodness, control anger, receive and obey God's word, and demonstrate true religion through compassionate action and moral purity."
+        "text": "These sections form a logical progression:\n\n**Introduction** - James, Jesus's half-brother, introduces himself as a bondservant (slave), not trading on family connection (v. 1)\n\n1. **Trials are opportunities** for spiritual growth (v. 2-4)\n2. **Wisdom is needed** to navigate trials rightly (v. 5-8)\n3. **Perspective matters** - eternal values trump earthly ones (v. 9-11)\n4. **Temptation must be resisted** - it leads to death, not life (v. 12-15)\n5. **God's character is trustworthy** - He gives only good gifts (v. 16-18)\n6. **Anger must be controlled** - human wrath doesn't produce God's righteousness (v. 19-20)\n7. **God's word must be received** - with meekness and a teachable heart (v. 21)\n8. **God's word must be obeyed** - doers, not just hearers (v. 22-25)\n9. **True religion is practical** - compassion for the needy and purity from the world (v. 26-27)\n\nTogether, they teach believers how to face suffering with joy, seek wisdom, maintain proper perspective, resist temptation, trust in God's goodness, control anger, receive and obey God's word, and demonstrate true religion through compassionate action and moral purity."
       }
     ]
   }
