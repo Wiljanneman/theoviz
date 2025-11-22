@@ -257,6 +257,7 @@
           "id": "section-intro",
           "label": "James's Greeting",
           "section": "Intro",
+          "color": "#CBC3E3",
           "verses": "v. 1",
           "verseReference": "james 1:1",
           "description": "James introduces himself not as 'the brother of Jesus' but as 'a bondservant of God and of the Lord Jesus Christ.' He writes to 'the twelve tribes scattered abroad' - Jewish believers dispersed throughout the Roman world after persecution.",
@@ -319,7 +320,7 @@
             },
             {
               "type": "become",
-              "text": "Spurgeon said: 'I have looked back to times of trial with a kind of longing... to feel the strength of God as I felt it then, to hang upon God's powerful arm as I hung upon it then.' Are you letting patience have its perfect work, or cutting it an inch shorter than the affliction?"
+              "text": "Spurgeon said: 'I have looked back to times of trial with a kind of longing... to feel the strength of God as I felt it then, to hang upon God's powerful arm as I hung upon it then.' Are you allowing God to make himself known to you in your trials?"
             }
           ]
         },
@@ -350,7 +351,7 @@
             },
             {
               "type": "reframe",
-              "text": "'Double-minded' (dipsuchos) is literally 'two-souled' - one soul for earth, another for heaven, trying to secure both worlds. The doubter is 'like a wave of the sea driven and tossed' - without rest, unstable, driven by winds, capable of great destruction. Calvin: God is 'ready ever to add new blessings to former ones, without any end or limitation.'"
+              "text": "'Double-minded' (dipsuchos) is literally 'two-souled' - one soul for earth, another for heaven, trying to secure both worlds. The doubter is 'like a wave of the sea driven and tossed' - without rest, unstable, driven by winds, capable of great destruction."
             },
             {
               "type": "become",
@@ -377,11 +378,11 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "James makes a sudden shift from trials and wisdom to riches and humility - like Proverbs and Old Testament wisdom literature, jumping from topic to topic. Yet this connects: both poverty and riches can be trials testing living faith. Lenski: 'As the poor brother forgets all his earthly poverty, so the rich brother forgets all his earthly riches. By faith in Christ the two are equals.'"
+              "text": "Both poverty and riches can be trials testing living faith. Lenski: 'As the poor brother forgets all his earthly poverty, so the rich brother forgets all his earthly riches. By faith in Christ the two are equals.'"
             },
             {
               "type": "apply",
-              "text": "In Israel, beautiful flowers spring to life when rains come but last only a short time before withering. On eternity's scale, this is how quickly 'the rich man also will fade away in his pursuits.' If you put your life and identity into things that fade, you will fade too. When a worldly-rich man dies, he leaves his riches. When a God-rich man dies, he goes to his riches."
+              "text": "If you put your life and identity into things that fade, you will fade too. When a worldly-rich man dies, he leaves his riches. When a God-rich man dies, he goes to his riches."
             },
             {
               "type": "reframe",
@@ -412,19 +413,15 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "God 'cannot be tempted by evil, nor does He Himself tempt anyone.' Poole: 'Lust hath a greater hand in it than either the devil or his instruments, who cannot make us sin without ourselves.' Spurgeon: 'Satan tempts: God tries. But the same trial may be both a temptation and a trial... just as Job suffered from Satan, and it was a temptation; but he also suffered from God through Satan, and so it was a trial.'"
-            },
-            {
-              "type": "apply",
-              "text": "'Drawn away' is 'a metaphor taken from a fish enticed by a bait, and drawn after it, or rather from a harlot drawing a young man out of the right way.' (Poole) Satan tempts, but the only reason temptation has a hook is our own fallen nature. We often give Satan too much credit and fail to recognize: we are drawn away by our own desires. Some people practically beg Satan to tempt them."
+              "text": "God 'cannot be tempted by evil, nor does He Himself tempt anyone.' Spurgeon: 'Satan tempts: God tries. But the same trial may be both a temptation and a trial... just as Job suffered from Satan, and it was a temptation; but he also suffered from God through Satan, and so it was a trial.'"
             },
             {
               "type": "reframe",
-              "text": "Clarke: 'James represents men's lust as a harlot, which entices their understanding and will into its impure embraces, and from that conjunction conceives sin. Sin, being brought forth, immediately acts, and is nourished by frequent repetition, until at length it gains such strength that in its turn it begets death. This is the true genealogy of sin and death.' Calvin: God never makes himself 'the author of sin.'"
+              "text": "'Drawn away' is 'a metaphor taken from a fish enticed by a bait, and drawn after it, or rather from a harlot drawing a young man out of the right way.'"
             },
             {
               "type": "become",
-              "text": "'Do not be deceived, my beloved brethren.' Satan's great strategy is convincing us that pursuing corrupt desires will produce life and goodness. Remember: Satan only comes 'to steal, and to kill, and to destroy' (John 10:10). The progression to death is inevitable - but Satan always tries to hide this from us."
+              "text": "Satan's great strategy is convincing us that pursuing corrupt desires will produce life and goodness. Remember: Satan only comes 'to steal, and to kill, and to destroy' (John 10:10). The progression to death is inevitable - but Satan always tries to hide this from us."
             }
           ]
         },
@@ -447,15 +444,11 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "'Every good gift and every perfect gift is from above' - we expect no true goodness from our fallen natures or those who entice us. God is 'the Father of the lights' (celestial bodies). Hiebert: The sun and stars never stop giving light, even when we can't see them. When night comes, the darkness isn't the fault of the sun; it shines as brightly as before. Instead, the earth has turned from the sun."
+              "text": "Hiebert: The sun and stars never stop giving light, even when we can't see them. When night comes, the darkness isn't the fault of the sun; it shines as brightly as before. Instead, the earth has turned from the sun."
             },
             {
               "type": "apply",
-              "text": "Trapp: 'He brought us forth' means 'He did the office of a mother to us, bringing us into the light of life.' Spurgeon: 'Mostly, men who are generous need to have their generosity excited... they must be pressed; an example must lead them on. But of his own will God did to us all that has been done, without any incentive or prompting, moved only by himself, because he delighteth in mercy; because his name and his nature are love.'"
-            },
-            {
-              "type": "reframe",
-              "text": "'There is no variation or shadow of turning' with God. God never changes - He isn't 'maturing' or 'growing' or 'in process.' Contrast: In previous verses, James told us what the lust of man brings forth - sin and death. Here he tells us what the will of the good God brings: salvation to us, as 'a kind of firstfruits of His creatures.'"
+              "text": "The ultimate goodness of any gift must be measured on an eternal scale. Something that may seem to be only good (such as winning money in a lottery) may in fact be turned to our destruction."
             },
             {
               "type": "become",
@@ -489,10 +482,6 @@
               "text": "'The wrath of man does not produce the righteousness of God' - our anger almost always simply defends or promotes our own agenda, not God's righteousness. This is the key test: does your anger accomplish God's purposes or yours?"
             },
             {
-              "type": "reframe",
-              "text": "Being 'slow to wrath' requires being 'swift to hear' and 'slow to speak.' Much anger comes from being self-centered rather than others-centered. When do you find yourself most prone to anger?"
-            },
-            {
               "type": "become",
               "text": "In light of God's unchanging goodness (v.17), how should believers respond to offense or provocation differently than the world responds?"
             }
@@ -516,16 +505,8 @@
           ],
           "thoughtProvoking": [
             {
-              "type": "discover",
-              "text": "Trapp: 'All filthiness' is 'the stinking filth of a pestilent ulcer. Sin is the devil's vomit, the soul's excrement, the superfluity or garbage of naughtiness... as it is here called by an allusion to the garbage of the sacrifices cast into the brook Kedron, that is, the town-ditch.' The older King James translates this as 'superfluity of naughtiness.'"
-            },
-            {
               "type": "apply",
-              "text": "Spurgeon: 'That word receive is a very instructive gospel word; it is the door through which God's grace enters to us. We are not saved by working, but by receiving; not by what we give to God, but by what God gives to us, and we receive from him.' The implanted word is 'able to save your souls' - it carries the power of God."
-            },
-            {
-              "type": "reframe",
-              "text": "In contrast to impure living, we should 'receive with meekness the implanted word' - doing it with a teachable heart. The purity of God's word can preserve us even in an impure age. When the word is implanted in the human heart, it carries spiritual power."
+              "text": "“The first thing, then, is receive. That word 'receive' is a very instructive gospel word; it is the door through which God's grace enters to us. We are not saved by working, but by receiving; not by what we give to God, but by what God gives to us, and we receive from him.” (Spurgeon)"
             },
             {
               "type": "become",
@@ -552,7 +533,7 @@
           "thoughtProvoking": [
             {
               "type": "discover",
-              "text": "Spurgeon: 'The glass of the Word is not like our ordinary looking-glass, which merely shows us our external features; but... the man sees in it the face of his birth; that is, the face of his nature. He that reads and hears the Word may see not only his actions there, but his motives, his desires, his inward condition.' Observing means 'careful scrutiny' - Bible experts who still don't do it."
+              "text": "Spurgeon: 'The glass of the Word is not like our ordinary looking-glass, which merely shows us our external features; but... the man sees in it the face of his birth; that is, the face of his nature. He that reads and hears the Word may see not only his actions there, but his motives, his desires, his inward condition.'"
             },
             {
               "type": "apply",
@@ -560,11 +541,11 @@
             },
             {
               "type": "reframe",
-              "text": "Spurgeon: 'I fear we have many such in all congregations; admiring hearers, affectionate hearers, attached hearers, but all the while unblest hearers, because they are not doers of the word.' Clarke: 'He sorrows, and purposes amendment; but when the preaching is over, the mirror is removed... he soon forgets what manner of man he was... he reasons himself out of the necessity of repentance and amendment of life, and thus deceives his soul.'"
+              "text": "Spurgeon: 'I fear we have many such in all congregations; admiring hearers, affectionate hearers, attached hearers, but all the while unblest hearers, because they are not doers of the word.'"
             },
             {
               "type": "become",
-              "text": "'Looks into' (Greek parakupto) means 'a penetrating examination, so that a person would even bend over to get a better look.' 'Continues' (parameinas) is like 'females who spend much time at their glass... and not leave one hair, or the smallest ornament, out of its place.' (Clarke) The perfect law of liberty - in the New Covenant, God writes His law on transformed hearts by the Spirit."
+              "text": "In the ancient Greek language, the word for looks into spoke of a penetrating examination, so that a person would even bend over to get a better look. Though James stressed doing, he did not neglect studying God's Word either. We should look into God's Word."
             }
           ]
         },
@@ -595,11 +576,11 @@
             },
             {
               "type": "reframe",
-              "text": "Spurgeon: 'Charity and purity are the two great garments of Christianity.' The ideal is not retreating from the world - Christians interact with orphans/widows and those in need. 'I would like to see a Christian, not kept in a glass case away from trial and temptation, but yet covered with an invisible shield, so that, wherever he went, he would be guarded and protected from the evil influences.'"
+              "text": " From the book of Genesis, Lot is an example of a man who was spotted by the world. He started living towards Sodom, disregarding the spiritual climate of the area because of the prosperity of the area. Eventually he moved to the wicked city and became a part of the city's leadership. The end result was that Lot lost everything - and was saved as only by the skin of his teeth."
             },
             {
               "type": "become",
-              "text": "Meyer: 'There is no book with so lofty an ideal of what life may become when it is yielded to the grace of Christ. A cleansed heart, and an unspotted robe; no sin allowed and permitted in the soul, and no evil habit allowed to dominate and enthrall the life.' Lot is an example of a man spotted by the world - he lost everything, saved only by the skin of his teeth."
+              "text": "The Christian ideal is not to retreat from the world; they are in the world, they are not of it; and remain unspotted from the world."
             }
           ]
         }
