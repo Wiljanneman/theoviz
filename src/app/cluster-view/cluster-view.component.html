@@ -26,7 +26,23 @@
         
         <!-- Cards overlay at bottom center of viz -->
         <div *ngIf="getCurrentNodePrompts().length > 0" class="cards-overlay w-full">
-          <div class="flex gap-3 justify-center flex-wrap">
+          <div class="flex gap-3 justify-center flex-wrap items-end">
+            <!-- Help button -->
+            <button 
+              (click)="showCardHelp = true"
+              class="flip-card help-card"
+              title="Learn about card types">
+              <div class="flip-card-inner">
+                <div class="flip-card-front help-card-front">
+                  <div class="flex flex-col items-center justify-center gap-4">
+                    <i class="fas fa-question-circle fa-lg"></i>
+                    <div class="text-xs uppercase font-bold">Help</div>
+                  </div>
+                </div>
+              </div>
+            </button>
+            
+            <!-- Regular cards -->
             <div *ngFor="let prompt of getCurrentNodePrompts(); let i = index" 
                  class="flip-card"
                  (click)="toggleCard(i)">
@@ -74,6 +90,71 @@
       <!-- Detail Panel (shown when a node is selected) -->
       <div id="detail-panel" 
            class="hidden w-96 bg-slate-800 border-l border-purple-500/30 overflow-y-auto">
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div *ngIf="showCardHelp" class="card-overlay" (click)="showCardHelp = false">
+    <div class="overlay-card max-w-2xl" (click)="$event.stopPropagation()">
+      <button class="overlay-close" (click)="showCardHelp = false">&times;</button>
+      <div class="overlay-header">
+        <i class="fas fa-2x fa-graduation-cap text-purple-400"></i>
+        <div>
+          <h3 class="overlay-type text-purple-400">Card Categories Guide</h3>
+          <p class="text-sm opacity-60 mt-1">The 4Ps of Knowing (Vervaeke Framework)</p>
+        </div>
+      </div>
+      <div class="overlay-body space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
+            <i class="fas fa-book fa-xl text-white"></i>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-blue-400 mb-2">Discover (Propositional)</h4>
+            <p class="text-sm text-slate-300 leading-relaxed">Uncover what the Scripture teaches. This addresses propositional knowing - factual truth, doctrinal content, and theological principles revealed in the text.</p>
+            <p class="text-xs text-slate-400 mt-2 italic">Ask: "What truth is God revealing here?"</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
+            <i class="fas fa-tools fa-xl text-white"></i>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-green-400 mb-2">Apply (Procedural)</h4>
+            <p class="text-sm text-slate-300 leading-relaxed">Learn how to practice this teaching. This addresses procedural knowing - concrete actions, spiritual disciplines, and habits to develop based on God's Word.</p>
+            <p class="text-xs text-slate-400 mt-2 italic">Ask: "How do I live this out practically?"</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
+            <i class="fas fa-glasses fa-xl text-white"></i>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-purple-400 mb-2">Reframe (Perspectival)</h4>
+            <p class="text-sm text-slate-300 leading-relaxed">Shift how you see the world. This addresses perspectival knowing - changing your worldview, seeing reality differently, and reframing circumstances through God's perspective.</p>
+            <p class="text-xs text-slate-400 mt-2 italic">Ask: "How does this change the way I see things?"</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center">
+            <i class="fas fa-hand-holding-heart fa-xl text-white"></i>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-pink-400 mb-2">Become (Participatory)</h4>
+            <p class="text-sm text-slate-300 leading-relaxed">Experience transformation in Christ. This addresses participatory knowing - identity formation, relationship with God, and who you're becoming through His refining work.</p>
+            <p class="text-xs text-slate-400 mt-2 italic">Ask: "How is God transforming me through this?"</p>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-slate-700/50 rounded-lg border border-purple-500/30">
+          <p class="text-xs text-slate-300 leading-relaxed">
+            <strong class="text-purple-300">Note:</strong> These four types of knowing work together. Biblical study isn't complete with just factual knowledge (Discover) - it must lead to practice (Apply), shape our perspective (Reframe), and transform our identity (Become).
+          </p>
+        </div>
       </div>
     </div>
   </div>

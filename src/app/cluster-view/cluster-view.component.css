@@ -82,6 +82,16 @@
   box-sizing: border-box;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 1;
+}
+
+.help-card-front {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  cursor: help;
+}
+
+.help-card:hover .help-card-front {
+  background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%) !important;
 }
 
 .flip-card:hover .flip-card-front,

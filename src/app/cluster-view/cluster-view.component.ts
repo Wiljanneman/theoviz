@@ -67,6 +67,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   // Flip card properties
   flippedCards = new Set<number>();
   modalCardIndex: number | null = null;
+  showCardHelp = false;
 
   getSectionGradient(section: string): string[] {
     if (!this.sectionColors[section]) {
