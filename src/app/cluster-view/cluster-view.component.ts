@@ -22,10 +22,20 @@ export interface ClusterNode {
   color?: string; // Optional custom color
 }
 
+export interface OverarchingTheme {
+  label: string;
+  description: string;
+  verseReference?: string;
+  verseText?: string;
+  content: string;
+  keywords?: string[];
+}
+
 export interface ClusterData {
   title: string;
   description: string;
   nodes: ClusterNode[];
+  overarchingTheme?: OverarchingTheme; // Optional theme node that all nodes merge into
   defaultColors?: { [key: string]: string[] }; // Optional custom color scheme
   layout?: {
     width?: number;
@@ -58,6 +68,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   // Guided mode properties
   isGuidedMode = true;
   currentStep = 0;
+  isShowingOverarchingTheme = false;
   
   // Bible API properties
   verseCache = new Map<string, string>();
@@ -304,10 +315,39 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
         </div>`;
       }
       
-      tooltip.style('display', 'block')
-        .style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY - 10) + 'px')
-        .html(tooltipHTML);
+      tooltip.html(tooltipHTML).style('display', 'block');
+      
+      // Position tooltip with viewport boundary detection
+      const tooltipNode = tooltip.node() as HTMLElement;
+      const tooltipRect = tooltipNode.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
+      let left = event.pageX + 10;
+      let top = event.pageY - 10;
+      
+      // Check right boundary
+      if (left + tooltipRect.width > viewportWidth) {
+        left = event.pageX - tooltipRect.width - 10;
+      }
+      
+      // Check bottom boundary
+      if (top + tooltipRect.height > viewportHeight) {
+        top = event.pageY - tooltipRect.height - 10;
+      }
+      
+      // Check left boundary
+      if (left < 0) {
+        left = 10;
+      }
+      
+      // Check top boundary
+      if (top < 0) {
+        top = 10;
+      }
+      
+      tooltip.style('left', left + 'px')
+        .style('top', top + 'px');
     })
     .on('mouseleave', function(this: SVGGElement) {
       d3.select(this).select('circle')
@@ -466,6 +506,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   toggleMode() {
     this.isGuidedMode = !this.isGuidedMode;
     this.flippedCards.clear(); // Reset flipped cards
+    this.isShowingOverarchingTheme = false;
     if (this.isGuidedMode) {
       this.currentStep = 0;
       // Only show guided step if verses are already loaded
@@ -478,15 +519,31 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   }
 
   nextStep() {
+    if (this.isShowingOverarchingTheme) {
+      return; // Already at final step
+    }
+    
     if (this.currentStep < this.clusterData.nodes.length - 1) {
       this.currentStep++;
       this.flippedCards.clear(); // Reset flipped cards
       this.showGuidedStep(this.currentStep);
+    } else if (this.clusterData.overarchingTheme && !this.isShowingOverarchingTheme) {
+      // Transition to overarching theme
+      this.showOverarchingTheme();
     }
   }
 
   previousStep() {
-    if (this.currentStep > 0) {
+    if (this.isShowingOverarchingTheme) {
+      // Go back from overarching theme to last node
+      this.isShowingOverarchingTheme = false;
+      this.currentStep = this.clusterData.nodes.length - 1;
+      this.flippedCards.clear();
+      // Re-render the cluster to restore all nodes
+      this.renderCluster();
+      // Then show the last step
+      setTimeout(() => this.showGuidedStep(this.currentStep), 300);
+    } else if (this.currentStep > 0) {
       this.currentStep--;
       this.flippedCards.clear(); // Reset flipped cards
       this.showGuidedStep(this.currentStep);
@@ -609,137 +666,49 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
         `);
     }
 
-    // Thought-Provoking Prompts (Collapsible)
-    if (node.thoughtProvoking && node.thoughtProvoking.length > 0) {
-      const promptSection = content.append('div')
-        .attr('class', 'mb-4 border-t border-slate-700 pt-4');
-      
-      const promptHeader = promptSection.append('button')
-        .attr('class', 'w-full flex justify-between items-center bg-slate-700/50 hover:bg-slate-700 rounded-lg p-3 transition text-left')
-        .on('click', function(this: HTMLButtonElement) {
-          const parent = this.parentNode as HTMLElement;
-          const promptsDiv = d3.select(parent).select('.thought-prompts');
-          const icon = d3.select(this).select('i');
-          const isHidden = promptsDiv.classed('hidden');
-          
-          promptsDiv.classed('hidden', !isHidden);
-          icon.classed('fa-chevron-down', isHidden);
-          icon.classed('fa-chevron-up', !isHidden);
-        });
-
-      promptHeader.append('div')
-        .html('<i class="fas fa-lightbulb mr-2 text-amber-400"></i><span class="font-semibold text-white">Reflect & Consider</span><span class="ml-2 text-xs text-slate-400">(' + node.thoughtProvoking.length + ' prompts)</span>');
-
-      promptHeader.append('i')
-        .attr('class', 'fas fa-chevron-down text-slate-400');
-
-      const promptsDiv = promptSection.append('div')
-        .attr('class', 'thought-prompts hidden mt-3 space-y-3');
-
-      node.thoughtProvoking.forEach((item: string | ThoughtProvokingItem, index: number) => {
-        const promptItem = promptsDiv.append('div')
-          .attr('class', 'flex gap-3');
-        
-        // Determine item type and text
-        let itemType: string;
-        let itemText: string;
-        let iconClass: string;
-        let iconColor: string;
-        
-        if (typeof item === 'string') {
-          // Legacy format - try to detect type from text
-          if (item.toLowerCase().startsWith('notice') || item.toLowerCase().startsWith('observe')) {
-            itemType = 'discover';
-            iconClass = 'fa-eye';
-            iconColor = 'text-blue-400';
-          } else if (item.toLowerCase().startsWith('practice') || item.toLowerCase().startsWith('apply')) {
-            itemType = 'apply';
-            iconClass = 'fa-hands';
-            iconColor = 'text-green-400';
-          } else if (item.toLowerCase().startsWith('this reframes') || item.toLowerCase().startsWith('reframe')) {
-            itemType = 'reframe';
-            iconClass = 'fa-lightbulb';
-            iconColor = 'text-amber-400';
-          } else {
-            itemType = 'become';
-            iconClass = 'fa-seedling';
-            iconColor = 'text-emerald-400';
-          }
-          itemText = item;
-        } else {
-          // Structured format
-          itemType = item.type;
-          itemText = item.text;
-          
-          switch (item.type) {
-            case 'discover':
-              iconClass = 'fa-eye';
-              iconColor = 'text-blue-400';
-              break;
-            case 'apply':
-              iconClass = 'fa-hands';
-              iconColor = 'text-green-400';
-              break;
-            case 'reframe':
-              iconClass = 'fa-lightbulb';
-              iconColor = 'text-amber-400';
-              break;
-            case 'become':
-              iconClass = 'fa-seedling';
-              iconColor = 'text-emerald-400';
-              break;
-          }
-        }
-        
-        // Icon
-        promptItem.append('div')
-          .attr('class', 'flex-shrink-0 mt-1')
-          .html(`<i class=\"fas ${iconClass} ${iconColor}\"></i>`);
-        
-        // Content
-        const contentDiv = promptItem.append('div')
-          .attr('class', 'flex-1');
-        
-        contentDiv.append('div')
-          .attr('class', 'text-xs font-semibold uppercase tracking-wide mb-1')
-          .attr('style', () => {
-            switch (itemType) {
-              case 'observe': return 'color: #60a5fa';
-              case 'consider': return 'color: #c084fc';
-              case 'reflect': return 'color: #fb7185';
-              case 'question': return 'color: #fbbf24';
-              default: return 'color: #94a3b8';
-            }
-          })
-          .text(itemType.charAt(0).toUpperCase() + itemType.slice(1));
-        
-        contentDiv.append('div')
-          .attr('class', 'text-slate-200 leading-relaxed')
-          .text(itemText);
-      });
-    }
-
     // Navigation buttons for guided mode, close button for free mode
     if (this.isGuidedMode) {
       const navDiv = content.append('div')
         .attr('class', 'flex gap-2 mt-4');
       
+      const isAtStart = this.currentStep === 0;
+      const isAtLastNode = this.currentStep === this.clusterData.nodes.length - 1;
+      const hasOverarchingTheme = !!this.clusterData.overarchingTheme;
+      
       navDiv.append('button')
-        .attr('class', `flex-1 ${this.currentStep === 0 ? 'bg-slate-700 opacity-50 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'} text-white py-2 px-4 rounded transition`)
-        .attr('disabled', this.currentStep === 0 ? 'true' : null)
+        .attr('class', `flex-1 ${isAtStart ? 'bg-slate-700 opacity-50 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'} text-white py-2 px-4 rounded transition`)
+        .attr('disabled', isAtStart ? 'true' : null)
         .text('← Previous')
         .on('click', () => {
-          if (this.currentStep > 0) this.previousStep();
+          if (!isAtStart) this.previousStep();
         });
       
       navDiv.append('button')
-        .attr('class', `flex-1 ${this.currentStep === this.clusterData.nodes.length - 1 ? 'bg-slate-700 opacity-50 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'} text-white py-2 px-4 rounded transition`)
-        .attr('disabled', this.currentStep === this.clusterData.nodes.length - 1 ? 'true' : null)
-        .text('Next →')
+        .attr('class', `flex-1 ${isAtLastNode && !hasOverarchingTheme ? 'bg-slate-700 opacity-50 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'} text-white py-2 px-4 rounded transition`)
+        .attr('disabled', isAtLastNode && !hasOverarchingTheme ? 'true' : null)
+        .html(isAtLastNode && hasOverarchingTheme ? 'See Overarching Theme →' : 'Next →')
         .on('click', () => {
-          if (this.currentStep < this.clusterData.nodes.length - 1) this.nextStep();
+          if (isAtLastNode && hasOverarchingTheme) {
+            this.showOverarchingTheme();
+          } else if (!isAtLastNode) {
+            this.nextStep();
+          }
         });
     } else {
+      // In free mode, check if this is the last node
+      const isLastNode = node.id === this.clusterData.nodes[this.clusterData.nodes.length - 1].id;
+      const hasOverarchingTheme = !!this.clusterData.overarchingTheme;
+      
+      if (isLastNode && hasOverarchingTheme) {
+        // Show button to view overarching theme
+        content.append('button')
+          .attr('class', 'mt-4 w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-3 px-4 rounded-lg transition flex items-center justify-center gap-2 font-semibold')
+          .html('<i class="fas fa-unity"></i><span>See Overarching Theme</span>')
+          .on('click', () => {
+            this.showOverarchingTheme();
+          });
+      }
+      
       content.append('button')
         .attr('class', 'mt-4 w-full bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded transition')
         .text('Close')
@@ -835,5 +804,241 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
 
   closeModal(): void {
     this.modalCardIndex = null;
+  }
+
+  /**
+   * Show the overarching theme with merging animation
+   */
+  showOverarchingTheme(): void {
+    if (!this.clusterData?.overarchingTheme) return;
+    
+    this.isShowingOverarchingTheme = true;
+    this.flippedCards.clear();
+    
+    const allNodes = d3.selectAll('#cluster-viz g').filter((d: any) => d && d.id);
+    if (allNodes.empty()) return;
+    
+    // Get center position
+    const centerX = this.width / 2;
+    const centerY = this.height / 2;
+    
+    // Animate all nodes to center and fade out
+    allNodes
+      .transition()
+      .duration(1000)
+      .attr('transform', `translate(${centerX},${centerY})`)
+      .style('opacity', 0);
+    
+    // Fade out all links
+    d3.selectAll('#cluster-viz line')
+      .transition()
+      .duration(800)
+      .style('opacity', 0);
+    
+    // After merge animation, create the overarching theme node
+    setTimeout(() => {
+      // Remove old nodes
+      allNodes.remove();
+      d3.selectAll('#cluster-viz line').remove();
+      
+      // Create central theme node
+      const themeNodeGroup = this.svg.append('g')
+        .attr('transform', `translate(${centerX},${centerY})`)
+        .style('opacity', 0);
+      
+      // Large central circle with gradient
+      const themeGradient = this.svg.select('defs').append('radialGradient')
+        .attr('id', 'theme-gradient')
+        .attr('cx', '50%')
+        .attr('cy', '50%')
+        .attr('r', '50%');
+      
+      themeGradient.append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', '#a78bfa')
+        .attr('stop-opacity', 1);
+      
+      themeGradient.append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', '#7c3aed')
+        .attr('stop-opacity', 1);
+      
+      const themeRadius = this.nodeRadius * 1.8;
+      themeNodeGroup.append('circle')
+        .attr('r', themeRadius)
+        .attr('fill', 'url(#theme-gradient)')
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 4)
+        .style('filter', 'drop-shadow(0 8px 24px rgba(139, 92, 246, 0.5))');
+      
+      // Add pulsing animation ring
+      const pulseRing = themeNodeGroup.append('circle')
+        .attr('r', themeRadius)
+        .attr('fill', 'none')
+        .attr('stroke', '#a78bfa')
+        .attr('stroke-width', 2)
+        .style('opacity', 0.8);
+      
+      // Pulse animation
+      const pulse = () => {
+        pulseRing
+          .transition()
+          .duration(2000)
+          .attr('r', themeRadius + 30)
+          .style('opacity', 0)
+          .on('end', () => {
+            pulseRing.attr('r', themeRadius).style('opacity', 0.8);
+            pulse();
+          });
+      };
+      pulse();
+      
+      // Add icon
+      themeNodeGroup.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', -15)
+        .attr('fill', '#fff')
+        .attr('font-size', '32px')
+        .attr('class', 'fas')
+        .text('\uf674'); // fa-unity icon
+      
+      // Add label
+      themeNodeGroup.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', 20)
+        .attr('fill', '#fff')
+        .attr('font-size', '20px')
+        .attr('font-weight', 'bold')
+        .text(this.clusterData.overarchingTheme!.label);
+      
+      // Fade in the theme node
+      themeNodeGroup
+        .transition()
+        .duration(800)
+        .style('opacity', 1);
+      
+      // Show details
+      this.showOverarchingThemeDetails();
+    }, 1000);
+  }
+
+  /**
+   * Reset from overarching theme back to normal visualization
+   */
+  private resetFromOverarchingTheme(): void {
+    this.isShowingOverarchingTheme = false;
+    d3.select('#detail-panel').classed('hidden', true);
+    this.renderCluster();
+  }
+
+  /**
+   * Show details panel for overarching theme
+   */
+  private showOverarchingThemeDetails(): void {
+    if (!this.clusterData?.overarchingTheme) return;
+    
+    const theme = this.clusterData.overarchingTheme;
+    const panel = d3.select('#detail-panel')
+      .classed('hidden', false)
+      .html('');
+    
+    const content = panel.append('div')
+      .attr('class', 'p-6');
+    
+    // Header with special styling for theme
+    const headerDiv = content.append('div')
+      .attr('class', 'mb-6');
+    
+    headerDiv.append('div')
+      .attr('class', 'flex items-center gap-3 mb-3')
+      .html(`
+        <i class="fas fa-unity text-3xl text-purple-400"></i>
+        <h2 class="text-3xl font-bold text-white">${theme.label}</h2>
+      `);
+    
+    headerDiv.append('p')
+      .attr('class', 'text-slate-300 text-sm leading-relaxed')
+      .text(theme.description);
+    
+    if (theme.verseReference) {
+      headerDiv.append('div')
+        .attr('class', 'mt-3')
+        .html(`
+          <div class="inline-flex items-center bg-purple-600/30 border border-purple-500/50 rounded-full px-3 py-1">
+            <i class="fas fa-book-open text-purple-300 text-xs mr-2"></i>
+            <span class="text-sm font-semibold text-purple-100">${theme.verseReference}</span>
+          </div>
+        `);
+    }
+    
+    // Main content
+    content.append('div')
+      .attr('class', 'bg-slate-700/30 border-l-4 border-purple-500 rounded-lg p-5 mb-4')
+      .html(`
+        <div class="text-slate-100 leading-relaxed" style="line-height: 1.8;">
+          ${theme.content}
+        </div>
+      `);
+    
+    // Keywords if available
+    if (theme.keywords && theme.keywords.length > 0) {
+      content.append('div')
+        .attr('class', 'flex flex-wrap gap-2 mb-4')
+        .selectAll('span')
+        .data(theme.keywords)
+        .join('span')
+        .attr('class', 'px-3 py-1 bg-purple-600/20 border border-purple-500/30 rounded-full text-sm text-purple-200')
+        .text((d: string) => d);
+    }
+    
+    // Summary of all nodes
+    content.append('div')
+      .attr('class', 'mt-6 pt-6 border-t border-purple-500/30')
+      .html(`
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-project-diagram text-purple-400"></i>
+          <h3 class="text-lg font-semibold text-white">Connected Themes</h3>
+        </div>
+      `);
+    
+    const nodesList = content.append('div')
+      .attr('class', 'grid grid-cols-1 gap-3');
+    
+    this.clusterData.nodes.forEach((node, index) => {
+      const colors = this.getSectionGradient(node.section);
+      nodesList.append('div')
+        .attr('class', 'flex items-center gap-3 p-3 bg-slate-700/50 rounded-lg border border-slate-600 hover:border-purple-500/50 transition')
+        .html(`
+          <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" 
+               style="background: linear-gradient(135deg, ${colors[0]}, ${colors[1]});">
+            ${node.section || (index + 1)}
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-white text-sm">${node.label}</div>
+            ${node.verses ? `<div class="text-xs text-slate-400 mt-0.5">${node.verses}</div>` : ''}
+          </div>
+        `);
+    });
+    
+    // Navigation
+    const navDiv = content.append('div')
+      .attr('class', 'flex gap-2 mt-6');
+    
+    if (this.isGuidedMode) {
+      navDiv.append('button')
+        .attr('class', 'flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded transition')
+        .text('← Previous')
+        .on('click', () => this.previousStep());
+      
+      navDiv.append('button')
+        .attr('class', 'flex-1 bg-slate-700 opacity-50 cursor-not-allowed text-white py-2 px-4 rounded')
+        .attr('disabled', 'true')
+        .text('Complete');
+    } else {
+      navDiv.append('button')
+        .attr('class', 'w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded transition')
+        .text('← Back to Visualization')
+        .on('click', () => this.resetFromOverarchingTheme());
+    }
   }
 }
