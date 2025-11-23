@@ -203,7 +203,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       .attr('fill', '#fff')
       .attr('font-size', '24px')
       .attr('font-weight', 'bold')
-      .text((d: any) => d.section ? `Section ${d.section}` : d.label);
+      .text((d: any) => d.section ? `${d.section}` : d.label);
 
     // Add verse references with enhanced styling (if available)
     node.each(function(this: SVGGElement, d: any) {
