@@ -1,10 +1,11 @@
 import { Component, Input, AfterViewInit, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import * as d3 from 'd3';
 import { BibleService, BibleVerse } from '../services/bible.service';
+import { ClaudeService } from '../services/claude.service';
 
 export interface ThoughtProvokingItem {
-  type: 'discover' | 'apply' | 'reframe' | 'become';
   text: string;
 }
 
@@ -50,13 +51,16 @@ export interface ClusterData {
   selector: 'app-cluster-view',
   templateUrl: './cluster-view.component.html',
   styleUrls: ['./cluster-view.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, FormsModule]
 })
 export class ClusterViewComponent implements AfterViewInit, OnChanges {
   @Input() clusterData!: ClusterData;
   @ViewChild('clusterContainer', { static: false }) clusterContainer!: ElementRef;
 
-  constructor(private bibleService: BibleService) {}
+  constructor(
+    private bibleService: BibleService,
+    private claudeService: ClaudeService
+  ) {}
 
   private svg: any;
   private width = 1200;
@@ -75,10 +79,13 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   isLoadingVerses = false;
   verseLoadError = false;
 
-  // Flip card properties
-  flippedCards = new Set<number>();
-  modalCardIndex: number | null = null;
-  showCardHelp = false;
+  // AI Question properties
+  showAiModal = false;
+  isGeneratingQuestion = false;
+  aiQuestion = '';
+  aiError = '';
+  showApiKeyInput = false;
+  apiKeyInput = '';
 
   getSectionGradient(section: string): string[] {
     if (!this.sectionColors[section]) {
@@ -505,7 +512,6 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
 
   toggleMode() {
     this.isGuidedMode = !this.isGuidedMode;
-    this.flippedCards.clear(); // Reset flipped cards
     this.isShowingOverarchingTheme = false;
     if (this.isGuidedMode) {
       this.currentStep = 0;
@@ -525,7 +531,6 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
     
     if (this.currentStep < this.clusterData.nodes.length - 1) {
       this.currentStep++;
-      this.flippedCards.clear(); // Reset flipped cards
       this.showGuidedStep(this.currentStep);
     } else if (this.clusterData.overarchingTheme && !this.isShowingOverarchingTheme) {
       // Transition to overarching theme
@@ -538,14 +543,12 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       // Go back from overarching theme to last node
       this.isShowingOverarchingTheme = false;
       this.currentStep = this.clusterData.nodes.length - 1;
-      this.flippedCards.clear();
       // Re-render the cluster to restore all nodes
       this.renderCluster();
       // Then show the last step
       setTimeout(() => this.showGuidedStep(this.currentStep), 300);
     } else if (this.currentStep > 0) {
       this.currentStep--;
-      this.flippedCards.clear(); // Reset flipped cards
       this.showGuidedStep(this.currentStep);
     }
   }
@@ -746,64 +749,104 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       return [];
     }
 
-    // Convert to structured format if needed
+    // Convert to unified format
     return node.thoughtProvoking.map(item => {
       if (typeof item === 'string') {
-        // Legacy format - try to detect type
-        let type: 'discover' | 'apply' | 'reframe' | 'become' = 'discover';
-        if (item.toLowerCase().startsWith('practice') || item.toLowerCase().startsWith('apply')) {
-          type = 'apply';
-        } else if (item.toLowerCase().startsWith('this reframes') || item.toLowerCase().startsWith('reframe')) {
-          type = 'reframe';
-        } else if (item.toLowerCase().startsWith('are you becoming')) {
-          type = 'become';
-        }
-        return { type, text: item };
+        return { text: item };
       }
-      return item;
+      return { text: item.text };
     });
   }
 
+
+
   /**
-   * Get icon class for prompt type
+   * Generate AI question for current node
    */
-  getPromptIcon(type: string): string {
-    switch (type) {
-      case 'discover':
-        return 'fa-eye';
-      case 'apply':
-        return 'fa-hands';
-      case 'reframe':
-        return 'fa-lightbulb';
-      case 'become':
-        return 'fa-seedling';
-      default:
-        return 'fa-lightbulb';
+  async generateAiQuestion(): Promise<void> {
+    // Check if API key is set
+    if (!this.claudeService.hasApiKey()) {
+      this.showApiKeyInput = true;
+      this.showAiModal = true;
+      return;
+    }
+
+    const currentNode = this.clusterData.nodes[this.currentStep];
+    if (!currentNode) {
+      this.aiError = 'No node selected';
+      this.showAiModal = true;
+      return;
+    }
+
+    // Check if verse text is available
+    if (!currentNode.verseText) {
+      // Try to use description as fallback if verseText isn't loaded yet
+      if (!currentNode.description || !currentNode.verseReference) {
+        this.aiError = 'No scripture text available for this node. Verse reference: ' + (currentNode.verseReference || 'none');
+        this.showAiModal = true;
+        return;
+      }
+      // Use description as fallback
+      this.showAiModal = true;
+      this.isGeneratingQuestion = true;
+      this.aiError = '';
+      this.aiQuestion = '';
+
+      try {
+        this.aiQuestion = await this.claudeService.generateQuestion(
+          currentNode.description,
+          currentNode.verseReference
+        );
+      } catch (error: any) {
+        this.aiError = error.message || 'Failed to generate question';
+      } finally {
+        this.isGeneratingQuestion = false;
+      }
+      return;
+    }
+
+    this.showAiModal = true;
+    this.isGeneratingQuestion = true;
+    this.aiError = '';
+    this.aiQuestion = '';
+
+    try {
+      this.aiQuestion = await this.claudeService.generateQuestion(
+        currentNode.verseText,
+        currentNode.verseReference || currentNode.verses || ''
+      );
+    } catch (error: any) {
+      this.aiError = error.message || 'Failed to generate question';
+    } finally {
+      this.isGeneratingQuestion = false;
     }
   }
 
   /**
-   * Get display label and subtext for prompt type
+   * Save API key and generate question
    */
-  getPromptLabel(type: string): { label: string; subtext: string } {
-    const labels: { [key: string]: { label: string; subtext: string } } = {
-      'discover': { label: 'Discover', subtext: 'Propositional' },
-      'apply': { label: 'Apply', subtext: 'Procedural' },
-      'reframe': { label: 'Reframe', subtext: 'Perspectival' },
-      'become': { label: 'Become', subtext: 'Participatory' }
-    };
-    return labels[type] || { label: type, subtext: '' };
+  async saveApiKey(): Promise<void> {
+    if (!this.apiKeyInput.trim()) {
+      this.aiError = 'Please enter a valid API key';
+      return;
+    }
+    
+    this.claudeService.setApiKey(this.apiKeyInput.trim());
+    this.showApiKeyInput = false;
+    this.apiKeyInput = '';
+    
+    // Now generate the question
+    await this.generateAiQuestion();
   }
 
   /**
-   * Toggle flip card state
+   * Close AI modal
    */
-  toggleCard(index: number): void {
-    this.modalCardIndex = index;
-  }
-
-  closeModal(): void {
-    this.modalCardIndex = null;
+  closeAiModal(): void {
+    this.showAiModal = false;
+    this.aiQuestion = '';
+    this.aiError = '';
+    this.showApiKeyInput = false;
   }
 
   /**
@@ -813,7 +856,6 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
     if (!this.clusterData?.overarchingTheme) return;
     
     this.isShowingOverarchingTheme = true;
-    this.flippedCards.clear();
     
     const allNodes = d3.selectAll('#cluster-viz g').filter((d: any) => d && d.id);
     if (allNodes.empty()) return;

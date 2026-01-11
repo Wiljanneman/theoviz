@@ -24,65 +24,80 @@
       <div class="flex-1 flex items-center justify-center p-8 relative">
         <svg #clusterContainer id="cluster-viz"></svg>
         
-        <!-- Cards overlay at bottom center of viz -->
-        <div *ngIf="getCurrentNodePrompts().length > 0" class="cards-overlay w-full">
-          <div class="flex gap-3 justify-center flex-wrap items-end">
-            <!-- Help button -->
-            <button 
-              (click)="showCardHelp = true"
-              class="flip-card help-card"
-              title="Learn about card types">
-              <div class="flip-card-inner">
-                <div class="flip-card-front help-card-front">
-                  <div class="flex flex-col items-center justify-center gap-4">
-                    <i class="fas fa-question-circle fa-lg"></i>
-                    <div class="text-xs uppercase font-bold">Help</div>
-                  </div>
-                </div>
-              </div>
-            </button>
-            
-            <!-- Regular cards -->
-            <div *ngFor="let prompt of getCurrentNodePrompts(); let i = index" 
-                 class="flip-card"
-                 (click)="toggleCard(i)">
-              <div class="flip-card-inner">
-                <!-- Front -->
-                <div class="flip-card-front" [attr.data-type]="prompt.type">                  <div class="flex flex-col items-center justify-center gap-1">
-                    <i class="fas fa-lg mb-2" [ngClass]="getPromptIcon(prompt.type)"></i>
-                    <div class="text-center">
-                      <div class="text-xs uppercase font-bold">{{ getPromptLabel(prompt.type).label }}</div>
-                      <div *ngIf="getPromptLabel(prompt.type).subtext" class="text-[10px] opacity-70 mt-0.5">{{ getPromptLabel(prompt.type).subtext }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- AI Question Button at bottom center -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+          <button 
+            (click)="generateAiQuestion()"
+            class="ai-question-button px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 font-semibold">
+            <i class="fas fa-sparkles"></i>
+            <span>Ask AI a Question</span>
+          </button>
         </div>
       </div>
 
-      <!-- Expanded Card Overlay -->
-      <div *ngIf="modalCardIndex !== null" 
+      <!-- AI Question Modal -->
+      <div *ngIf="showAiModal" 
            class="card-overlay"
-           (click)="closeModal()">
+           (click)="closeAiModal()">
         <div class="overlay-card" (click)="$event.stopPropagation()">
-          <button class="overlay-close" (click)="closeModal()">&times;</button>
-          <div class="overlay-header">
-            <i class="fas fa-2x" 
-               [ngClass]="getPromptIcon(getCurrentNodePrompts()[modalCardIndex].type) + ' ' + getCurrentNodePrompts()[modalCardIndex].type"></i>
-            <div>
-              <h3 class="overlay-type" [ngClass]="getCurrentNodePrompts()[modalCardIndex].type">
-                {{ getPromptLabel(getCurrentNodePrompts()[modalCardIndex].type).label }}
-              </h3>
-              <p *ngIf="getPromptLabel(getCurrentNodePrompts()[modalCardIndex].type).subtext" 
-                 class="text-sm opacity-60 mt-1">
-                {{ getPromptLabel(getCurrentNodePrompts()[modalCardIndex].type).subtext }}
+          <button class="overlay-close" (click)="closeAiModal()">&times;</button>
+          
+          <!-- API Key Input -->
+          <div *ngIf="showApiKeyInput">
+            <div class="overlay-header">
+              <i class="fas fa-key fa-2x text-purple-400"></i>
+              <h3 class="overlay-type">Enter Claude API Key</h3>
+            </div>
+            <div class="overlay-body space-y-4">
+              <p class="text-sm text-slate-300 mb-4">
+                Get your API key from <a href="https://console.anthropic.com/" target="_blank" class="text-purple-400 hover:text-purple-300 underline">anthropic.com</a>
               </p>
+              <input 
+                type="password" 
+                [(ngModel)]="apiKeyInput"
+                placeholder="sk-ant-..."
+                class="w-full px-4 py-2 bg-slate-700 text-white rounded-lg border border-purple-500/30 focus:border-purple-500 focus:outline-none"
+                (keyup.enter)="saveApiKey()">
+              <button 
+                (click)="saveApiKey()"
+                class="w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition">
+                Save & Generate Question
+              </button>
+              <p *ngIf="aiError" class="text-red-400 text-sm">{{ aiError }}</p>
             </div>
           </div>
-          <div class="overlay-body">
-            {{ getCurrentNodePrompts()[modalCardIndex].text }}
+
+          <!-- Loading State -->
+          <div *ngIf="isGeneratingQuestion && !showApiKeyInput">
+            <div class="overlay-header">
+              <i class="fas fa-sparkles fa-2x text-purple-400 animate-pulse"></i>
+              <h3 class="overlay-type">Generating Question...</h3>
+            </div>
+            <div class="overlay-body flex justify-center py-8">
+              <div class="animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
+            </div>
+          </div>
+
+          <!-- Generated Question -->
+          <div *ngIf="aiQuestion && !isGeneratingQuestion && !showApiKeyInput">
+            <div class="overlay-header">
+              <i class="fas fa-comment-dots fa-2x text-purple-400"></i>
+              <h3 class="overlay-type">AI-Generated Question</h3>
+            </div>
+            <div class="overlay-body">
+              <p class="text-lg leading-relaxed">{{ aiQuestion }}</p>
+            </div>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="aiError && !showApiKeyInput && !isGeneratingQuestion">
+            <div class="overlay-header">
+              <i class="fas fa-exclamation-circle fa-2x text-red-400"></i>
+              <h3 class="overlay-type">Error</h3>
+            </div>
+            <div class="overlay-body">
+              <p class="text-red-300">{{ aiError }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -94,70 +109,7 @@
     </div>
   </div>
 
-  <!-- Help Modal -->
-  <div *ngIf="showCardHelp" class="card-overlay" (click)="showCardHelp = false">
-    <div class="overlay-card max-w-2xl" (click)="$event.stopPropagation()">
-      <button class="overlay-close" (click)="showCardHelp = false">&times;</button>
-      <div class="overlay-header">
-        <i class="fas fa-2x fa-graduation-cap text-purple-400"></i>
-        <div>
-          <h3 class="overlay-type text-purple-400">Card Categories Guide</h3>
-          <p class="text-sm opacity-60 mt-1">The 4Ps of Knowing (Vervaeke Framework)</p>
-        </div>
-      </div>
-      <div class="overlay-body space-y-6">
-        <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-            <i class="fas fa-book fa-xl text-white"></i>
-          </div>
-          <div>
-            <h4 class="text-xl font-bold text-blue-400 mb-2">Discover (Propositional)</h4>
-            <p class="text-sm text-slate-300 leading-relaxed">Uncover what the Scripture teaches. This addresses propositional knowing - factual truth, doctrinal content, and theological principles revealed in the text.</p>
-            <p class="text-xs text-slate-400 mt-2 italic">Ask: "What truth is God revealing here?"</p>
-          </div>
-        </div>
-        
-        <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
-            <i class="fas fa-tools fa-xl text-white"></i>
-          </div>
-          <div>
-            <h4 class="text-xl font-bold text-green-400 mb-2">Apply (Procedural)</h4>
-            <p class="text-sm text-slate-300 leading-relaxed">Learn how to practice this teaching. This addresses procedural knowing - concrete actions, spiritual disciplines, and habits to develop based on God's Word.</p>
-            <p class="text-xs text-slate-400 mt-2 italic">Ask: "How do I live this out practically?"</p>
-          </div>
-        </div>
-        
-        <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
-            <i class="fas fa-glasses fa-xl text-white"></i>
-          </div>
-          <div>
-            <h4 class="text-xl font-bold text-purple-400 mb-2">Reframe (Perspectival)</h4>
-            <p class="text-sm text-slate-300 leading-relaxed">Shift how you see the world. This addresses perspectival knowing - changing your worldview, seeing reality differently, and reframing circumstances through God's perspective.</p>
-            <p class="text-xs text-slate-400 mt-2 italic">Ask: "How does this change the way I see things?"</p>
-          </div>
-        </div>
-        
-        <div class="flex items-start gap-4">
-          <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center">
-            <i class="fas fa-hand-holding-heart fa-xl text-white"></i>
-          </div>
-          <div>
-            <h4 class="text-xl font-bold text-pink-400 mb-2">Become (Participatory)</h4>
-            <p class="text-sm text-slate-300 leading-relaxed">Experience transformation in Christ. This addresses participatory knowing - identity formation, relationship with God, and who you're becoming through His refining work.</p>
-            <p class="text-xs text-slate-400 mt-2 italic">Ask: "How is God transforming me through this?"</p>
-          </div>
-        </div>
-        
-        <div class="mt-6 p-4 bg-slate-700/50 rounded-lg border border-purple-500/30">
-          <p class="text-xs text-slate-300 leading-relaxed">
-            <strong class="text-purple-300">Note:</strong> These four types of knowing work together. Biblical study isn't complete with just factual knowledge (Discover) - it must lead to practice (Apply), shape our perspective (Reframe), and transform our identity (Become).
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Tooltip -->
   <div id="cluster-tooltip" 
