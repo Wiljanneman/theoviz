@@ -25,7 +25,7 @@ export class InteractiveStudyComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<any[]>('/theoviz/stepper-content.json').subscribe(data => {
+    this.http.get<any[]>('./stepper-content.json').subscribe(data => {
       this.steps = data;
       this.setStep(0);
     });
