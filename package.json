@@ -6,7 +6,7 @@
     "start": "ng serve",
     "start:proxy": "node server.js",
     "dev": "concurrently \"npm run start\" \"npm run start:proxy\"",
-    "build": "ng build --output-path docs --base-href /theoviz/ && cp docs/index.html docs/404.html",
+    "build": "ng build --output-path . --base-href / && cp index.html 404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
