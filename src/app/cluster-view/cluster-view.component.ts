@@ -764,12 +764,6 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
    * Generate AI question for current node
    */
   async generateAiQuestion(): Promise<void> {
-    // Check if API key is set
-    if (!this.claudeService.hasApiKey()) {
-      this.showApiKeyInput = true;
-      this.showAiModal = true;
-      return;
-    }
 
     const currentNode = this.clusterData.nodes[this.currentStep];
     if (!currentNode) {
@@ -831,7 +825,6 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       return;
     }
     
-    this.claudeService.setApiKey(this.apiKeyInput.trim());
     this.showApiKeyInput = false;
     this.apiKeyInput = '';
     
