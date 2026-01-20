@@ -16,7 +16,7 @@
             "outputPath": "dist/theoviz",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "baseHref": "/theoviz/",
+            "baseHref": "/",
             "polyfills": [
               "zone.js"
             ],
