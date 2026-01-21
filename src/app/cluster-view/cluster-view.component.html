@@ -1,14 +1,14 @@
 <div class="w-full h-full flex flex-col bg-gradient-to-br from-slate-900 to-slate-800">
   <!-- Header -->
-  <div class="p-6 border-b border-purple-500/30">
-    <div class="flex justify-between items-start mb-2">
-      <div>
-        <h2 class="text-2xl font-bold text-white mb-2">{{ clusterData.title }}</h2>
-        <p class="text-slate-300 text-sm">{{ clusterData.description }}</p>
+  <div class="p-4 sm:p-6 border-b border-purple-500/30">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mb-2">
+      <div class="flex-1">
+        <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">{{ clusterData.title }}</h2>
+        <p class="text-slate-300 text-xs sm:text-sm">{{ clusterData.description }}</p>
       </div>
       <button 
         (click)="toggleMode()"
-        class="px-4 py-2 rounded-lg transition flex items-center gap-2"
+        class="px-3 sm:px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center sm:justify-start"
         [ngClass]="isGuidedMode ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-slate-700 hover:bg-slate-600 text-slate-300'">
         <i class="fas" [ngClass]="isGuidedMode ? 'fa-route' : 'fa-hand-pointer'"></i>
         <span>{{ isGuidedMode ? 'Guided Mode' : 'Free Mode' }}</span>
@@ -21,16 +21,39 @@
   <div class="flex-1 flex flex-col overflow-hidden">
     <div class="flex-1 flex overflow-hidden relative">
       <!-- Visualization Container -->
-      <div class="flex-1 flex items-center justify-center p-8 relative">
+      <div class="flex-1 flex items-center justify-center p-4 sm:p-8 relative pb-20 sm:pb-8">
         <svg #clusterContainer id="cluster-viz"></svg>
         
+        <!-- Mobile Navigation Buttons (only in guided mode) -->
+        <div *ngIf="isGuidedMode" class="md:hidden fixed bottom-20 left-0 right-0 z-20 px-4">
+          <div class="flex gap-2 max-w-md mx-auto">
+            <button 
+              (click)="previousStep()"
+              [disabled]="currentStep === 0"
+              class="flex-1 py-3 rounded-lg transition flex items-center justify-center gap-2 font-semibold text-sm"
+              [ngClass]="currentStep === 0 ? 'bg-slate-700 opacity-50 cursor-not-allowed text-slate-400' : 'bg-slate-700 hover:bg-slate-600 text-white'">
+              <i class="fas fa-arrow-left"></i>
+              <span>Previous</span>
+            </button>
+            <button 
+              (click)="nextStep()"
+              [disabled]="currentStep === clusterData.nodes.length - 1 && !clusterData.overarchingTheme"
+              class="flex-1 py-3 rounded-lg transition flex items-center justify-center gap-2 font-semibold text-sm"
+              [ngClass]="currentStep === clusterData.nodes.length - 1 && !clusterData.overarchingTheme ? 'bg-slate-700 opacity-50 cursor-not-allowed text-slate-400' : 'bg-purple-600 hover:bg-purple-700 text-white'">
+              <span>{{ currentStep === clusterData.nodes.length - 1 && clusterData.overarchingTheme ? 'Theme' : 'Next' }}</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+        
         <!-- AI Question Button at bottom center -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10">
           <button 
             (click)="generateAiQuestion()"
-            class="ai-question-button px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 font-semibold">
+            class="ai-question-button px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 sm:gap-3 font-semibold text-sm sm:text-base">
             <i class="fas fa-sparkles"></i>
-            <span>Ask AI a Question</span>
+            <span class="hidden sm:inline">Ask AI a Question</span>
+            <span class="sm:hidden">AI Question</span>
           </button>
         </div>
       </div>
@@ -45,58 +68,58 @@
           <!-- API Key Input -->
           <div *ngIf="showApiKeyInput">
             <div class="overlay-header">
-              <i class="fas fa-key fa-2x text-purple-400"></i>
+              <i class="fas fa-key text-xl sm:text-2xl text-purple-400"></i>
               <h3 class="overlay-type">Enter Claude API Key</h3>
             </div>
             <div class="overlay-body space-y-4">
-              <p class="text-sm text-slate-300 mb-4">
+              <p class="text-xs sm:text-sm text-slate-300 mb-4">
                 Get your API key from <a href="https://console.anthropic.com/" target="_blank" class="text-purple-400 hover:text-purple-300 underline">anthropic.com</a>
               </p>
               <input 
                 type="password" 
                 [(ngModel)]="apiKeyInput"
                 placeholder="sk-ant-..."
-                class="w-full px-4 py-2 bg-slate-700 text-white rounded-lg border border-purple-500/30 focus:border-purple-500 focus:outline-none"
+                class="w-full px-3 sm:px-4 py-2 bg-slate-700 text-white rounded-lg border border-purple-500/30 focus:border-purple-500 focus:outline-none text-sm sm:text-base"
                 (keyup.enter)="saveApiKey()">
               <button 
                 (click)="saveApiKey()"
-                class="w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition">
+                class="w-full px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition text-sm sm:text-base">
                 Save & Generate Question
               </button>
-              <p *ngIf="aiError" class="text-red-400 text-sm">{{ aiError }}</p>
+              <p *ngIf="aiError" class="text-red-400 text-xs sm:text-sm">{{ aiError }}</p>
             </div>
           </div>
 
           <!-- Loading State -->
           <div *ngIf="isGeneratingQuestion && !showApiKeyInput">
             <div class="overlay-header">
-              <i class="fas fa-sparkles fa-2x text-purple-400 animate-pulse"></i>
+              <i class="fas fa-sparkles text-xl sm:text-2xl text-purple-400 animate-pulse"></i>
               <h3 class="overlay-type">Generating Question...</h3>
             </div>
             <div class="overlay-body flex justify-center py-8">
-              <div class="animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
+              <div class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-4 border-purple-500 border-t-transparent"></div>
             </div>
           </div>
 
           <!-- Generated Question -->
           <div *ngIf="aiQuestion && !isGeneratingQuestion && !showApiKeyInput">
             <div class="overlay-header">
-              <i class="fas fa-comment-dots fa-2x text-purple-400"></i>
+              <i class="fas fa-comment-dots text-xl sm:text-2xl text-purple-400"></i>
               <h3 class="overlay-type">AI-Generated Question</h3>
             </div>
             <div class="overlay-body">
-              <p class="text-lg leading-relaxed">{{ aiQuestion }}</p>
+              <p class="text-base sm:text-lg leading-relaxed">{{ aiQuestion }}</p>
             </div>
           </div>
 
           <!-- Error State -->
           <div *ngIf="aiError && !showApiKeyInput && !isGeneratingQuestion">
             <div class="overlay-header">
-              <i class="fas fa-exclamation-circle fa-2x text-red-400"></i>
+              <i class="fas fa-exclamation-circle text-xl sm:text-2xl text-red-400"></i>
               <h3 class="overlay-type">Error</h3>
             </div>
             <div class="overlay-body">
-              <p class="text-red-300">{{ aiError }}</p>
+              <p class="text-red-300 text-sm sm:text-base">{{ aiError }}</p>
             </div>
           </div>
         </div>

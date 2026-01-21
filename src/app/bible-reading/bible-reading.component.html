@@ -1,53 +1,53 @@
 <div class="w-full h-full bg-gradient-to-br from-slate-900 to-slate-800 overflow-auto">
   <!-- Header -->
-  <div class="p-8 border-b border-purple-500/30">
-    <div class="max-w-4xl mx-auto">
-      <div class="flex items-center gap-3 mb-4">
-        <i class="fas fa-bible text-3xl text-purple-400"></i>
-        <h1 class="text-3xl font-bold text-white">{{ readingData.chapterTitle }}</h1>
+  <div class="p-4 sm:p-6 md:p-8 border-b border-purple-500/30">
+    <div class="max-w-full md:max-w-2xl lg:max-w-4xl mx-auto">
+      <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+        <i class="fas fa-bible text-2xl sm:text-3xl text-purple-400"></i>
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-white">{{ readingData.chapterTitle }}</h1>
       </div>
       
-      <p *ngIf="readingData?.introduction" class="text-slate-300 text-lg leading-relaxed mb-6">
+      <p *ngIf="readingData?.introduction" class="text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6">
         {{ readingData.introduction }}
       </p>
 
       <!-- Key Themes -->
-      <div *ngIf="readingData?.keyThemes?.length" class="mb-6">
-        <h3 class="text-lg font-semibold text-purple-300 mb-3">Key Themes in This Chapter:</h3>
-        <div class="flex flex-wrap gap-2">
+      <div *ngIf="readingData?.keyThemes?.length" class="mb-4 sm:mb-6">
+        <h3 class="text-base sm:text-lg font-semibold text-purple-300 mb-2 sm:mb-3">Key Themes in This Chapter:</h3>
+        <div class="flex flex-wrap gap-1.5 sm:gap-2">
           <span *ngFor="let theme of readingData.keyThemes" 
-                class="bg-purple-600/20 border border-purple-500/30 rounded-full px-3 py-1 text-sm text-purple-200">
+                class="bg-purple-600/20 border border-purple-500/30 rounded-full px-2 sm:px-3 py-1 text-xs sm:text-sm text-purple-200">
             {{ theme }}
           </span>
         </div>
       </div>
 
       <!-- Focus Verses -->
-      <div *ngIf="readingData?.focusVerses" class="mb-4">
-        <div class="bg-amber-600/20 border border-amber-500/30 rounded-lg p-4">
+      <div *ngIf="readingData?.focusVerses" class="mb-3 sm:mb-4">
+        <div class="bg-amber-600/20 border border-amber-500/30 rounded-lg p-3 sm:p-4">
           <div class="flex items-center gap-2 mb-2">
-            <i class="fas fa-bullseye text-amber-400"></i>
-            <span class="font-semibold text-amber-300">Study Focus:</span>
+            <i class="fas fa-bullseye text-amber-400 text-sm sm:text-base"></i>
+            <span class="font-semibold text-amber-300 text-sm sm:text-base">Study Focus:</span>
           </div>
-          <p class="text-amber-100">We'll be focusing on <strong>{{ readingData.focusVerses }}</strong> in the detailed study that follows.</p>
+          <p class="text-amber-100 text-xs sm:text-sm md:text-base">We'll be focusing on <strong>{{ readingData.focusVerses }}</strong> in the detailed study that follows.</p>
         </div>
       </div>
 
       <!-- Reading Instructions -->
-      <div *ngIf="readingData?.readingInstructions" class="bg-slate-700/50 border border-slate-600 rounded-lg p-4">
+      <div *ngIf="readingData?.readingInstructions" class="bg-slate-700/50 border border-slate-600 rounded-lg p-3 sm:p-4">
         <div class="flex items-center gap-2 mb-2">
-          <i class="fas fa-lightbulb text-blue-400"></i>
-          <span class="font-semibold text-blue-300">Reading Guide:</span>
+          <i class="fas fa-lightbulb text-blue-400 text-sm sm:text-base"></i>
+          <span class="font-semibold text-blue-300 text-sm sm:text-base">Reading Guide:</span>
         </div>
-        <p class="text-slate-200">{{ readingData.readingInstructions }}</p>
+        <p class="text-slate-200 text-xs sm:text-sm md:text-base">{{ readingData.readingInstructions }}</p>
       </div>
 
       <!-- Audio Player -->
-      <div class="mt-6">
-        <div class="bg-slate-700/50 border border-slate-600 rounded-lg p-4">
-          <div class="flex items-center gap-2 mb-3">
-            <i class="fas fa-headphones text-purple-400"></i>
-            <span class="font-semibold text-purple-300">Listen to James 1</span>
+      <div class="mt-4 sm:mt-6">
+        <div class="bg-slate-700/50 border border-slate-600 rounded-lg p-3 sm:p-4">
+          <div class="flex items-center gap-2 mb-2 sm:mb-3">
+            <i class="fas fa-headphones text-purple-400 text-sm sm:text-base"></i>
+            <span class="font-semibold text-purple-300 text-sm sm:text-base">Listen to James 1</span>
           </div>
           <audio 
             controls 
@@ -62,21 +62,21 @@
   </div>
 
   <!-- Bible Text Content -->
-  <div class="p-8">
-    <div class="max-w-4xl mx-auto">
+  <div class="p-4 sm:p-6 md:p-8">
+    <div class="max-w-full md:max-w-2xl lg:max-w-4xl mx-auto">
       
       <!-- Loading State -->
-      <div *ngIf="isLoading" class="text-center py-12">
-        <i class="fas fa-spinner fa-spin text-4xl text-purple-400 mb-4"></i>
-        <p class="text-slate-300 text-lg">Loading Scripture text...</p>
+      <div *ngIf="isLoading" class="text-center py-8 sm:py-12">
+        <i class="fas fa-spinner fa-spin text-3xl sm:text-4xl text-purple-400 mb-3 sm:mb-4"></i>
+        <p class="text-slate-300 text-base sm:text-lg">Loading Scripture text...</p>
       </div>
 
       <!-- Error State -->
-      <div *ngIf="loadError && !isLoading" class="text-center py-12">
-        <i class="fas fa-exclamation-triangle text-4xl text-amber-400 mb-4"></i>
-        <p class="text-slate-300 text-lg mb-4">Unable to load the Bible text.</p>
+      <div *ngIf="loadError && !isLoading" class="text-center py-8 sm:py-12">
+        <i class="fas fa-exclamation-triangle text-3xl sm:text-4xl text-amber-400 mb-3 sm:mb-4"></i>
+        <p class="text-slate-300 text-base sm:text-lg mb-3 sm:mb-4">Unable to load the Bible text.</p>
         <button (click)="retryLoad()" 
-                class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition">
+                class="bg-purple-600 hover:bg-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition text-sm sm:text-base">
           <i class="fas fa-retry mr-2"></i>
           Retry Loading
         </button>
@@ -84,23 +84,23 @@
 
       <!-- Bible Text -->
       <div *ngIf="bibleText && !isLoading && !loadError" 
-           class="bg-slate-800/50 border border-slate-700 rounded-xl p-8">
-        <div class="flex items-center gap-3 mb-6">
-          <i class="fas fa-scroll text-2xl text-purple-400"></i>
-          <h2 class="text-2xl font-bold text-white">{{ readingData.chapterTitle }}</h2>
+           class="bg-slate-800/50 border border-slate-700 rounded-xl p-4 sm:p-6 md:p-8">
+        <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+          <i class="fas fa-scroll text-xl sm:text-2xl text-purple-400"></i>
+          <h2 class="text-xl sm:text-2xl font-bold text-white">{{ readingData.chapterTitle }}</h2>
         </div>
         
-        <div class="prose prose-invert prose-lg max-w-none leading-relaxed" 
+        <div class="prose prose-invert prose-sm sm:prose-base md:prose-lg max-w-none leading-relaxed" 
              [innerHTML]="bibleText"
-             style="line-height: 2; font-size: 1.1rem;">
+             style="line-height: 1.8; font-size: clamp(0.95rem, 2vw, 1.1rem);">
         </div>
       </div>
 
       <!-- Navigation Hint -->
-      <div class="mt-8 text-center">
-        <div class="bg-slate-700/50 border border-slate-600 rounded-lg p-4 inline-block">
-          <div class="flex items-center gap-2 text-slate-300">
-            <i class="fas fa-arrow-right"></i>
+      <div class="mt-6 sm:mt-8 text-center">
+        <div class="bg-slate-700/50 border border-slate-600 rounded-lg p-3 sm:p-4 inline-block max-w-full">
+          <div class="flex items-center gap-2 text-slate-300 text-xs sm:text-sm md:text-base">
+            <i class="fas fa-arrow-right flex-shrink-0"></i>
             <span>Continue to the next step to explore the structure and meaning of this passage</span>
           </div>
         </div>

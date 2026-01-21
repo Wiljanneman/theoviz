@@ -63,6 +63,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
   ) {}
 
   private svg: any;
+  private g: any; // Group for zoom/pan
   private width = 1200;
   private height = 800;
   private simulation: any;
@@ -130,8 +131,20 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       .attr('viewBox', [0, 0, this.width, this.height])
       .attr('preserveAspectRatio', 'xMidYMid meet');
 
+    // Add zoom behavior
+    const zoom = d3.zoom()
+      .scaleExtent([0.5, 3]) // Min zoom 50%, max zoom 300%
+      .on('zoom', (event) => {
+        this.g.attr('transform', event.transform);
+      });
+
+    this.svg.call(zoom);
+
+    // Create main group for zoom/pan transformations
+    this.g = this.svg.append('g');
+
     // Add gradient definitions dynamically
-    const defs = this.svg.append('defs');
+    const defs = this.g.append('defs');
     
     Object.entries(this.sectionColors).forEach(([section, colors]) => {
       const gradient = defs.append('linearGradient')
@@ -183,7 +196,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       .force('collision', d3.forceCollide().radius(this.nodeRadius + 20));
 
     // Add links
-    const link = this.svg.append('g')
+    const link = this.g.append('g')
       .selectAll('line')
       .data(links)
       .join('line')
@@ -193,7 +206,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       .attr('opacity', 0.6);
 
     // Add node groups
-    const node = this.svg.append('g')
+    const node = this.g.append('g')
       .selectAll('g')
       .data(nodes)
       .join('g')

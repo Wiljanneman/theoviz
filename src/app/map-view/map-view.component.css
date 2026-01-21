@@ -143,6 +143,74 @@
   width: 360px;
   max-width: calc(100vw - 32px);
   border: 1px solid rgba(255, 255, 255, 0.8);
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .map-filter-overlay {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 70vh;
+    padding: 16px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  .map-filter-overlay.drawer-open {
+    transform: translateY(0);
+  }
+  
+  .filter-header {
+    font-size: 13px;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  
+  .filter-button {
+    padding: 10px 12px;
+    font-size: 13px;
+    gap: 8px;
+  }
+  
+  .filter-button i {
+    font-size: 15px;
+  }
+  
+  .filter-description {
+    font-size: 11px;
+    padding: 8px 12px !important;
+  }
+  
+  .filter-description.expanded {
+    max-height: 120px;
+  }
+  
+  .filter-item {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-button span {
+    font-size: 12px;
+  }
+  
+  .chevron-icon {
+    font-size: 11px;
+  }
+  
+  .map-filter-overlay {
+    padding: 12px;
+  }
 }
 
 .filter-header {

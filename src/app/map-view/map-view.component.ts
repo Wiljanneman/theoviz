@@ -48,6 +48,7 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
   private arrowLayersAdded: boolean = false;
   activeFilter: string = 'all';
   expandedFilter: string | null = null;
+  isFilterDrawerOpen: boolean = false;
 
   private getDefaultIcon(type: string): string {
     const iconMap: { [key: string]: string } = {
@@ -63,6 +64,10 @@ export class MapViewComponent implements AfterViewInit, OnChanges {
   toggleExpand(filterType: string, event: Event): void {
     event.stopPropagation();
     this.expandedFilter = this.expandedFilter === filterType ? null : filterType;
+  }
+
+  toggleFilterDrawer(): void {
+    this.isFilterDrawerOpen = !this.isFilterDrawerOpen;
   }
 
   filterMarkers(filterType: string): void {

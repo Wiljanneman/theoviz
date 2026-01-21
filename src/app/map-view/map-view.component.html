@@ -1,9 +1,28 @@
 <div class="w-full h-full relative">
   <div id="map" class="w-full h-full"></div>
   
+  <!-- Mobile Filter Toggle Button (visible only on mobile when drawer is closed) -->
+  <button 
+    *ngIf="!isFilterDrawerOpen"
+    (click)="toggleFilterDrawer()"
+    class="md:hidden fixed bottom-4 right-4 z-[1001] bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-xl transition-all duration-200 flex items-center justify-center">
+    <i class="fas fa-filter text-xl"></i>
+  </button>
+  
   <!-- Filter overlay -->
-  <div class="map-filter-overlay">
-    <div class="filter-header">Explore the Context</div>
+  <div class="map-filter-overlay" [class.drawer-open]="isFilterDrawerOpen">
+    <!-- Mobile drawer handle / close button -->
+    <div class="md:hidden flex items-center justify-between mb-3 pb-3 border-b border-gray-300">
+      <div class="filter-header !mb-0 !pb-0 !border-0">Explore the Context</div>
+      <button 
+        (click)="toggleFilterDrawer()"
+        class="text-gray-600 hover:text-gray-800 p-2">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    
+    <!-- Desktop header (visible only on desktop) -->
+    <div class="hidden md:block filter-header">Explore the Context</div>
     
     <div class="filter-item">
       <button 
@@ -69,4 +88,10 @@
       </div>
     </div>
   </div>
+  
+  <!-- Mobile backdrop -->
+  <div 
+    *ngIf="isFilterDrawerOpen"
+    (click)="toggleFilterDrawer()"
+    class="md:hidden fixed inset-0 bg-black/50 z-[999] backdrop-blur-sm"></div>
 </div>

@@ -21,6 +21,7 @@ export class InteractiveStudyComponent implements OnInit {
   clusterData: ClusterData | null = null;
   readingData: ReadingData | null = null;
   verseReference: string = '';
+  isMobileMenuOpen = false;
 
   constructor(private http: HttpClient) {}
 
@@ -34,6 +35,9 @@ export class InteractiveStudyComponent implements OnInit {
   setStep(index: number) {
     this.currentStepIndex = index;
     const step = this.steps[index];
+    
+    // Close mobile menu when step is selected
+    this.isMobileMenuOpen = false;
     
     // Reset data
     this.mapData = null;
@@ -51,5 +55,9 @@ export class InteractiveStudyComponent implements OnInit {
         this.clusterData = step.clusterData;
       }
     }
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 }
