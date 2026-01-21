@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, Ren
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import * as d3 from 'd3';
-import { TooltipService } from '@babybeet/angular-tooltip';
 import { TutorialService } from '../services/tutorial.service';
 
 interface TreeNode {
@@ -85,11 +84,11 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
   };
 
   private visibleNodes = new Set<string>(['root', 'bible-authority']); // Start with root and first question visible
+  private tooltipElement: HTMLElement | null = null;
 
   constructor(
     private renderer: Renderer2, 
-    private sanitizer: DomSanitizer, 
-    private tooltipService: TooltipService,
+    private sanitizer: DomSanitizer,
     private tutorialService: TutorialService
   ) {}
 
@@ -107,11 +106,7 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
         this.hideTooltipTimeout = null;
       }
       
-      this.tooltipService.show(target, {
-        content: target.getAttribute('data-tooltip') || '',
-        theme: 'dark',
-        className: 'custom-tooltip'
-      });
+      this.showTooltip(target, target.getAttribute('data-tooltip') || '');
     }
   }
 
@@ -121,8 +116,48 @@ export class DenominationQuizComponent implements OnInit, AfterViewInit, OnDestr
     if (target && target.classList.contains('tooltip-term')) {
       // Small delay to prevent flickering when moving between adjacent tooltip terms
       this.hideTooltipTimeout = setTimeout(() => {
-        this.tooltipService.hide();
-      }, 50); // Reduced from 100ms to 50ms for snappier response
+        this.hideTooltip();
+      }, 50);
+    }
+  }
+
+  private showTooltip(target: HTMLElement, content: string): void {
+    if (!content || this.tooltipElement) return;
+
+    this.tooltipElement = this.renderer.createElement('div');
+    const classes = [
+      'fixed', 'z-[9999]', 'px-3', 'py-2', 'text-sm', 'text-white',
+      'bg-slate-900', 'rounded-lg', 'shadow-xl', 'border', 'border-purple-500/50',
+      'backdrop-blur-sm', 'max-w-xs', 'pointer-events-none', 'leading-relaxed'
+    ];
+    classes.forEach(c => this.renderer.addClass(this.tooltipElement, c));
+
+    const text = this.renderer.createText(content);
+    this.renderer.appendChild(this.tooltipElement, text);
+    this.renderer.appendChild(document.body, this.tooltipElement);
+
+    const targetRect = target.getBoundingClientRect();
+    const tooltipRect = this.tooltipElement!.getBoundingClientRect();
+    
+    let top = targetRect.bottom + 8;
+    let left = targetRect.left + (targetRect.width - tooltipRect.width) / 2;
+
+    if (left < 8) left = 8;
+    if (left + tooltipRect.width > window.innerWidth - 8) {
+      left = window.innerWidth - tooltipRect.width - 8;
+    }
+    if (top + tooltipRect.height > window.innerHeight - 8) {
+      top = targetRect.top - tooltipRect.height - 8;
+    }
+
+    this.renderer.setStyle(this.tooltipElement, 'top', `${top}px`);
+    this.renderer.setStyle(this.tooltipElement, 'left', `${left}px`);
+  }
+
+  private hideTooltip(): void {
+    if (this.tooltipElement) {
+      this.renderer.removeChild(document.body, this.tooltipElement);
+      this.tooltipElement = null;
     }
   }
 
