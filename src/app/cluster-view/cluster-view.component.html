@@ -21,39 +21,49 @@
   <div class="flex-1 flex flex-col overflow-hidden">
     <div class="flex-1 flex overflow-hidden relative">
       <!-- Visualization Container -->
-      <div class="flex-1 flex items-center justify-center p-4 sm:p-8 relative pb-20 sm:pb-8">
+      <div class="flex-1 flex items-center justify-center p-4 sm:p-8 relative pb-24 sm:pb-8">
         <svg #clusterContainer id="cluster-viz"></svg>
         
-        <!-- Mobile Navigation Buttons (only in guided mode) -->
-        <div *ngIf="isGuidedMode" class="md:hidden fixed bottom-20 left-0 right-0 z-20 px-4">
-          <div class="flex gap-2 max-w-md mx-auto">
+        <!-- Mobile Bottom Navigation Bar -->
+        <div class="md:hidden fixed bottom-4 left-0 right-0 z-20 px-4">
+          <div class="flex items-center justify-center gap-3 max-w-md mx-auto">
+            <!-- Previous Button (Icon Only) -->
             <button 
+              *ngIf="isGuidedMode"
               (click)="previousStep()"
               [disabled]="currentStep === 0"
-              class="flex-1 py-3 rounded-lg transition flex items-center justify-center gap-2 font-semibold text-sm"
+              class="w-12 h-12 rounded-full transition flex items-center justify-center shadow-lg"
               [ngClass]="currentStep === 0 ? 'bg-slate-700 opacity-50 cursor-not-allowed text-slate-400' : 'bg-slate-700 hover:bg-slate-600 text-white'">
               <i class="fas fa-arrow-left"></i>
-              <span>Previous</span>
             </button>
+            
+            <!-- AI Question Button -->
             <button 
+              (click)="generateAiQuestion()"
+              class="ai-question-button px-5 py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center gap-2 font-semibold text-sm">
+              <i class="fas fa-sparkles"></i>
+              <span>AI</span>
+            </button>
+            
+            <!-- Next Button (Icon Only) -->
+            <button 
+              *ngIf="isGuidedMode"
               (click)="nextStep()"
               [disabled]="currentStep === clusterData.nodes.length - 1 && !clusterData.overarchingTheme"
-              class="flex-1 py-3 rounded-lg transition flex items-center justify-center gap-2 font-semibold text-sm"
+              class="w-12 h-12 rounded-full transition flex items-center justify-center shadow-lg"
               [ngClass]="currentStep === clusterData.nodes.length - 1 && !clusterData.overarchingTheme ? 'bg-slate-700 opacity-50 cursor-not-allowed text-slate-400' : 'bg-purple-600 hover:bg-purple-700 text-white'">
-              <span>{{ currentStep === clusterData.nodes.length - 1 && clusterData.overarchingTheme ? 'Theme' : 'Next' }}</span>
-              <i class="fas fa-arrow-right"></i>
+              <i class="fas" [ngClass]="currentStep === clusterData.nodes.length - 1 && clusterData.overarchingTheme ? 'fa-star' : 'fa-arrow-right'"></i>
             </button>
           </div>
         </div>
         
-        <!-- AI Question Button at bottom center -->
-        <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <!-- Desktop AI Question Button -->
+        <div class="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
           <button 
             (click)="generateAiQuestion()"
-            class="ai-question-button px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 sm:gap-3 font-semibold text-sm sm:text-base">
+            class="ai-question-button px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 font-semibold">
             <i class="fas fa-sparkles"></i>
-            <span class="hidden sm:inline">Ask AI a Question</span>
-            <span class="sm:hidden">AI Question</span>
+            <span>Ask AI a Question</span>
           </button>
         </div>
       </div>
