@@ -2,13 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
 const rateLimit = require('express-rate-limit');
-const crypto = require('crypto');
 
 const app = express();
 const PORT = 3001;
-
-// Shared secret for request signing (set in environment)
-const APP_SECRET = process.env.APP_SECRET || 'dev-secret-change-in-production';
 
 // Rate limiting: 10 requests per minute per IP
 const limiter = rateLimit({
@@ -23,7 +19,7 @@ const limiter = rateLimit({
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'timestamp', 'signature'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: false
 }));
 
@@ -32,38 +28,11 @@ app.use(express.json());
 // Handle preflight requests
 app.options('*', cors());
 
-// Middleware to verify request signature
-function verifySignature(req, res, next) {
-  const { timestamp, signature } = req.headers;
-  
-  if (!timestamp || !signature) {
-    return res.status(401).json({ error: 'Missing authentication headers' });
-  }
-  
-  // Check if timestamp is within 5 minutes (prevents replay attacks)
-  const now = Date.now();
-  const requestTime = parseInt(timestamp);
-  if (Math.abs(now - requestTime) > 5 * 60 * 1000) {
-    return res.status(401).json({ error: 'Request timestamp expired' });
-  }
-  
-  // Verify signature
-  const data = timestamp + JSON.stringify(req.body);
-  const expectedSignature = crypto
-    .createHmac('sha256', APP_SECRET)
-    .update(data)
-    .digest('hex');
-  
-  if (signature !== expectedSignature) {
-    return res.status(401).json({ error: 'Invalid signature' });
-  }
-  
-  next();
-}
 
-// Apply rate limiting and signature verification to Claude endpoint
-app.post('/api/claude', limiter, verifySignature, async (req, res) => {
-  console.log('Received authenticated request from:', req.get('origin'));
+
+// Apply rate limiting to Claude endpoint
+app.post('/api/claude', limiter, async (req, res) => {
+  console.log('Received request from:', req.get('origin'));
   
   try {
     const { prompt, apiKey } = req.body;

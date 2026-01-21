@@ -1,8 +1,3 @@
-const crypto = require('crypto');
-
-// Shared secret for request signing
-const APP_SECRET = process.env.APP_SECRET || 'dev-secret-change-in-production';
-
 // Simple in-memory rate limiting (resets on cold start)
 const requestCounts = new Map();
 
@@ -28,37 +23,13 @@ function checkRateLimit(ip) {
   return true;
 }
 
-function verifySignature(timestamp, signature, body) {
-  if (!timestamp || !signature) {
-    return { valid: false, error: 'Missing authentication headers' };
-  }
-  
-  // Check if timestamp is within 5 minutes
-  const now = Date.now();
-  const requestTime = parseInt(timestamp);
-  if (Math.abs(now - requestTime) > 5 * 60 * 1000) {
-    return { valid: false, error: 'Request timestamp expired' };
-  }
-  
-  // Verify signature
-  const data = timestamp + JSON.stringify(body);
-  const expectedSignature = crypto
-    .createHmac('sha256', APP_SECRET)
-    .update(data)
-    .digest('hex');
-  
-  if (signature !== expectedSignature) {
-    return { valid: false, error: 'Invalid signature' };
-  }
-  
-  return { valid: true };
-}
+
 
 module.exports = async (req, res) => {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, timestamp, signature');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   // Handle preflight
   if (req.method === 'OPTIONS') {
@@ -73,13 +44,6 @@ module.exports = async (req, res) => {
   const ip = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown';
   if (!checkRateLimit(ip)) {
     return res.status(429).json({ error: 'Too many requests, please try again later.' });
-  }
-  
-  // Verify signature
-  const { timestamp, signature } = req.headers;
-  const verification = verifySignature(timestamp, signature, req.body);
-  if (!verification.valid) {
-    return res.status(401).json({ error: verification.error });
   }
   
   try {

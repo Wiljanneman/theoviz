@@ -27,34 +27,8 @@ export interface ClaudeResponse {
 export class ClaudeService {
   private proxyUrl = environment.proxyUrl || 'http://localhost:3001/api/claude';
   private model = 'claude-3-5-sonnet-20240620';
-  private appSecret = environment.appSecret || 'dev-secret-change-in-production';
 
-  private async signRequest(body: any): Promise<{ timestamp: string; signature: string }> {
-    const timestamp = Date.now().toString();
-    const data = timestamp + JSON.stringify(body);
-    
-    // Use Web Crypto API to create HMAC signature
-    const encoder = new TextEncoder();
-    const key = await crypto.subtle.importKey(
-      'raw',
-      encoder.encode(this.appSecret),
-      { name: 'HMAC', hash: 'SHA-256' },
-      false,
-      ['sign']
-    );
-    
-    const signatureBuffer = await crypto.subtle.sign(
-      'HMAC',
-      key,
-      encoder.encode(data)
-    );
-    
-    const signature = Array.from(new Uint8Array(signatureBuffer))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
-    
-    return { timestamp, signature };
-  }
+
 
   async generateQuestion(verseText: string, verseReference: string): Promise<string> {
 
@@ -75,14 +49,11 @@ Text: ${verseText}
 Generate only the question, nothing else.`;
 
     const body = { prompt };
-    const { timestamp, signature } = await this.signRequest(body);
 
     const response = await fetch(this.proxyUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'timestamp': timestamp,
-        'signature': signature
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
     });
