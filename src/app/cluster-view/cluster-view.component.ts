@@ -210,8 +210,7 @@ export class ClusterViewComponent implements AfterViewInit, OnChanges {
       .selectAll('g')
       .data(nodes)
       .join('g')
-      .attr('cursor', 'pointer')
-      .call(this.drag(this.simulation));
+      .attr('cursor', 'pointer');
 
     // Add circles
     node.append('circle')
